@@ -1,0 +1,10 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Resources>
+    <Assembly ID="Maximus.ControlCenter.UI.Control.Assembly" Accessibility="Public" HasNullStream="false"
+              FileName="Maximus.ControlCenter.UI.Control.dll"
+              QualifiedName="Maximus.ControlCenter.UI.Control, Version=1.0.0.26, Culture=neutral, PublicKeyToken=fd5098a6a3259696" />
+    <DeployableAssembly ID="Maximus.ControlCenter.Tasks.Module.DeployableAssembly" Accessibility="Public" HasNullStream="false"
+                        FileName="Maximus.ControlCenter.Tasks.Module.dll"
+                        QualifiedName="Maximus.ControlCenter.Tasks.Module, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fd5098a6a3259696" />
+  </Resources>
+</ManagementPackFragment>
