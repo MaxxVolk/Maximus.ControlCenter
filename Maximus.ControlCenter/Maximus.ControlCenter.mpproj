@@ -30,6 +30,11 @@
     <GenerateSealed>True</GenerateSealed>
   </PropertyGroup>
   <ItemGroup>
+    <ManagementPackReference Include="Maximus.Base.Library">
+      <HintPath>C:\Projects\SCOMAuthoring\Maximus.Base.Library\Maximus.Base.Library\bin\Release\Maximus.Base.Library.mpb</HintPath>
+      <Alias>MBL</Alias>
+      <MinVersion>1.0.0.12</MinVersion>
+    </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.SystemCenter.Library">
       <Alias>SC</Alias>
       <PackageToBundle>false</PackageToBundle>
@@ -72,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assemblies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataTypes.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI.mpx">

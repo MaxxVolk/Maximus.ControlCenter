@@ -1,0 +1,16 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <DataTypes>
+      
+      <!-- Maximus.ControlCenter.Services.ServiceListDataItem -->
+      <DataType ID="Maximus.ControlCenter.Services.ServiceListDataItem" Accessibility="Public" Base="System!System.BaseData"
+                Comment="List of Windows Services">
+        <Implementation>
+          <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+          <Type>Maximus.ControlCenter.Tasks.Module.Services.ServiceListDataItem</Type>
+        </Implementation>
+      </DataType>
+      
+    </DataTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>
