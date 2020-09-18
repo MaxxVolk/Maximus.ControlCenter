@@ -1,4 +1,7 @@
 ﻿using Maximus.Library.Helpers;
+using Maximus.Library.ManagedModuleBase;
+
+using Microsoft.EnterpriseManagement.HealthService;
 
 using System;
 using System.Collections.Generic;
@@ -19,8 +22,13 @@ namespace Maximus.ControlCenter.Tasks.Module.Global
     const int LogBaseEventId = 7320;
 
     static private LoggingHelper _Logger;
-    static internal LoggingHelper Logger => _Logger ?? (_Logger = new LoggingHelper(LogSourceName, LogBaseEventId, EventLoggingLevel.Warning));
+    static internal LoggingHelper Logger => _Logger ?? (_Logger = new LoggingHelper(LogSourceName, LogBaseEventId, EventLoggingLevel.Verbose));
 
     internal const int evtId_QueryServiceListPA = 0;
+
+    internal static void ModuleErrorSignalReceiver(ModuleErrorSeverity severity, ModuleErrorCriticality criticality, Exception e, string message, object callerInstance)
+    {
+      Logger.WriteException($"Internal module exception or error.\r\nMessage: {message}\r\nError Severity: {severity}\r\nError Criticality: {criticality}", e ?? new Exception("Unknown exception"), callerInstance);
+    }
   }
 }

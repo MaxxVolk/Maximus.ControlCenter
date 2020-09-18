@@ -1,10 +1,6 @@
 ﻿using Maximus.Library.DataItemCollection;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Maximus.ControlCenter.Tasks.Module.Services
@@ -14,5 +10,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
   {
     [XmlArray]
     public List<ServiceInfo> Services { get; set; }
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
   }
 }

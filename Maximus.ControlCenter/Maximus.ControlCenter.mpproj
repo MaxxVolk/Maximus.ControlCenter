@@ -76,15 +76,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgentTasks.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>AgentTasks.mptg</DependentUpon>
+    </Compile>
     <Compile Include="Assemblies.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataTypes.mpx">
+    <Compile Include="ManagedDataItems.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManagedModules.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI.mpx">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AgentTasks.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

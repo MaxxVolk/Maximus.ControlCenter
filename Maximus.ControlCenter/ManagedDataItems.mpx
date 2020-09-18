@@ -2,9 +2,8 @@
   <TypeDefinitions>
     <DataTypes>
       
-      <!-- Maximus.ControlCenter.Services.ServiceListDataItem -->
-      <DataType ID="Maximus.ControlCenter.Services.ServiceListDataItem" Accessibility="Public" Base="System!System.BaseData"
-                Comment="List of Windows Services">
+      <!-- Maximus.ControlCenter.ServiceListDataItem -->
+      <DataType ID="Maximus.ControlCenter.ServiceListDataItem" Base="System!System.BaseData" Accessibility="Public">
         <Implementation>
           <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
           <Type>Maximus.ControlCenter.Tasks.Module.Services.ServiceListDataItem</Type>

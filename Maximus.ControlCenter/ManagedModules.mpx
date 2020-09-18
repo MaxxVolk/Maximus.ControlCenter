@@ -1,0 +1,27 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+      
+      <!-- Maximus.ControlCenter.QueryServiceList.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.ControlCenter.QueryServiceList.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="QueryParameters" minOccurs="0" type="xsd:boolean"/>
+          <xsd:element name="QueryService" minOccurs="0" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="QueryParameters" Selector="$Config/QueryParameters$" ParameterType="bool" />
+          <OverrideableParameter ID="QueryService" Selector="$Config/QueryService$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Services.QueryServiceListPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>Maximus.ControlCenter.ServiceListDataItem</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+      
+    </ModuleTypes>
+  </TypeDefinitions>
+</ManagementPackFragment>
