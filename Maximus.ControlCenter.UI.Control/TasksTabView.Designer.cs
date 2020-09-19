@@ -31,16 +31,16 @@
       this.tcCategories = new System.Windows.Forms.TabControl();
       this.tpServices = new System.Windows.Forms.TabPage();
       this.dgvServices = new System.Windows.Forms.DataGridView();
-      this.pControls = new System.Windows.Forms.Panel();
-      this.btServicesRefresh = new System.Windows.Forms.Button();
-      this.tabPage2 = new System.Windows.Forms.TabPage();
-      this.tabPage3 = new System.Windows.Forms.TabPage();
       this.cServiceDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cServiceStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cServiceStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cServiceIsTriggered = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.cServiceIsDelayed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.cServiceObjectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.pControls = new System.Windows.Forms.Panel();
+      this.btServicesRefresh = new System.Windows.Forms.Button();
+      this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.tabPage3 = new System.Windows.Forms.TabPage();
       this.tcCategories.SuspendLayout();
       this.tpServices.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
@@ -86,50 +86,17 @@
             this.cServiceIsDelayed,
             this.cServiceObjectName});
       this.dgvServices.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dgvServices.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
       this.dgvServices.Location = new System.Drawing.Point(203, 3);
+      this.dgvServices.MultiSelect = false;
       this.dgvServices.Name = "dgvServices";
       this.dgvServices.ReadOnly = true;
+      this.dgvServices.RowHeadersVisible = false;
+      this.dgvServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
       this.dgvServices.Size = new System.Drawing.Size(1056, 392);
       this.dgvServices.TabIndex = 1;
-      // 
-      // pControls
-      // 
-      this.pControls.Controls.Add(this.btServicesRefresh);
-      this.pControls.Dock = System.Windows.Forms.DockStyle.Left;
-      this.pControls.Location = new System.Drawing.Point(3, 3);
-      this.pControls.Name = "pControls";
-      this.pControls.Size = new System.Drawing.Size(200, 392);
-      this.pControls.TabIndex = 0;
-      // 
-      // btServicesRefresh
-      // 
-      this.btServicesRefresh.Location = new System.Drawing.Point(3, 3);
-      this.btServicesRefresh.Name = "btServicesRefresh";
-      this.btServicesRefresh.Size = new System.Drawing.Size(191, 23);
-      this.btServicesRefresh.TabIndex = 0;
-      this.btServicesRefresh.Text = "Load / Refresh";
-      this.btServicesRefresh.UseVisualStyleBackColor = true;
-      this.btServicesRefresh.Click += new System.EventHandler(this.btServicesRefresh_Click);
-      // 
-      // tabPage2
-      // 
-      this.tabPage2.Location = new System.Drawing.Point(4, 22);
-      this.tabPage2.Name = "tabPage2";
-      this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(1262, 398);
-      this.tabPage2.TabIndex = 1;
-      this.tabPage2.Text = "tabPage2";
-      this.tabPage2.UseVisualStyleBackColor = true;
-      // 
-      // tabPage3
-      // 
-      this.tabPage3.Location = new System.Drawing.Point(4, 22);
-      this.tabPage3.Name = "tabPage3";
-      this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage3.Size = new System.Drawing.Size(1262, 398);
-      this.tabPage3.TabIndex = 2;
-      this.tabPage3.Text = "tabPage3";
-      this.tabPage3.UseVisualStyleBackColor = true;
+      this.dgvServices.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvServices_CellDoubleClick);
+      this.dgvServices.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvServices_KeyPress);
       // 
       // cServiceDisplayName
       // 
@@ -181,6 +148,45 @@
       this.cServiceObjectName.HeaderText = "Log On As";
       this.cServiceObjectName.Name = "cServiceObjectName";
       this.cServiceObjectName.ReadOnly = true;
+      // 
+      // pControls
+      // 
+      this.pControls.Controls.Add(this.btServicesRefresh);
+      this.pControls.Dock = System.Windows.Forms.DockStyle.Left;
+      this.pControls.Location = new System.Drawing.Point(3, 3);
+      this.pControls.Name = "pControls";
+      this.pControls.Size = new System.Drawing.Size(200, 392);
+      this.pControls.TabIndex = 0;
+      // 
+      // btServicesRefresh
+      // 
+      this.btServicesRefresh.Location = new System.Drawing.Point(3, 3);
+      this.btServicesRefresh.Name = "btServicesRefresh";
+      this.btServicesRefresh.Size = new System.Drawing.Size(191, 23);
+      this.btServicesRefresh.TabIndex = 0;
+      this.btServicesRefresh.Text = "Load / Refresh";
+      this.btServicesRefresh.UseVisualStyleBackColor = true;
+      this.btServicesRefresh.Click += new System.EventHandler(this.btServicesRefresh_Click);
+      // 
+      // tabPage2
+      // 
+      this.tabPage2.Location = new System.Drawing.Point(4, 22);
+      this.tabPage2.Name = "tabPage2";
+      this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPage2.Size = new System.Drawing.Size(1262, 398);
+      this.tabPage2.TabIndex = 1;
+      this.tabPage2.Text = "tabPage2";
+      this.tabPage2.UseVisualStyleBackColor = true;
+      // 
+      // tabPage3
+      // 
+      this.tabPage3.Location = new System.Drawing.Point(4, 22);
+      this.tabPage3.Name = "tabPage3";
+      this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPage3.Size = new System.Drawing.Size(1262, 398);
+      this.tabPage3.TabIndex = 2;
+      this.tabPage3.Text = "tabPage3";
+      this.tabPage3.UseVisualStyleBackColor = true;
       // 
       // TasksTabView
       // 

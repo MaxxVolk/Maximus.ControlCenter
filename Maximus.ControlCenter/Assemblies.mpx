@@ -2,7 +2,7 @@
   <Resources>
     <Assembly ID="Maximus.ControlCenter.UI.Control.Assembly" Accessibility="Public" HasNullStream="false"
               FileName="Maximus.ControlCenter.UI.Control.dll"
-              QualifiedName="Maximus.ControlCenter.UI.Control, Version=1.0.0.38, Culture=neutral, PublicKeyToken=fd5098a6a3259696">
+              QualifiedName="Maximus.ControlCenter.UI.Control, Version=1.0.0.45, Culture=neutral, PublicKeyToken=fd5098a6a3259696">
       <Dependency ID="MBL!Maximus.Base.Library.Console.Assembly"/>
     </Assembly>
     <DeployableAssembly ID="Maximus.ControlCenter.Tasks.Module.DeployableAssembly" Accessibility="Public" HasNullStream="false"

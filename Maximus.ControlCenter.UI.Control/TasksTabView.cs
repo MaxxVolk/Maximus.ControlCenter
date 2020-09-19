@@ -17,6 +17,8 @@ using System.IO;
 using System.Xml;
 using Maximus.ControlCenter.Tasks.Module.Services;
 using Maximus.Library.SCOMId;
+using Microsoft.EnterpriseManagement.ConsoleFramework.Input;
+using Maximus.ControlCenter.UI.Control.Dialogs;
 
 namespace Maximus.ControlCenter.UI.Control
 {
@@ -24,8 +26,7 @@ namespace Maximus.ControlCenter.UI.Control
   {
     private ManagementPackClass healthServiceClass = null;
     private string currentSelectedObjectName = "";
-    private EnterpriseManagementObject ManagementObject;
-
+    public EnterpriseManagementObject ManagementObject;
 
     public TasksTabView() : base()
     {
@@ -135,18 +136,23 @@ namespace Maximus.ControlCenter.UI.Control
         {
           if (IsTaskStatusFinite(result.Status))
           {
-            StringReader stringReader = new StringReader(result.Output);
-            XmlReader xmlReader = XmlReader.Create(stringReader);
-            if (result.Status == Microsoft.EnterpriseManagement.Runtime.TaskStatus.Succeeded || result.Status == Microsoft.EnterpriseManagement.Runtime.TaskStatus.CompletedWithInfo)
+            using (StringReader stringReader = new StringReader(result.Output))
             {
-              if (xmlReader.Read() && xmlReader.ReadToDescendant("ServiceList"))
+              using (XmlReader xmlReader = XmlReader.Create(stringReader))
               {
-                ServiceListDataItem serviceListResult = new ServiceListDataItem(xmlReader.ReadSubtree());
-                if (serviceListResult.Data.ErrorCode == 0)
+                if (result.Status == Microsoft.EnterpriseManagement.Runtime.TaskStatus.Succeeded || result.Status == Microsoft.EnterpriseManagement.Runtime.TaskStatus.CompletedWithInfo)
                 {
-                  DataTable table = PrepareServiceTable(serviceListResult);
-                  BindingSource bs = new BindingSource() { DataSource = table };
-                  dgvServices.DataSource = bs;
+                  if (xmlReader.Read() && xmlReader.ReadToDescendant("ServiceList"))
+                  {
+                    ServiceListDataItem serviceListResult = new ServiceListDataItem(xmlReader.ReadSubtree());
+                    if (serviceListResult.Data.ErrorCode == 0)
+                    {
+                      DataTable table = PrepareServiceTable(serviceListResult);
+                      BindingSource bs = new BindingSource() { DataSource = table };
+                      dgvServices.DataSource = bs;
+                      dgvServices.Sort(cServiceDisplayName, ListSortDirection.Ascending);
+                    }
+                  }
                 }
               }
             }
@@ -206,6 +212,34 @@ namespace Maximus.ControlCenter.UI.Control
         case 4: return "Disabled";
       }
       return "#####";
+    }
+
+    private void dgvServices_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      if (e.KeyChar == (char)13)
+      {
+        e.Handled = true;
+        ShowServiceDetails((DataRowView)dgvServices.CurrentRow.DataBoundItem);
+      }
+
+    }
+
+    private void dgvServices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+      if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+      {
+        ShowServiceDetails((DataRowView)dgvServices.Rows[e.RowIndex].DataBoundItem);
+      }
+    }
+
+    private void ShowServiceDetails(DataRowView dataItem)
+    {
+      using (ServicePropertiesForm servicePropertiesForm = new ServicePropertiesForm())
+      {
+        servicePropertiesForm.InputData = dataItem;
+        servicePropertiesForm.ParentTabView = this;
+        servicePropertiesForm.ShowDialog();
+      }
     }
   }
 }

@@ -69,6 +69,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -101,6 +102,13 @@
     </Compile>
     <Compile Include="ControlCenter.Personalization.cs" />
     <Compile Include="Dbg.cs" />
+    <Compile Include="Dialogs\ServiceProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ServiceProperties.Designer.cs">
+      <DependentUpon>ServiceProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnumWithDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TasksTabView.ManagementPackTask.cs">
       <SubType>UserControl</SubType>
@@ -118,6 +126,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ControlCenter.resx">
       <DependentUpon>ControlCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ServiceProperties.resx">
+      <DependentUpon>ServiceProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TasksTabView.resx">
       <DependentUpon>TasksTabView.cs</DependentUpon>
