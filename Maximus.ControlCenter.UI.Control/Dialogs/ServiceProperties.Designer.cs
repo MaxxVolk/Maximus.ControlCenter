@@ -28,8 +28,8 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Refresh Service to list parameters.");
-      this.tabControl1 = new System.Windows.Forms.TabControl();
+      System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Refresh Service to list parameters.");
+      this.tcServiceInfo = new System.Windows.Forms.TabControl();
       this.tpGeneral = new System.Windows.Forms.TabPage();
       this.tpLogOn = new System.Windows.Forms.TabPage();
       this.tpDependencies = new System.Windows.Forms.TabPage();
@@ -71,7 +71,11 @@
       this.chValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.label8 = new System.Windows.Forms.Label();
       this.tbClusterNode = new System.Windows.Forms.TextBox();
-      this.tabControl1.SuspendLayout();
+      this.textBox1 = new System.Windows.Forms.TextBox();
+      this.label9 = new System.Windows.Forms.Label();
+      this.label10 = new System.Windows.Forms.Label();
+      this.textBox2 = new System.Windows.Forms.TextBox();
+      this.tcServiceInfo.SuspendLayout();
       this.tpGeneral.SuspendLayout();
       this.tpLogOn.SuspendLayout();
       this.tpDependencies.SuspendLayout();
@@ -79,18 +83,18 @@
       this.tpCluster.SuspendLayout();
       this.SuspendLayout();
       // 
-      // tabControl1
+      // tcServiceInfo
       // 
-      this.tabControl1.Controls.Add(this.tpGeneral);
-      this.tabControl1.Controls.Add(this.tpLogOn);
-      this.tabControl1.Controls.Add(this.tpDependencies);
-      this.tabControl1.Controls.Add(this.tpParameters);
-      this.tabControl1.Controls.Add(this.tpCluster);
-      this.tabControl1.Location = new System.Drawing.Point(12, 12);
-      this.tabControl1.Name = "tabControl1";
-      this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(426, 326);
-      this.tabControl1.TabIndex = 0;
+      this.tcServiceInfo.Controls.Add(this.tpGeneral);
+      this.tcServiceInfo.Controls.Add(this.tpLogOn);
+      this.tcServiceInfo.Controls.Add(this.tpDependencies);
+      this.tcServiceInfo.Controls.Add(this.tpParameters);
+      this.tcServiceInfo.Controls.Add(this.tpCluster);
+      this.tcServiceInfo.Location = new System.Drawing.Point(12, 12);
+      this.tcServiceInfo.Name = "tcServiceInfo";
+      this.tcServiceInfo.SelectedIndex = 0;
+      this.tcServiceInfo.Size = new System.Drawing.Size(426, 326);
+      this.tcServiceInfo.TabIndex = 0;
       // 
       // tpGeneral
       // 
@@ -124,6 +128,10 @@
       // 
       // tpLogOn
       // 
+      this.tpLogOn.Controls.Add(this.textBox2);
+      this.tpLogOn.Controls.Add(this.label10);
+      this.tpLogOn.Controls.Add(this.label9);
+      this.tpLogOn.Controls.Add(this.textBox1);
       this.tpLogOn.Controls.Add(this.tbObjectName);
       this.tpLogOn.Controls.Add(this.lLogOnAs);
       this.tpLogOn.Location = new System.Drawing.Point(4, 22);
@@ -150,15 +158,18 @@
       // 
       // btApply
       // 
+      this.btApply.Enabled = false;
       this.btApply.Location = new System.Drawing.Point(339, 344);
       this.btApply.Name = "btApply";
       this.btApply.Size = new System.Drawing.Size(95, 23);
       this.btApply.TabIndex = 1;
       this.btApply.Text = "Apply";
       this.btApply.UseVisualStyleBackColor = true;
+      this.btApply.Click += new System.EventHandler(this.btApply_Click);
       // 
       // btOK
       // 
+      this.btOK.DialogResult = System.Windows.Forms.DialogResult.OK;
       this.btOK.Location = new System.Drawing.Point(137, 344);
       this.btOK.Name = "btOK";
       this.btOK.Size = new System.Drawing.Size(95, 23);
@@ -168,6 +179,7 @@
       // 
       // btCancel
       // 
+      this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
       this.btCancel.Location = new System.Drawing.Point(238, 344);
       this.btCancel.Name = "btCancel";
       this.btCancel.Size = new System.Drawing.Size(95, 23);
@@ -231,6 +243,7 @@
       this.cbStartupType.Size = new System.Drawing.Size(311, 21);
       this.cbStartupType.TabIndex = 5;
       this.cbStartupType.ValueMember = "NativeValue";
+      this.cbStartupType.SelectionChangeCommitted += new System.EventHandler(this.cbStartupType_SelectionChangeCommitted);
       // 
       // label1
       // 
@@ -276,6 +289,7 @@
       this.btStart.TabIndex = 10;
       this.btStart.Text = "Start";
       this.btStart.UseVisualStyleBackColor = true;
+      this.btStart.Click += new System.EventHandler(this.btStart_Click);
       // 
       // btStop
       // 
@@ -285,6 +299,7 @@
       this.btStop.TabIndex = 11;
       this.btStop.Text = "Stop";
       this.btStop.UseVisualStyleBackColor = true;
+      this.btStop.Click += new System.EventHandler(this.btStop_Click);
       // 
       // btRefresh
       // 
@@ -304,6 +319,7 @@
       this.btPause.TabIndex = 13;
       this.btPause.Text = "Pause";
       this.btPause.UseVisualStyleBackColor = true;
+      this.btPause.Click += new System.EventHandler(this.btPause_Click);
       // 
       // btResume
       // 
@@ -313,6 +329,7 @@
       this.btResume.TabIndex = 14;
       this.btResume.Text = "Resume";
       this.btResume.UseVisualStyleBackColor = true;
+      this.btResume.Click += new System.EventHandler(this.btResume_Click);
       // 
       // label2
       // 
@@ -336,6 +353,7 @@
       // 
       // cbDelayed
       // 
+      this.cbDelayed.AutoCheck = false;
       this.cbDelayed.AutoSize = true;
       this.cbDelayed.Location = new System.Drawing.Point(96, 170);
       this.cbDelayed.Name = "cbDelayed";
@@ -346,6 +364,7 @@
       // 
       // cbTriggerStart
       // 
+      this.cbTriggerStart.AutoCheck = false;
       this.cbTriggerStart.AutoSize = true;
       this.cbTriggerStart.Location = new System.Drawing.Point(193, 170);
       this.cbTriggerStart.Name = "cbTriggerStart";
@@ -373,11 +392,9 @@
       // 
       // tbObjectName
       // 
-      this.tbObjectName.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.tbObjectName.Location = new System.Drawing.Point(69, 12);
       this.tbObjectName.Name = "tbObjectName";
-      this.tbObjectName.ReadOnly = true;
-      this.tbObjectName.Size = new System.Drawing.Size(343, 13);
+      this.tbObjectName.Size = new System.Drawing.Size(343, 20);
       this.tbObjectName.TabIndex = 2;
       // 
       // label5
@@ -453,7 +470,7 @@
       this.lvParameters.GridLines = true;
       this.lvParameters.HideSelection = false;
       this.lvParameters.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem10});
       this.lvParameters.Location = new System.Drawing.Point(3, 3);
       this.lvParameters.Name = "lvParameters";
       this.lvParameters.Size = new System.Drawing.Size(412, 294);
@@ -494,6 +511,40 @@
       this.tbClusterNode.Size = new System.Drawing.Size(331, 13);
       this.tbClusterNode.TabIndex = 1;
       // 
+      // textBox1
+      // 
+      this.textBox1.Location = new System.Drawing.Point(105, 38);
+      this.textBox1.Name = "textBox1";
+      this.textBox1.PasswordChar = '*';
+      this.textBox1.Size = new System.Drawing.Size(307, 20);
+      this.textBox1.TabIndex = 3;
+      // 
+      // label9
+      // 
+      this.label9.AutoSize = true;
+      this.label9.Location = new System.Drawing.Point(6, 41);
+      this.label9.Name = "label9";
+      this.label9.Size = new System.Drawing.Size(56, 13);
+      this.label9.TabIndex = 4;
+      this.label9.Text = "Password:";
+      // 
+      // label10
+      // 
+      this.label10.AutoSize = true;
+      this.label10.Location = new System.Drawing.Point(6, 67);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(93, 13);
+      this.label10.TabIndex = 5;
+      this.label10.Text = "Confirm password:";
+      // 
+      // textBox2
+      // 
+      this.textBox2.Location = new System.Drawing.Point(105, 64);
+      this.textBox2.Name = "textBox2";
+      this.textBox2.PasswordChar = '*';
+      this.textBox2.Size = new System.Drawing.Size(307, 20);
+      this.textBox2.TabIndex = 6;
+      // 
       // ServicePropertiesForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,7 +553,7 @@
       this.Controls.Add(this.btCancel);
       this.Controls.Add(this.btOK);
       this.Controls.Add(this.btApply);
-      this.Controls.Add(this.tabControl1);
+      this.Controls.Add(this.tcServiceInfo);
       this.Controls.Add(this.btRefresh);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
@@ -510,8 +561,9 @@
       this.Name = "ServicePropertiesForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "ServiceProperties";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ServicePropertiesForm_FormClosed);
       this.Load += new System.EventHandler(this.ServicePropertiesForm_Load);
-      this.tabControl1.ResumeLayout(false);
+      this.tcServiceInfo.ResumeLayout(false);
       this.tpGeneral.ResumeLayout(false);
       this.tpGeneral.PerformLayout();
       this.tpLogOn.ResumeLayout(false);
@@ -527,7 +579,7 @@
 
     #endregion
 
-    private System.Windows.Forms.TabControl tabControl1;
+    private System.Windows.Forms.TabControl tcServiceInfo;
     private System.Windows.Forms.TabPage tpGeneral;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Button btResume;
@@ -569,5 +621,9 @@
     private System.Windows.Forms.ColumnHeader chValue;
     private System.Windows.Forms.TextBox tbClusterNode;
     private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.TextBox textBox2;
+    private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.Label label9;
+    private System.Windows.Forms.TextBox textBox1;
   }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
@@ -161,8 +162,18 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
       object dependOnServiceValue = serviceKey.GetValue("DependOnService");
       newInstance.DependOnService = dependOnServiceValue == null ? null : (string[])dependOnServiceValue;
 
-      object descriptionValue = serviceKey.GetValue("Description");
-      newInstance.Description = "";
+      try
+      {
+        StringBuilder outBuf = new StringBuilder(512);
+        if (Win32Helper.RegLoadMUIStringW(serviceObject.ServiceHandle.DangerousGetHandle(), "Description", outBuf, 512, out uint outSize, 0, null) == 0)
+          newInstance.Description = outBuf.ToString();
+        else
+          newInstance.Description = $"Failed to get description: {Marshal.GetLastWin32Error()}";
+      }
+      catch (Exception e)
+      {
+        newInstance.Description = $"Failed to get description: {e.Message}";
+      }
 
       object imagePathValue = serviceKey.GetValue("ImagePath");
       newInstance.ImagePath = imagePathValue == null ? null : Environment.ExpandEnvironmentVariables((string)imagePathValue);

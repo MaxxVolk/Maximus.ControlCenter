@@ -18,10 +18,17 @@ using Microsoft.EnterpriseManagement.Runtime;
 
 namespace Maximus.ControlCenter.UI.Control.Dialogs
 {
+  public enum ActionCodeEnum { Start = 1, Stop = 2, Pause = 3, Resume = 4, Command = 5 }
+
   public partial class ServicePropertiesForm : Form
   {
     public DataRowView InputData { private get; set; }
     public TasksTabView ParentTabView { private get; set; }
+
+    // configuration change
+    private bool StartupTypeChanged = false, LogOnNameChanged = false, LogOnPasswordChanged = false;
+    private ServiceStartMode NewServiceStartMode;
+    private string NewLogOnName = "", NewLogOnPassword = "";
 
     public ServicePropertiesForm()
     {
@@ -87,7 +94,7 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
 
       ServiceStartMode serviceStartMode = (ServiceStartMode)serviceInfo.Start;
       for (int newSE = 0; newSE < cbStartupType.Items.Count; newSE++)
-        if ((ServiceStartMode)(((EnumWithDescription<ServiceStartMode>)cbStartupType.Items[newSE]).NativeValue) == serviceStartMode)
+        if ((ServiceStartMode)((EnumWithDescription<ServiceStartMode>)cbStartupType.Items[newSE]).NativeValue == serviceStartMode)
           cbStartupType.SelectedIndex = newSE;
 
       lvParameters.Items.Clear();
@@ -96,6 +103,87 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
         {
           lvParameters.Items.Add(new ListViewItem(new string[] { param.Name, param.RegType, param.Data.ToString() }));
         }
+    }
+
+    private void btApply_Click(object sender, EventArgs e)
+    {
+      ApplyChanges();
+    }
+
+    private void ServicePropertiesForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      if (e.CloseReason == CloseReason.UserClosing && DialogResult == DialogResult.OK)
+      {
+        ApplyChanges();
+      }
+    }
+
+    private void ApplyChanges()
+    {
+      // TODO: Implement
+    }
+
+    private void btStart_Click(object sender, EventArgs e)
+    {
+      ExecuteControl(ActionCodeEnum.Start);
+    }
+
+    private void ExecuteControl(ActionCodeEnum action)
+    {
+      lStatus.Text = "Unknown. Click 'Refresh' to update.";
+      btStop.Enabled = false;
+      btStart.Enabled = false;
+      btPause.Enabled = false;
+      btResume.Enabled = false;
+      ParentTabView.SubmitTask(ParentTabView.ControlServiceTaskId, ParentTabView.ManagementObject, new Dictionary<string, string>
+      {
+        { "QueryService", ((ServiceInfo)InputData["SourceObject"]).Name },
+        { "ActionCode", ((int)action).ToString() }
+      }, new OnTaskStatusChangeDelegate(OnServiceControl));
+    }
+
+    private void OnServiceControl(IList<TaskResult> results, bool lastUpdate)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
+
+      foreach (Microsoft.EnterpriseManagement.Runtime.TaskResult result in results)
+        try
+        {
+          if (result.Status == Microsoft.EnterpriseManagement.Runtime.TaskStatus.Succeeded || result.Status == Microsoft.EnterpriseManagement.Runtime.TaskStatus.CompletedWithInfo)
+            using (StringReader stringReader = new StringReader(result.Output))
+            {
+              using (XmlReader xmlReader = XmlReader.Create(stringReader))
+              {
+                //if (xmlReader.Read() && xmlReader.ReadToDescendant("ServiceList"))
+                //{
+                //  ServiceListDataItem serviceListResult = new propertybagdataitem(xmlReader.ReadSubtree());
+                //  if (serviceListResult.Data.ErrorCode == 0)
+                //  {
+                //    ShowServiceInfo(serviceListResult.Data.Services[0]);
+                //  }
+                //}
+              }
+            }
+        }
+        catch (Exception e)
+        {
+          Dbg.Log($"Exception {e.Message} in {MethodBase.GetCurrentMethod().Name}");
+        }
+    }
+
+    private void btStop_Click(object sender, EventArgs e)
+    {
+      ExecuteControl(ActionCodeEnum.Stop);
+    }
+
+    private void btPause_Click(object sender, EventArgs e)
+    {
+      ExecuteControl(ActionCodeEnum.Pause);
+    }
+
+    private void btResume_Click(object sender, EventArgs e)
+    {
+      ExecuteControl(ActionCodeEnum.Resume);
     }
 
     private void btRefresh_Click(object sender, EventArgs e)
@@ -134,6 +222,15 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
         {
           Dbg.Log($"Exception {e.Message} in {MethodBase.GetCurrentMethod().Name}");
         }
+    }
+
+    private void cbStartupType_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+      if (cbStartupType.SelectedIndex >= 0)
+      {
+        StartupTypeChanged = true;
+        NewServiceStartMode = (ServiceStartMode)((EnumWithDescription<ServiceStartMode>)cbStartupType.Items[cbStartupType.SelectedIndex]).NativeValue;
+      }
     }
   }
 }

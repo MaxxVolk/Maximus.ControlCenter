@@ -43,7 +43,7 @@ namespace Maximus.ControlCenter.UI.Control
       Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
       base.OnLoad(e);
 
-      GetTaskObjects();
+      GetTaskObjects(QueryServiceListTaskId);
       EnableTaskControls();
     }
 

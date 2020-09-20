@@ -21,7 +21,65 @@
         <OutputType>Maximus.ControlCenter.ServiceListDataItem</OutputType>
         <InputType>System!System.BaseData</InputType>
       </ProbeActionModuleType>
-      
+
+      <!-- Maximus.ControlCenter.ControlService.ProbeAction -->
+      <WriteActionModuleType ID="Maximus.ControlCenter.ControlService.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="QueryService" minOccurs="1" type="xsd:string"/>
+          <xsd:element name="ActionCode" minOccurs="1" type="xsd:integer"/>
+          <xsd:element name="CommandId" minOccurs="0" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="QueryService" Selector="$Config/QueryService$" ParameterType="string" />
+          <OverrideableParameter ID="ActionCode" Selector="$Config/ActionCode$" ParameterType="int" />
+          <OverrideableParameter ID="CommandId" Selector="$Config/CommandId$" ParameterType="int" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Services.ControlServicePA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </WriteActionModuleType>
+
+      <!-- Maximus.ControlCenter.ConfigureService.ProbeAction -->
+      <WriteActionModuleType ID="Maximus.ControlCenter.ConfigureService.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="QueryService" minOccurs="1" type="xsd:string"/>
+          <xsd:element name="ServiceType" minOccurs="0" type="xsd:integer"/>
+          <xsd:element name="StartType" minOccurs="0" type="xsd:integer"/>
+          <xsd:element name="ErrorControl" minOccurs="0" type="xsd:integer"/>
+          <xsd:element name="BinaryPathName" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="LoadOrderGroup" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="Dependencies" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="ServiceStartName" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="Password" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="DisplayName" minOccurs="0" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="QueryService" Selector="$Config/QueryService$" ParameterType="string" />
+          <OverrideableParameter ID="ServiceType" Selector="$Config/ServiceType$" ParameterType="int" />
+          <OverrideableParameter ID="StartType" Selector="$Config/StartType$" ParameterType="int" />
+          <OverrideableParameter ID="ErrorControl" Selector="$Config/ErrorControl$" ParameterType="int" />
+          <OverrideableParameter ID="BinaryPathName" Selector="$Config/BinaryPathName$" ParameterType="string" />
+          <OverrideableParameter ID="LoadOrderGroup" Selector="$Config/LoadOrderGroup$" ParameterType="string" />
+          <OverrideableParameter ID="Dependencies" Selector="$Config/Dependencies$" ParameterType="string" />
+          <OverrideableParameter ID="ServiceStartName" Selector="$Config/ServiceStartName$" ParameterType="string" />
+          <OverrideableParameter ID="Password" Selector="$Config/Password$" ParameterType="string" />
+          <OverrideableParameter ID="DisplayName" Selector="$Config/DisplayName$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Services.ConfigureServicePA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </WriteActionModuleType>
+
     </ModuleTypes>
   </TypeDefinitions>
 </ManagementPackFragment>

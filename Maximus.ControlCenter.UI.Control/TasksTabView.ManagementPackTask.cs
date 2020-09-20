@@ -15,19 +15,20 @@ namespace Maximus.ControlCenter.UI.Control
   public partial class TasksTabView
   {
     public readonly Guid QueryServiceListTaskId = Guid.Parse("947db33d-74a9-cc0a-d28c-9c8c65cd33c4");
+    public readonly Guid ControlServiceTaskId = Guid.Parse("84c9e107-8d5b-6936-25a6-177fb2d563cd");
+    public readonly Guid ConfigureServiceTaskId = Guid.Parse("86389e6b-2f7b-6604-1865-ca4a521b773a");
 
     private readonly Dictionary<Guid, ManagementPackTaskInfo> MPTasks = new Dictionary<Guid, ManagementPackTaskInfo>(20);
 
-    private void GetTaskObjects()
+    private void GetTaskObjects(Guid taskId)
     {
       Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
 
-      // Maximus.ControlCenter.QueryServiceList.Task
       try
       {
-        MPTasks[QueryServiceListTaskId] = new ManagementPackTaskInfo { ManagementPackTask = ManagementGroup.TaskConfiguration.GetTask(QueryServiceListTaskId) };
-        foreach (ManagementPackOverrideableParameter param in MPTasks[QueryServiceListTaskId].ManagementPackTask.GetOverrideableParameters())
-          MPTasks[QueryServiceListTaskId].OverrideableParameters.Add(key: param.Name, param);
+        MPTasks[taskId] = new ManagementPackTaskInfo { ManagementPackTask = ManagementGroup.TaskConfiguration.GetTask(taskId) };
+        foreach (ManagementPackOverrideableParameter param in MPTasks[taskId].ManagementPackTask.GetOverrideableParameters())
+          MPTasks[taskId].OverrideableParameters.Add(key: param.Name, param);
       }
       catch
       {
@@ -47,12 +48,17 @@ namespace Maximus.ControlCenter.UI.Control
     {
       Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
 
-      Microsoft.EnterpriseManagement.Runtime.TaskConfiguration taskParams = new Microsoft.EnterpriseManagement.Runtime.TaskConfiguration();
-      if (taskParameters != null)
-        foreach (KeyValuePair<string, string> paramPair in taskParameters)
-          taskParams.Overrides.Add(new Pair<ManagementPackOverrideableParameter, string>(MPTasks[taskId].OverrideableParameters[paramPair.Key], paramPair.Value));
-      Guid batchId = ManagementGroup.TaskRuntime.SubmitTask(mo, MPTasks[taskId].ManagementPackTask, taskParams, new Microsoft.EnterpriseManagement.Runtime.TaskStatusChangeCallback(OnTaskStatusChange));
-      MPTasks[taskId].TaskCallbacks.Add(batchId, statusChangeCallback);
+      if (!MPTasks.ContainsKey(taskId))
+        GetTaskObjects(taskId);
+      if (MPTasks.ContainsKey(taskId))
+      {
+        Microsoft.EnterpriseManagement.Runtime.TaskConfiguration taskParams = new Microsoft.EnterpriseManagement.Runtime.TaskConfiguration();
+        if (taskParameters != null)
+          foreach (KeyValuePair<string, string> paramPair in taskParameters)
+            taskParams.Overrides.Add(new Pair<ManagementPackOverrideableParameter, string>(MPTasks[taskId].OverrideableParameters[paramPair.Key], paramPair.Value));
+        Guid batchId = ManagementGroup.TaskRuntime.SubmitTask(mo, MPTasks[taskId].ManagementPackTask, taskParams, new Microsoft.EnterpriseManagement.Runtime.TaskStatusChangeCallback(OnTaskStatusChange));
+        MPTasks[taskId].TaskCallbacks.Add(batchId, statusChangeCallback);
+      }
     }
 
     private void OnTaskStatusChange(Guid batchId, IList<Microsoft.EnterpriseManagement.Runtime.TaskResult> results, bool completed)

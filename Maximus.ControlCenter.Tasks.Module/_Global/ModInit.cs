@@ -25,6 +25,8 @@ namespace Maximus.ControlCenter.Tasks.Module.Global
     static internal LoggingHelper Logger => _Logger ?? (_Logger = new LoggingHelper(LogSourceName, LogBaseEventId, EventLoggingLevel.Verbose));
 
     internal const int evtId_QueryServiceListPA = 0;
+    internal const int evtId_ControlServicePA = 1;
+    internal const int evtId_ConfigureServicePA = 2;
 
     internal static void ModuleErrorSignalReceiver(ModuleErrorSeverity severity, ModuleErrorCriticality criticality, Exception e, string message, object callerInstance)
     {

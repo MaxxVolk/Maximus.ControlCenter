@@ -3,8 +3,27 @@
     <Instance ID="Instance20404dd4788c4b2a8acaf4580df22fc9" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
       <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <Accessibility>Internal</Accessibility>
+        <Id>ConfigureService.Task</Id>
+        <DisplayName>Configure Service (Automation)</DisplayName>
+        <Description>Configures a service.</Description>
+        <Target>SC!Microsoft.SystemCenter.HealthService</Target>
+        <Enabled>true</Enabled>
+        <Category>Maintenance</Category>
+        <Timeout>300</Timeout>
+        <Remotable>true</Remotable>
+        <ProbeActionId>PA</ProbeActionId>
+        <ProbeActionConfig>&lt;QueryParameters&gt;false&lt;/QueryParameters&gt;&lt;QueryService /&gt;</ProbeActionConfig>
+        <ProbeActionType />
+        <WriteActionId>WA_ConfigureService</WriteActionId>
+        <WriteActionConfig>&lt;QueryService&gt;&lt;/QueryService&gt;</WriteActionConfig>
+        <WriteActionType>Maximus.ControlCenter.ConfigureService.ProbeAction</WriteActionType>
+      </CustomTaskConfig>
+    </Instance>
+    <Instance ID="Instancec48f66cd0519463abd62e40f29738fe9" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
+      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Accessibility>Internal</Accessibility>
         <Id>QueryServiceList.Task</Id>
-        <DisplayName>Query Service List</DisplayName>
+        <DisplayName>Query Service List (Automation)</DisplayName>
         <Description>Get list of locas Services.</Description>
         <Target>SC!Microsoft.SystemCenter.HealthService</Target>
         <Enabled>true</Enabled>
@@ -15,6 +34,25 @@
         <ProbeActionConfig>&lt;QueryParameters&gt;false&lt;/QueryParameters&gt;&lt;QueryService /&gt;</ProbeActionConfig>
         <ProbeActionType>Maximus.ControlCenter.QueryServiceList.ProbeAction</ProbeActionType>
         <WriteActionId>WA</WriteActionId>
+      </CustomTaskConfig>
+    </Instance>
+    <Instance ID="Instanceb55b0df3e61849dea75e728ead155b7c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
+      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Accessibility>Internal</Accessibility>
+        <Id>ControlService.Task</Id>
+        <DisplayName>Control Service (Automation)</DisplayName>
+        <Description>Controls a service.</Description>
+        <Target>SC!Microsoft.SystemCenter.HealthService</Target>
+        <Enabled>true</Enabled>
+        <Category>Maintenance</Category>
+        <Timeout>300</Timeout>
+        <Remotable>true</Remotable>
+        <ProbeActionId>PA</ProbeActionId>
+        <ProbeActionConfig>&lt;QueryParameters&gt;false&lt;/QueryParameters&gt;&lt;QueryService /&gt;</ProbeActionConfig>
+        <ProbeActionType />
+        <WriteActionId>WA_ControlService</WriteActionId>
+        <WriteActionConfig>&lt;QueryService&gt;&lt;/QueryService&gt;&lt;ActionCode&gt;0&lt;/ActionCode&gt;</WriteActionConfig>
+        <WriteActionType>Maximus.ControlCenter.ControlService.ProbeAction</WriteActionType>
       </CustomTaskConfig>
     </Instance>
   </Instances>
