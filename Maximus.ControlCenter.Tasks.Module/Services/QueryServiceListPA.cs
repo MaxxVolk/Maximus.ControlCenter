@@ -147,48 +147,53 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
 
     private void FillServiceValuesFromRegistry(ServiceInfo newInstance, ServiceController serviceObject, bool queryParameters)
     {
-      RegistryKey registry = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-      RegistryKey serviceKey = registry.OpenSubKey($"SYSTEM\\CurrentControlSet\\Services\\{serviceObject.ServiceName}");
-
-      object delayedAutostartValue = supportDelayedStart ? serviceKey.GetValue("DelayedAutostart") : null;
-      newInstance.IsDelayed = supportDelayedStart && delayedAutostartValue != null && (int)delayedAutostartValue == 1;
-
-      RegistryKey triggerKey = supportDelayedStart ? serviceKey.OpenSubKey("TriggerInfo") : null;
-      newInstance.IsTriggered = supportDelayedStart && (triggerKey?.SubKeyCount ?? -1) > 0;
-
-      object startValue = serviceKey.GetValue("Start");
-      newInstance.Start = startValue == null ? 4 : (int)startValue; // 4 => Disabled
-
-      object dependOnServiceValue = serviceKey.GetValue("DependOnService");
-      newInstance.DependOnService = dependOnServiceValue == null ? null : (string[])dependOnServiceValue;
-
-      try
+      using (RegistryKey registry = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
       {
-        StringBuilder outBuf = new StringBuilder(512);
-        if (Win32Helper.RegLoadMUIStringW(serviceObject.ServiceHandle.DangerousGetHandle(), "Description", outBuf, 512, out uint outSize, 0, null) == 0)
-          newInstance.Description = outBuf.ToString();
-        else
-          newInstance.Description = $"Failed to get description: {Marshal.GetLastWin32Error()}";
-      }
-      catch (Exception e)
-      {
-        newInstance.Description = $"Failed to get description: {e.Message}";
-      }
-
-      object imagePathValue = serviceKey.GetValue("ImagePath");
-      newInstance.ImagePath = imagePathValue == null ? null : Environment.ExpandEnvironmentVariables((string)imagePathValue);
-
-      object objectNameValue = serviceKey.GetValue("ObjectName");
-      newInstance.ObjectName = objectNameValue == null ? null : (string)objectNameValue;
-
-      if (queryParameters)
-      {
-        try
+        using (RegistryKey serviceKey = registry.OpenSubKey($"SYSTEM\\CurrentControlSet\\Services\\{serviceObject.ServiceName}"))
         {
-          RegistryKey paramsSubKey = serviceKey.OpenSubKey("Parameters");
-          EnumerateParameters(paramsSubKey, "", newInstance.Parameters);
+          object delayedAutostartValue = supportDelayedStart ? serviceKey.GetValue("DelayedAutostart") : null;
+          newInstance.IsDelayed = supportDelayedStart && delayedAutostartValue != null && (int)delayedAutostartValue == 1;
+
+          RegistryKey triggerKey = supportDelayedStart ? serviceKey.OpenSubKey("TriggerInfo") : null;
+          newInstance.IsTriggered = supportDelayedStart && (triggerKey?.SubKeyCount ?? -1) > 0;
+          triggerKey?.Dispose();
+
+          object startValue = serviceKey.GetValue("Start");
+          newInstance.Start = startValue == null ? 4 : (int)startValue; // 4 => Disabled
+
+          object dependOnServiceValue = serviceKey.GetValue("DependOnService");
+          newInstance.DependOnService = dependOnServiceValue == null ? null : (string[])dependOnServiceValue;
+
+          try
+          {
+            const int bufSize = 4096;
+            StringBuilder outBuf = new StringBuilder(bufSize);
+            if (Win32Helper.RegLoadMUIStringW(serviceKey.Handle.DangerousGetHandle(), "Description", outBuf, bufSize, out uint outSize, 0, null) == 0)
+              newInstance.Description = outBuf.ToString();
+            else
+              newInstance.Description = $"Failed to get description: {Marshal.GetLastWin32Error()}";
+          }
+          catch (Exception e)
+          {
+            newInstance.Description = $"Failed to get description: {e.Message}";
+          }
+
+          object imagePathValue = serviceKey.GetValue("ImagePath");
+          newInstance.ImagePath = imagePathValue == null ? null : Environment.ExpandEnvironmentVariables((string)imagePathValue);
+
+          object objectNameValue = serviceKey.GetValue("ObjectName");
+          newInstance.ObjectName = objectNameValue == null ? null : (string)objectNameValue;
+
+          if (queryParameters)
+          {
+            try
+            {
+              using (RegistryKey paramsSubKey = serviceKey.OpenSubKey("Parameters"))
+                EnumerateParameters(paramsSubKey, "", newInstance.Parameters);
+            }
+            catch { }
+          }
         }
-        catch { }
       }
     }
 
@@ -197,7 +202,8 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
       foreach (string paramName in rootKey.GetValueNames())
         destination.Add(new ServiceParameter { Name = string.IsNullOrEmpty(path) ? paramName : $"{path}\\{paramName}", Data = rootKey.GetValue(paramName), RegType = rootKey.GetValueKind(paramName).ToString() });
       foreach (string subKeyName in rootKey.GetSubKeyNames())
-        EnumerateParameters(rootKey.OpenSubKey(subKeyName), string.IsNullOrEmpty(path) ? subKeyName : $"{path}\\{subKeyName}", destination);
+        using (RegistryKey subKey = rootKey.OpenSubKey(subKeyName))
+          EnumerateParameters(subKey, string.IsNullOrEmpty(path) ? subKeyName : $"{path}\\{subKeyName}", destination);
     }
 
     protected override void LoadConfiguration(XmlDocument cfgDoc)

@@ -9,6 +9,22 @@
           <Type>Maximus.ControlCenter.Tasks.Module.Services.ServiceListDataItem</Type>
         </Implementation>
       </DataType>
+
+      <!-- Maximus.ControlCenter.EventListDataItem -->
+      <DataType ID="Maximus.ControlCenter.EventListDataItem" Base="System!System.BaseData" Accessibility="Public">
+        <Implementation>
+          <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+          <Type>Maximus.ControlCenter.Tasks.Module.Events.EventListDataItem</Type>
+        </Implementation>
+      </DataType>
+      
+      <!--  -->
+      <DataType ID="Maximus.ControlCenter.QuadrupleListDataItem" Base="System!System.BaseData" Accessibility="Public">
+        <Implementation>
+          <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+          <Type>Maximus.ControlCenter.Tasks.Module.QuadrupleListDataItem</Type>
+        </Implementation>
+      </DataType>
       
     </DataTypes>
   </TypeDefinitions>

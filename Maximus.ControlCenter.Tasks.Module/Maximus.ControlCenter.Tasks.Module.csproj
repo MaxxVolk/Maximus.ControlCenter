@@ -80,6 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\EventInfo.cs" />
+    <Compile Include="Events\EventList.cs" />
+    <Compile Include="Events\EventListDataItem.cs" />
+    <Compile Include="Events\ListEventLogsPA.cs" />
+    <Compile Include="Events\ReadEventLogPA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ClusteredServiceInfo.cs" />
     <Compile Include="Services\ConfigureServicePA.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="Services\ServiceList.cs" />
     <Compile Include="Services\ServiceListDataItem.cs" />
     <Compile Include="_Global\ModInit.cs" />
+    <Compile Include="_Global\QuadrupleListDataItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Maximus.snk" />

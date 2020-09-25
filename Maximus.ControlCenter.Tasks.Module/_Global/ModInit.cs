@@ -27,6 +27,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Global
     internal const int evtId_QueryServiceListPA = 0;
     internal const int evtId_ControlServicePA = 1;
     internal const int evtId_ConfigureServicePA = 2;
+    internal const int evtId_ReadEventLogPA = 3;
 
     internal static void ModuleErrorSignalReceiver(ModuleErrorSeverity severity, ModuleErrorCriticality criticality, Exception e, string message, object callerInstance)
     {

@@ -135,7 +135,7 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
       btStart.Enabled = false;
       btPause.Enabled = false;
       btResume.Enabled = false;
-      ParentTabView.SubmitTask(ParentTabView.ControlServiceTaskId, ParentTabView.ManagementObject, new Dictionary<string, string>
+      ParentTabView.SubmitTaskAsync(ParentTabView.ControlServiceTaskId, ParentTabView.ManagementObject, new Dictionary<string, string>
       {
         { "QueryService", ((ServiceInfo)InputData["SourceObject"]).Name },
         { "ActionCode", ((int)action).ToString() }
@@ -188,7 +188,7 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
 
     private void btRefresh_Click(object sender, EventArgs e)
     {
-      ParentTabView.SubmitTask(ParentTabView.QueryServiceListTaskId, ParentTabView.ManagementObject, new Dictionary<string, string>
+      ParentTabView.SubmitTaskAsync(ParentTabView.QueryServiceListTaskId, ParentTabView.ManagementObject, new Dictionary<string, string>
       {
         { "QueryParameters", true.ToString() },
         { "QueryService", ((ServiceInfo)InputData["SourceObject"]).Name }

@@ -21,6 +21,48 @@
         <OutputType>Maximus.ControlCenter.ServiceListDataItem</OutputType>
         <InputType>System!System.BaseData</InputType>
       </ProbeActionModuleType>
+      
+      <!-- Maximus.ControlCenter.ReadEventLog.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.ControlCenter.ReadEventLog.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="LogName" minOccurs="1" type="xsd:string"/>
+          <xsd:element name="MaxEvents" minOccurs="0" type="xsd:integer"/>
+          <xsd:element name="MaxSearchEvents" minOccurs="0" type="xsd:integer"/>
+          <xsd:element name="SearchString" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="SearchUseRegExp" minOccurs="0" type="xsd:boolean"/>
+          <xsd:element name="XPathQuery" minOccurs="0" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="LogName" Selector="$Config/LogName$" ParameterType="string" />
+          <OverrideableParameter ID="MaxEvents" Selector="$Config/MaxEvents$" ParameterType="int" />
+          <OverrideableParameter ID="MaxSearchEvents" Selector="$Config/MaxSearchEvents$" ParameterType="int" />
+          <OverrideableParameter ID="SearchString" Selector="$Config/SearchString$" ParameterType="string" />
+          <OverrideableParameter ID="SearchUseRegExp" Selector="$Config/SearchUseRegExp$" ParameterType="bool" />
+          <OverrideableParameter ID="XPathQuery" Selector="$Config/XPathQuery$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Events.ReadEventLogPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>Maximus.ControlCenter.EventListDataItem</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
+      
+      <!-- Maximus.ControlCenter.ListEventLogs.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.ControlCenter.ListEventLogs.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration />
+        <OverrideableParameters/>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Events.ListEventLogsPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>Maximus.ControlCenter.QuadrupleListDataItem</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
 
       <!-- Maximus.ControlCenter.ControlService.ProbeAction -->
       <WriteActionModuleType ID="Maximus.ControlCenter.ControlService.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
