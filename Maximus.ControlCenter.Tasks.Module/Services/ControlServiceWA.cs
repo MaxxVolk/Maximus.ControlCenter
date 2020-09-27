@@ -22,20 +22,20 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
 
   [MonitoringModule(ModuleType.WriteAction)]
   [ModuleOutput(true)]
-  class ControlServicePA : ModuleBaseSimpleAction<PropertyBagDataItem>
+  class ControlServiceWA : ModuleBaseSimpleAction<PropertyBagDataItem>
   {
     // configuration
     private string QueryService;
     private int CommandId, ActionCode;
 
-    public ControlServicePA(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
+    public ControlServiceWA(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
     {
 
     }
 
     protected override void PreInitialize(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState)
     {
-      ModInit.Logger.AddLoggingSource(GetType(), ModInit.evtId_ControlServicePA);
+      ModInit.Logger.AddLoggingSource(GetType(), ModInit.evtId_ControlServiceWA);
       base.PreInitialize(moduleHost, configuration, previousState);
     }
 

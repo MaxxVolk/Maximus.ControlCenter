@@ -24,6 +24,7 @@ namespace Maximus.ControlCenter.UI.Control
     public readonly Guid ConfigureServiceTaskId = Guid.Parse("86389e6b-2f7b-6604-1865-ca4a521b773a");
     public readonly Guid ReadEventLogTaskId = Guid.Parse("7634b1dc-5710-c2c1-9f0a-5c798a1ea84c");
     public readonly Guid ListEventLogsTaskId = Guid.Parse("ec971a1d-6176-8cca-51bd-d7c20af1a573");
+    public readonly Guid ReadRegistryKeyTaskId = Guid.Parse("c38c31df-167a-693d-7a71-d0893b264e58");
 
     private readonly Dictionary<Guid, ManagementPackTaskInfo> MPTasks = new Dictionary<Guid, ManagementPackTaskInfo>(20);
     private object onTaskStatusChangeLock = new object();
@@ -107,7 +108,10 @@ namespace Maximus.ControlCenter.UI.Control
             if (tasksInProgress == 0)
               Invoke(new Action<string>(UpdateTaskStatus), new object[] { "" });
             else
-              Invoke(new Action<string>(UpdateTaskStatus), new object[] { $"{tasksInProgress} are waiting to complete..." });
+            {
+              string msg = $"{tasksInProgress} task{(tasksInProgress == 1 ? "" : "s")} {(tasksInProgress == 1 ? "is" : "are")} waiting to complete...";
+              Invoke(new Action<string>(UpdateTaskStatus), new object[] { msg });
+            }
 
             Dbg.Log($"Callback dictionary size: {tasksInProgress}");
           }

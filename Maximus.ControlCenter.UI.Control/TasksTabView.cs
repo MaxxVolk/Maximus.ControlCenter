@@ -19,6 +19,24 @@ using Maximus.ControlCenter.Tasks.Module;
 
 namespace Maximus.ControlCenter.UI.Control
 {
+  public enum WriteRegistryElementAction
+  {
+    // KeyPath, NewName
+    CreateKey = 1,
+    // KeyPath, OldName
+    DeleteKey = 2,
+    // KeyPath, OldName, NewName
+    RenameKey = 3,
+    // KeyPath, NewName, NewValue, ValueType
+    CreateValue = 4,
+    // KeyPath, OldName
+    DeleteValue = 5,
+    // KeyPath, OldName, NewName
+    RenameValue = 6,
+    // KeyPath, OldName, NewValue, ValueType
+    SetValue = 7
+  }
+
   public partial class TasksTabView : CachedDetailView<PartialMonitoringObject>, IDisposable
   {
     private ManagementPackClass healthServiceClass = null;
@@ -44,6 +62,7 @@ namespace Maximus.ControlCenter.UI.Control
 
       GetTaskObjects(QueryServiceListTaskId);
       EnableTaskControls();
+      cbRegRootKey.SelectedIndex = 1;
     }
 
     private void RefreshColors()
@@ -370,6 +389,8 @@ namespace Maximus.ControlCenter.UI.Control
 
     private void btEventMakeXPathQuery_Click(object sender, EventArgs e)
     {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
+
       using (EventXPathQueryForm queryDialog = new EventXPathQueryForm())
       {
         queryDialog.Query = tbEventXPathQuery.Text;
@@ -448,6 +469,106 @@ namespace Maximus.ControlCenter.UI.Control
     private void panel1_Paint(object sender, PaintEventArgs e)
     {
 
+    }
+
+    private void btRegGo_Click(object sender, EventArgs e)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
+
+      SubmitTaskAsync(ReadRegistryKeyTaskId, ManagementObject,
+        new Dictionary<string, string>
+        {
+          { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" }
+        }, new OnTaskStatusChangeDelegate(OnReadRegistryKeyTaskChange));
+    }
+
+    private void OnReadRegistryKeyTaskChange(IList<Microsoft.EnterpriseManagement.Runtime.TaskResult> results, bool lastUpdate)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
+
+      try
+      {
+        QuadrupleListDataItem regReadResult = DeserializeDataItemFromTaskResults<QuadrupleListDataItem, QuadrupleList>(results, (xmlReader) => new QuadrupleListDataItem(xmlReader));
+        if (regReadResult?.Data?.List != null)
+        {
+          lvRegItems.Items.Clear();
+          lvRegItems.Items.Add(new ListViewItem(new string[] { "..", "REG_KEY", "" }, GetRegImageIndex("REG_KEY")));
+          foreach (Quadruple item in regReadResult.Data.List)
+            lvRegItems.Items.Add(new ListViewItem(new string[] { item.I1, item.I2, item.I3 }, GetRegImageIndex(item.I2)));
+        }
+      }
+      catch (Exception e)
+      {
+        Dbg.Log($"Exception {e.Message} in {MethodBase.GetCurrentMethod().Name}");
+      }
+    }
+
+    private int GetRegImageIndex(string regType)
+    {
+      switch (regType)
+      {
+        case "REG_SZ":
+        case "REG_EXPAND_SZ":
+        case "REG_MULTI_SZ":
+          return 1;
+        case "REG_KEY":
+          return 0;
+      }
+      return 2;
+    }
+
+    private void lvRegItems_DoubleClick(object sender, EventArgs e)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}; Selected items count: {lvRegItems.SelectedItems?.Count ?? -1}");
+
+      if (lvRegItems.SelectedItems !=null && lvRegItems.SelectedItems.Count == 1)
+      {
+        ListViewItem selectedItem = lvRegItems.SelectedItems[0];
+        Dbg.Log($"Subitems count: {selectedItem.SubItems.Count}; [0]: {selectedItem.SubItems[0].Text}");
+        if (selectedItem.SubItems[1].Text == "REG_KEY")
+        {
+          string addPath = selectedItem.SubItems[0].Text;
+          if (addPath == "..")
+          {
+            int deleteTo = tbRegPath.Text.LastIndexOf('\\');
+            if (deleteTo >= 0)
+              tbRegPath.Text = tbRegPath.Text.Substring(0, deleteTo);
+          }
+          else
+            tbRegPath.Text += $"{(string.IsNullOrWhiteSpace(tbRegPath.Text) ? "" : "\\")}{addPath}";
+          btRegGo_Click(sender, e);
+        }
+        else
+        {
+          // call editor
+        }
+      }
+    }
+
+    private void cmRegEditMenu_Opening(object sender, CancelEventArgs e)
+    {
+      ListViewItem selectedItem = null;
+      if (lvRegItems.SelectedItems != null && lvRegItems.SelectedItems.Count == 1)
+        selectedItem = lvRegItems.SelectedItems[0];
+      if (selectedItem == null || selectedItem.SubItems[0].Text == "..")
+      {
+        renameToolStripMenuItem.Enabled = false;
+        deleteToolStripMenuItem.Enabled = false;
+      }
+      else
+      {
+        renameToolStripMenuItem.Enabled = true;
+        deleteToolStripMenuItem.Enabled = true;
+      }
+      if (selectedItem == null || selectedItem.SubItems[1].Text == "REG_KEY")
+        modifyToolStripMenuItem.Enabled = false;
+      else
+        modifyToolStripMenuItem.Enabled = true;
+    }
+
+    private void cbRegRootKey_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+      tbRegPath.Text = "";
     }
   }
 }

@@ -1,7 +1,7 @@
 <TemplateGroup>
   <Instances>
     <Instance ID="Instance20404dd4788c4b2a8acaf4580df22fc9" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
-      <CustomTaskConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <Accessibility>Internal</Accessibility>
         <Id>ConfigureService.Task</Id>
         <DisplayName>Configure Service (Automation)</DisplayName>
@@ -20,7 +20,7 @@
       </CustomTaskConfig>
     </Instance>
     <Instance ID="Instancec48f66cd0519463abd62e40f29738fe9" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
-      <CustomTaskConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <Accessibility>Internal</Accessibility>
         <Id>QueryServiceList.Task</Id>
         <DisplayName>Query Service List (Automation)</DisplayName>
@@ -37,7 +37,7 @@
       </CustomTaskConfig>
     </Instance>
     <Instance ID="Instanceb55b0df3e61849dea75e728ead155b7c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
-      <CustomTaskConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <Accessibility>Internal</Accessibility>
         <Id>ControlService.Task</Id>
         <DisplayName>Control Service (Automation)</DisplayName>
@@ -56,7 +56,7 @@
       </CustomTaskConfig>
     </Instance>
     <Instance ID="Instance52f58e0120eb48d29bfd90cfd8eff87e" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
-      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomTaskConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <Accessibility>Internal</Accessibility>
         <Id>ReadEventLog.Task</Id>
         <DisplayName>Read Event Log Task (Automation)</DisplayName>
@@ -73,7 +73,7 @@
       </CustomTaskConfig>
     </Instance>
     <Instance ID="Instanced40171c7184b47bcb48f67de2fade458" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
-      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomTaskConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <Accessibility>Internal</Accessibility>
         <Id>CommandExecuter.Task</Id>
         <DisplayName>Command Executer Task (Automation)</DisplayName>
@@ -90,7 +90,7 @@
       </CustomTaskConfig>
     </Instance>
     <Instance ID="Instance1f23fd4ca79e46e6af56bf9118340f5b" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
-      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <CustomTaskConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <Accessibility>Internal</Accessibility>
         <Id>ListEventLogs.Task</Id>
         <DisplayName>List Event Logs Task (Automation)</DisplayName>
@@ -102,6 +102,23 @@
         <Remotable>true</Remotable>
         <ProbeActionId>PA_ListEventLogs</ProbeActionId>
         <ProbeActionType>Maximus.ControlCenter.ListEventLogs.ProbeAction</ProbeActionType>
+        <WriteActionId>WA</WriteActionId>
+      </CustomTaskConfig>
+    </Instance>
+    <Instance ID="Instanceebcdcc81162d45b584463cce7394d6b9" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.CustomTask" Version="1.0.0.0">
+      <CustomTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Accessibility>Internal</Accessibility>
+        <Id>ReadRegistryKey.Task</Id>
+        <DisplayName>Read Registry Key Task (Automation)</DisplayName>
+        <Description>Read Registry Key</Description>
+        <Target>SC!Microsoft.SystemCenter.HealthService</Target>
+        <Enabled>true</Enabled>
+        <Category>Maintenance</Category>
+        <Timeout>300</Timeout>
+        <Remotable>true</Remotable>
+        <ProbeActionId>PA_ReadRegistryKey</ProbeActionId>
+        <ProbeActionConfig>&lt;KeyPath&gt;HKEY_LOCAL_MACHINE&lt;/KeyPath&gt;</ProbeActionConfig>
+        <ProbeActionType>Maximus.ControlCenter.ReadRegistryKey.ProbeAction</ProbeActionType>
         <WriteActionId>WA</WriteActionId>
       </CustomTaskConfig>
     </Instance>

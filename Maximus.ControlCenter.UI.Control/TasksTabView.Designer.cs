@@ -28,6 +28,8 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TasksTabView));
       this.tcCategories = new System.Windows.Forms.TabControl();
       this.tpServices = new System.Windows.Forms.TabPage();
       this.dgvServices = new System.Windows.Forms.DataGridView();
@@ -92,6 +94,32 @@
       this.label2 = new System.Windows.Forms.Label();
       this.btBrowseLogs = new System.Windows.Forms.Button();
       this.tpRegistry = new System.Windows.Forms.TabPage();
+      this.lvRegItems = new System.Windows.Forms.ListView();
+      this.chRegName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.chRegType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.chRegData = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.cmRegEditMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.keyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.stringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.binaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.dWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.qWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.multiStringValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.expandableStringValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.ilRegIcons = new System.Windows.Forms.ImageList(this.components);
+      this.pRegistryControls = new System.Windows.Forms.Panel();
+      this.btRegGo = new System.Windows.Forms.Button();
+      this.tbRegPath = new System.Windows.Forms.TextBox();
+      this.label18 = new System.Windows.Forms.Label();
+      this.cbRegRootKey = new System.Windows.Forms.ComboBox();
+      this.label13 = new System.Windows.Forms.Label();
       this.tpPerformance = new System.Windows.Forms.TabPage();
       this.tpSystemInfo = new System.Windows.Forms.TabPage();
       this.tpStorage = new System.Windows.Forms.TabPage();
@@ -104,13 +132,6 @@
       this.textBox1 = new System.Windows.Forms.TextBox();
       this.tpPowerShell = new System.Windows.Forms.TabPage();
       this.lCurrentTasks = new System.Windows.Forms.Label();
-      this.pRegistryControls = new System.Windows.Forms.Panel();
-      this.label13 = new System.Windows.Forms.Label();
-      this.cbRegRootKey = new System.Windows.Forms.ComboBox();
-      this.label18 = new System.Windows.Forms.Label();
-      this.tbRegPath = new System.Windows.Forms.TextBox();
-      this.btRegGo = new System.Windows.Forms.Button();
-      this.lvRegItems = new System.Windows.Forms.ListView();
       this.tcCategories.SuspendLayout();
       this.tpServices.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
@@ -127,8 +148,9 @@
       this.tpDetails.SuspendLayout();
       this.pEventControls.SuspendLayout();
       this.tpRegistry.SuspendLayout();
-      this.tpCMD.SuspendLayout();
+      this.cmRegEditMenu.SuspendLayout();
       this.pRegistryControls.SuspendLayout();
+      this.tpCMD.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
       this.SuspendLayout();
       // 
@@ -807,6 +829,217 @@
       this.tpRegistry.Text = "Registry";
       this.tpRegistry.UseVisualStyleBackColor = true;
       // 
+      // lvRegItems
+      // 
+      this.lvRegItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chRegName,
+            this.chRegType,
+            this.chRegData});
+      this.lvRegItems.ContextMenuStrip = this.cmRegEditMenu;
+      this.lvRegItems.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.lvRegItems.FullRowSelect = true;
+      this.lvRegItems.HideSelection = false;
+      this.lvRegItems.Location = new System.Drawing.Point(3, 50);
+      this.lvRegItems.MultiSelect = false;
+      this.lvRegItems.Name = "lvRegItems";
+      this.lvRegItems.Size = new System.Drawing.Size(1097, 332);
+      this.lvRegItems.SmallImageList = this.ilRegIcons;
+      this.lvRegItems.TabIndex = 1;
+      this.lvRegItems.UseCompatibleStateImageBehavior = false;
+      this.lvRegItems.View = System.Windows.Forms.View.Details;
+      this.lvRegItems.DoubleClick += new System.EventHandler(this.lvRegItems_DoubleClick);
+      // 
+      // chRegName
+      // 
+      this.chRegName.Text = "Name";
+      this.chRegName.Width = 165;
+      // 
+      // chRegType
+      // 
+      this.chRegType.Text = "Type";
+      this.chRegType.Width = 93;
+      // 
+      // chRegData
+      // 
+      this.chRegData.Text = "Data";
+      this.chRegData.Width = 650;
+      // 
+      // cmRegEditMenu
+      // 
+      this.cmRegEditMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modifyToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.deleteToolStripMenuItem,
+            this.renameToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.newToolStripMenuItem});
+      this.cmRegEditMenu.Name = "contextMenuStrip1";
+      this.cmRegEditMenu.Size = new System.Drawing.Size(118, 104);
+      this.cmRegEditMenu.Opening += new System.ComponentModel.CancelEventHandler(this.cmRegEditMenu_Opening);
+      // 
+      // modifyToolStripMenuItem
+      // 
+      this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
+      this.modifyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.modifyToolStripMenuItem.Text = "Modify";
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(114, 6);
+      // 
+      // deleteToolStripMenuItem
+      // 
+      this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.deleteToolStripMenuItem.Text = "Delete";
+      // 
+      // renameToolStripMenuItem
+      // 
+      this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.renameToolStripMenuItem.Text = "Rename";
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(114, 6);
+      // 
+      // newToolStripMenuItem
+      // 
+      this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.keyToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.stringToolStripMenuItem,
+            this.binaryToolStripMenuItem,
+            this.dWORDToolStripMenuItem,
+            this.qWORDToolStripMenuItem,
+            this.multiStringValueToolStripMenuItem,
+            this.expandableStringValueToolStripMenuItem});
+      this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+      this.newToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.newToolStripMenuItem.Text = "New";
+      // 
+      // keyToolStripMenuItem
+      // 
+      this.keyToolStripMenuItem.Name = "keyToolStripMenuItem";
+      this.keyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.keyToolStripMenuItem.Text = "Key";
+      // 
+      // toolStripSeparator3
+      // 
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(197, 6);
+      // 
+      // stringToolStripMenuItem
+      // 
+      this.stringToolStripMenuItem.Name = "stringToolStripMenuItem";
+      this.stringToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.stringToolStripMenuItem.Text = "String Value";
+      // 
+      // binaryToolStripMenuItem
+      // 
+      this.binaryToolStripMenuItem.Name = "binaryToolStripMenuItem";
+      this.binaryToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.binaryToolStripMenuItem.Text = "Binary Value";
+      // 
+      // dWORDToolStripMenuItem
+      // 
+      this.dWORDToolStripMenuItem.Name = "dWORDToolStripMenuItem";
+      this.dWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.dWORDToolStripMenuItem.Text = "DWORD Value";
+      // 
+      // qWORDToolStripMenuItem
+      // 
+      this.qWORDToolStripMenuItem.Name = "qWORDToolStripMenuItem";
+      this.qWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.qWORDToolStripMenuItem.Text = "QWORD Value";
+      // 
+      // multiStringValueToolStripMenuItem
+      // 
+      this.multiStringValueToolStripMenuItem.Name = "multiStringValueToolStripMenuItem";
+      this.multiStringValueToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.multiStringValueToolStripMenuItem.Text = "Multi-String Value";
+      // 
+      // expandableStringValueToolStripMenuItem
+      // 
+      this.expandableStringValueToolStripMenuItem.Name = "expandableStringValueToolStripMenuItem";
+      this.expandableStringValueToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+      this.expandableStringValueToolStripMenuItem.Text = "Expandable String Value";
+      // 
+      // ilRegIcons
+      // 
+      this.ilRegIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilRegIcons.ImageStream")));
+      this.ilRegIcons.TransparentColor = System.Drawing.Color.Transparent;
+      this.ilRegIcons.Images.SetKeyName(0, "RegKey.gif");
+      this.ilRegIcons.Images.SetKeyName(1, "RegStrValue.gif");
+      this.ilRegIcons.Images.SetKeyName(2, "RegBinValue.gif");
+      // 
+      // pRegistryControls
+      // 
+      this.pRegistryControls.AutoScroll = true;
+      this.pRegistryControls.Controls.Add(this.btRegGo);
+      this.pRegistryControls.Controls.Add(this.tbRegPath);
+      this.pRegistryControls.Controls.Add(this.label18);
+      this.pRegistryControls.Controls.Add(this.cbRegRootKey);
+      this.pRegistryControls.Controls.Add(this.label13);
+      this.pRegistryControls.Dock = System.Windows.Forms.DockStyle.Top;
+      this.pRegistryControls.Location = new System.Drawing.Point(3, 3);
+      this.pRegistryControls.Name = "pRegistryControls";
+      this.pRegistryControls.Size = new System.Drawing.Size(1097, 47);
+      this.pRegistryControls.TabIndex = 0;
+      this.pRegistryControls.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+      // 
+      // btRegGo
+      // 
+      this.btRegGo.Location = new System.Drawing.Point(718, 14);
+      this.btRegGo.Name = "btRegGo";
+      this.btRegGo.Size = new System.Drawing.Size(75, 23);
+      this.btRegGo.TabIndex = 4;
+      this.btRegGo.Text = "Go";
+      this.btRegGo.UseVisualStyleBackColor = true;
+      this.btRegGo.Click += new System.EventHandler(this.btRegGo_Click);
+      // 
+      // tbRegPath
+      // 
+      this.tbRegPath.Location = new System.Drawing.Point(204, 16);
+      this.tbRegPath.Name = "tbRegPath";
+      this.tbRegPath.Size = new System.Drawing.Size(508, 20);
+      this.tbRegPath.TabIndex = 3;
+      // 
+      // label18
+      // 
+      this.label18.AutoSize = true;
+      this.label18.Location = new System.Drawing.Point(201, 0);
+      this.label18.Name = "label18";
+      this.label18.Size = new System.Drawing.Size(32, 13);
+      this.label18.TabIndex = 2;
+      this.label18.Text = "Path:";
+      this.label18.Click += new System.EventHandler(this.label18_Click);
+      // 
+      // cbRegRootKey
+      // 
+      this.cbRegRootKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbRegRootKey.Items.AddRange(new object[] {
+            "HKEY_CLASSES_ROOT",
+            "HKEY_LOCAL_MACHINE",
+            "HKEY_USERS",
+            "HKEY_CURRENT_CONFIG"});
+      this.cbRegRootKey.Location = new System.Drawing.Point(6, 16);
+      this.cbRegRootKey.Name = "cbRegRootKey";
+      this.cbRegRootKey.Size = new System.Drawing.Size(192, 21);
+      this.cbRegRootKey.TabIndex = 1;
+      this.cbRegRootKey.SelectionChangeCommitted += new System.EventHandler(this.cbRegRootKey_SelectionChangeCommitted);
+      // 
+      // label13
+      // 
+      this.label13.AutoSize = true;
+      this.label13.Location = new System.Drawing.Point(3, 0);
+      this.label13.Name = "label13";
+      this.label13.Size = new System.Drawing.Size(53, 13);
+      this.label13.TabIndex = 0;
+      this.label13.Text = "Root key:";
+      // 
       // tpPerformance
       // 
       this.tpPerformance.Location = new System.Drawing.Point(4, 22);
@@ -924,75 +1157,6 @@
       this.lCurrentTasks.Size = new System.Drawing.Size(0, 13);
       this.lCurrentTasks.TabIndex = 1;
       // 
-      // pRegistryControls
-      // 
-      this.pRegistryControls.AutoScroll = true;
-      this.pRegistryControls.Controls.Add(this.btRegGo);
-      this.pRegistryControls.Controls.Add(this.tbRegPath);
-      this.pRegistryControls.Controls.Add(this.label18);
-      this.pRegistryControls.Controls.Add(this.cbRegRootKey);
-      this.pRegistryControls.Controls.Add(this.label13);
-      this.pRegistryControls.Dock = System.Windows.Forms.DockStyle.Top;
-      this.pRegistryControls.Location = new System.Drawing.Point(3, 3);
-      this.pRegistryControls.Name = "pRegistryControls";
-      this.pRegistryControls.Size = new System.Drawing.Size(1097, 47);
-      this.pRegistryControls.TabIndex = 0;
-      this.pRegistryControls.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-      // 
-      // label13
-      // 
-      this.label13.AutoSize = true;
-      this.label13.Location = new System.Drawing.Point(3, 0);
-      this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(53, 13);
-      this.label13.TabIndex = 0;
-      this.label13.Text = "Root key:";
-      // 
-      // cbRegRootKey
-      // 
-      this.cbRegRootKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cbRegRootKey.FormattingEnabled = true;
-      this.cbRegRootKey.Location = new System.Drawing.Point(6, 16);
-      this.cbRegRootKey.Name = "cbRegRootKey";
-      this.cbRegRootKey.Size = new System.Drawing.Size(121, 21);
-      this.cbRegRootKey.TabIndex = 1;
-      // 
-      // label18
-      // 
-      this.label18.AutoSize = true;
-      this.label18.Location = new System.Drawing.Point(133, 0);
-      this.label18.Name = "label18";
-      this.label18.Size = new System.Drawing.Size(32, 13);
-      this.label18.TabIndex = 2;
-      this.label18.Text = "Path:";
-      this.label18.Click += new System.EventHandler(this.label18_Click);
-      // 
-      // tbRegPath
-      // 
-      this.tbRegPath.Location = new System.Drawing.Point(133, 17);
-      this.tbRegPath.Name = "tbRegPath";
-      this.tbRegPath.Size = new System.Drawing.Size(508, 20);
-      this.tbRegPath.TabIndex = 3;
-      // 
-      // btRegGo
-      // 
-      this.btRegGo.Location = new System.Drawing.Point(647, 14);
-      this.btRegGo.Name = "btRegGo";
-      this.btRegGo.Size = new System.Drawing.Size(75, 23);
-      this.btRegGo.TabIndex = 4;
-      this.btRegGo.Text = "Go";
-      this.btRegGo.UseVisualStyleBackColor = true;
-      // 
-      // lvRegItems
-      // 
-      this.lvRegItems.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.lvRegItems.HideSelection = false;
-      this.lvRegItems.Location = new System.Drawing.Point(3, 50);
-      this.lvRegItems.Name = "lvRegItems";
-      this.lvRegItems.Size = new System.Drawing.Size(1097, 332);
-      this.lvRegItems.TabIndex = 1;
-      this.lvRegItems.UseCompatibleStateImageBehavior = false;
-      // 
       // TasksTabView
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1019,10 +1183,11 @@
       this.pEventControls.ResumeLayout(false);
       this.pEventControls.PerformLayout();
       this.tpRegistry.ResumeLayout(false);
-      this.tpCMD.ResumeLayout(false);
-      this.tpCMD.PerformLayout();
+      this.cmRegEditMenu.ResumeLayout(false);
       this.pRegistryControls.ResumeLayout(false);
       this.pRegistryControls.PerformLayout();
+      this.tpCMD.ResumeLayout(false);
+      this.tpCMD.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -1114,5 +1279,24 @@
     private System.Windows.Forms.ListView lvRegItems;
     private System.Windows.Forms.Button btRegGo;
     private System.Windows.Forms.TextBox tbRegPath;
+    private System.Windows.Forms.ColumnHeader chRegName;
+    private System.Windows.Forms.ColumnHeader chRegType;
+    private System.Windows.Forms.ColumnHeader chRegData;
+    private System.Windows.Forms.ImageList ilRegIcons;
+    private System.Windows.Forms.ContextMenuStrip cmRegEditMenu;
+    private System.Windows.Forms.ToolStripMenuItem modifyToolStripMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem keyToolStripMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    private System.Windows.Forms.ToolStripMenuItem stringToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem binaryToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem dWORDToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem qWORDToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem multiStringValueToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem expandableStringValueToolStripMenuItem;
   }
 }

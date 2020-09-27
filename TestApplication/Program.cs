@@ -20,7 +20,7 @@ namespace TestApplication
   {
     static void Main(string[] args)
     {
-      TestXMLAttribute<QuadrupleList>();
+      TestCast();
     }
 
     private static void TestEventRead()
@@ -113,6 +113,14 @@ namespace TestApplication
         return;
       if (containmentNodeAttr is XmlRootAttribute xmlRootAttr)
         Console.WriteLine(xmlRootAttr.ElementName);
+    }
+
+    private static void TestCast()
+    {
+      int i = 3304;
+      object x = i;
+      string s = unchecked((uint)x).ToString();
+      Console.WriteLine(s);
     }
   }
 

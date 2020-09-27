@@ -14,21 +14,21 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
 {
   [MonitoringModule(ModuleType.WriteAction)]
   [ModuleOutput(true)]
-  class ConfigureServicePA : ModuleBaseSimpleAction<PropertyBagDataItem>
+  class ConfigureServiceWA : ModuleBaseSimpleAction<PropertyBagDataItem>
   {
     // configuration
     private string QueryService;
     private int ServiceType = -1, StartType = -1, ErrorControl = -1; // SERVICE_NO_CHANGE = 0xFFFFFFFF
     private string BinaryPathName, LoadOrderGroup, Dependencies, ServiceStartName, Password, DisplayName;
 
-    public ConfigureServicePA(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
+    public ConfigureServiceWA(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
     {
 
     }
 
     protected override void PreInitialize(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState)
     {
-      ModInit.Logger.AddLoggingSource(GetType(), ModInit.evtId_ConfigureServicePA);
+      ModInit.Logger.AddLoggingSource(GetType(), ModInit.evtId_ConfigureServiceWA);
       base.PreInitialize(moduleHost, configuration, previousState);
     }
 

@@ -63,6 +63,26 @@
         <OutputType>Maximus.ControlCenter.QuadrupleListDataItem</OutputType>
         <InputType>System!System.BaseData</InputType>
       </ProbeActionModuleType>
+      
+      <!-- Maximus.ControlCenter.ReadRegistryKey.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.ControlCenter.ReadRegistryKey.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="KeyPath" minOccurs="1" type="xsd:string"/>
+          <xsd:element name="ExpandStrings" minOccurs="0" type="xsd:boolean"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="KeyPath" Selector="$Config/KeyPath$" ParameterType="string" />
+          <OverrideableParameter ID="ExpandStrings" Selector="$Config/ExpandStrings$" ParameterType="bool" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Registry.ReadRegistryKeyPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>Maximus.ControlCenter.QuadrupleListDataItem</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
 
       <!-- Maximus.ControlCenter.ControlService.ProbeAction -->
       <WriteActionModuleType ID="Maximus.ControlCenter.ControlService.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
@@ -79,7 +99,7 @@
         <ModuleImplementation>
           <Managed>
             <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
-            <Type>Maximus.ControlCenter.Tasks.Module.Services.ControlServicePA</Type>
+            <Type>Maximus.ControlCenter.Tasks.Module.Services.ControlServiceWA</Type>
           </Managed>
         </ModuleImplementation>
         <OutputType>System!System.PropertyBagData</OutputType>
@@ -115,7 +135,7 @@
         <ModuleImplementation>
           <Managed>
             <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
-            <Type>Maximus.ControlCenter.Tasks.Module.Services.ConfigureServicePA</Type>
+            <Type>Maximus.ControlCenter.Tasks.Module.Services.ConfigureServiceWA</Type>
           </Managed>
         </ModuleImplementation>
         <OutputType>System!System.PropertyBagData</OutputType>

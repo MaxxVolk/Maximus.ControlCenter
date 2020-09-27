@@ -86,9 +86,11 @@
     <Compile Include="Events\ListEventLogsPA.cs" />
     <Compile Include="Events\ReadEventLogPA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry\ReadRegistryKeyPA.cs" />
+    <Compile Include="Registry\WriteRegistryElementWA.cs" />
     <Compile Include="Services\ClusteredServiceInfo.cs" />
-    <Compile Include="Services\ConfigureServicePA.cs" />
-    <Compile Include="Services\ControlServicePA.cs" />
+    <Compile Include="Services\ConfigureServiceWA.cs" />
+    <Compile Include="Services\ControlServiceWA.cs" />
     <Compile Include="Services\QueryServiceListPA.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
     <Compile Include="Services\ServiceInfo.cs" />
