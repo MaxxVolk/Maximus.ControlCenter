@@ -120,6 +120,12 @@
     <Compile Include="Dialogs\EventXPathQuery.Designer.cs">
       <DependentUpon>EventXPathQuery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\RegistryEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\RegistryEdit.Designer.cs">
+      <DependentUpon>RegistryEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ServiceProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EventXPathQuery.resx">
       <DependentUpon>EventXPathQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\RegistryEdit.resx">
+      <DependentUpon>RegistryEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ServiceProperties.resx">
       <DependentUpon>ServiceProperties.cs</DependentUpon>

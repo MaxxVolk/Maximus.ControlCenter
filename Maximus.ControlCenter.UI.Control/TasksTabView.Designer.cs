@@ -126,11 +126,8 @@
       this.tpPtocesses = new System.Windows.Forms.TabPage();
       this.tpShares = new System.Windows.Forms.TabPage();
       this.tpLocalUsers = new System.Windows.Forms.TabPage();
-      this.tpCMD = new System.Windows.Forms.TabPage();
-      this.button1 = new System.Windows.Forms.Button();
-      this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-      this.textBox1 = new System.Windows.Forms.TextBox();
-      this.tpPowerShell = new System.Windows.Forms.TabPage();
+      this.tbComputerCertificates = new System.Windows.Forms.TabPage();
+      this.tpFirewall = new System.Windows.Forms.TabPage();
       this.lCurrentTasks = new System.Windows.Forms.Label();
       this.tcCategories.SuspendLayout();
       this.tpServices.SuspendLayout();
@@ -150,7 +147,6 @@
       this.tpRegistry.SuspendLayout();
       this.cmRegEditMenu.SuspendLayout();
       this.pRegistryControls.SuspendLayout();
-      this.tpCMD.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
       this.SuspendLayout();
       // 
@@ -165,8 +161,8 @@
       this.tcCategories.Controls.Add(this.tpPtocesses);
       this.tcCategories.Controls.Add(this.tpShares);
       this.tcCategories.Controls.Add(this.tpLocalUsers);
-      this.tcCategories.Controls.Add(this.tpCMD);
-      this.tcCategories.Controls.Add(this.tpPowerShell);
+      this.tcCategories.Controls.Add(this.tbComputerCertificates);
+      this.tcCategories.Controls.Add(this.tpFirewall);
       this.tcCategories.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tcCategories.Location = new System.Drawing.Point(0, 0);
       this.tcCategories.Name = "tcCategories";
@@ -874,36 +870,38 @@
             this.toolStripSeparator2,
             this.newToolStripMenuItem});
       this.cmRegEditMenu.Name = "contextMenuStrip1";
-      this.cmRegEditMenu.Size = new System.Drawing.Size(118, 104);
+      this.cmRegEditMenu.Size = new System.Drawing.Size(181, 126);
       this.cmRegEditMenu.Opening += new System.ComponentModel.CancelEventHandler(this.cmRegEditMenu_Opening);
       // 
       // modifyToolStripMenuItem
       // 
       this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-      this.modifyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
       this.modifyToolStripMenuItem.Text = "Modify";
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(114, 6);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
       // 
       // deleteToolStripMenuItem
       // 
       this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
       this.deleteToolStripMenuItem.Text = "Delete";
+      this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
       this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-      this.renameToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
       this.renameToolStripMenuItem.Text = "Rename";
+      this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(114, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
       // 
       // newToolStripMenuItem
       // 
@@ -917,7 +915,7 @@
             this.multiStringValueToolStripMenuItem,
             this.expandableStringValueToolStripMenuItem});
       this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-      this.newToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+      this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
       this.newToolStripMenuItem.Text = "New";
       // 
       // keyToolStripMenuItem
@@ -925,6 +923,7 @@
       this.keyToolStripMenuItem.Name = "keyToolStripMenuItem";
       this.keyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
       this.keyToolStripMenuItem.Text = "Key";
+      this.keyToolStripMenuItem.Click += new System.EventHandler(this.keyToolStripMenuItem_Click);
       // 
       // toolStripSeparator3
       // 
@@ -1100,53 +1099,25 @@
       this.tpLocalUsers.Text = "Local Users and Groups";
       this.tpLocalUsers.UseVisualStyleBackColor = true;
       // 
-      // tpCMD
+      // tbComputerCertificates
       // 
-      this.tpCMD.Controls.Add(this.button1);
-      this.tpCMD.Controls.Add(this.richTextBox1);
-      this.tpCMD.Controls.Add(this.textBox1);
-      this.tpCMD.Location = new System.Drawing.Point(4, 22);
-      this.tpCMD.Name = "tpCMD";
-      this.tpCMD.Padding = new System.Windows.Forms.Padding(3);
-      this.tpCMD.Size = new System.Drawing.Size(1103, 385);
-      this.tpCMD.TabIndex = 9;
-      this.tpCMD.Text = "Command Prompt";
-      this.tpCMD.UseVisualStyleBackColor = true;
+      this.tbComputerCertificates.Location = new System.Drawing.Point(4, 22);
+      this.tbComputerCertificates.Name = "tbComputerCertificates";
+      this.tbComputerCertificates.Padding = new System.Windows.Forms.Padding(3);
+      this.tbComputerCertificates.Size = new System.Drawing.Size(1103, 385);
+      this.tbComputerCertificates.TabIndex = 9;
+      this.tbComputerCertificates.Text = "Computer Certificates";
+      this.tbComputerCertificates.UseVisualStyleBackColor = true;
       // 
-      // button1
+      // tpFirewall
       // 
-      this.button1.Location = new System.Drawing.Point(183, 76);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(75, 23);
-      this.button1.TabIndex = 2;
-      this.button1.Text = "button1";
-      this.button1.UseVisualStyleBackColor = true;
-      // 
-      // richTextBox1
-      // 
-      this.richTextBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.richTextBox1.Location = new System.Drawing.Point(155, 161);
-      this.richTextBox1.Name = "richTextBox1";
-      this.richTextBox1.Size = new System.Drawing.Size(950, 174);
-      this.richTextBox1.TabIndex = 1;
-      this.richTextBox1.Text = "";
-      // 
-      // textBox1
-      // 
-      this.textBox1.Location = new System.Drawing.Point(109, 29);
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(100, 20);
-      this.textBox1.TabIndex = 0;
-      // 
-      // tpPowerShell
-      // 
-      this.tpPowerShell.Location = new System.Drawing.Point(4, 22);
-      this.tpPowerShell.Name = "tpPowerShell";
-      this.tpPowerShell.Padding = new System.Windows.Forms.Padding(3);
-      this.tpPowerShell.Size = new System.Drawing.Size(1103, 385);
-      this.tpPowerShell.TabIndex = 10;
-      this.tpPowerShell.Text = "PowerShell";
-      this.tpPowerShell.UseVisualStyleBackColor = true;
+      this.tpFirewall.Location = new System.Drawing.Point(4, 22);
+      this.tpFirewall.Name = "tpFirewall";
+      this.tpFirewall.Padding = new System.Windows.Forms.Padding(3);
+      this.tpFirewall.Size = new System.Drawing.Size(1103, 385);
+      this.tpFirewall.TabIndex = 10;
+      this.tpFirewall.Text = "Firewall";
+      this.tpFirewall.UseVisualStyleBackColor = true;
       // 
       // lCurrentTasks
       // 
@@ -1186,8 +1157,6 @@
       this.cmRegEditMenu.ResumeLayout(false);
       this.pRegistryControls.ResumeLayout(false);
       this.pRegistryControls.PerformLayout();
-      this.tpCMD.ResumeLayout(false);
-      this.tpCMD.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -1217,8 +1186,6 @@
     private System.Windows.Forms.TabPage tpPtocesses;
     private System.Windows.Forms.TabPage tpShares;
     private System.Windows.Forms.TabPage tpLocalUsers;
-    private System.Windows.Forms.TabPage tpCMD;
-    private System.Windows.Forms.TabPage tpPowerShell;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.DataGridView dgvEventsMain;
     private System.Windows.Forms.TabControl tvEventDetails;
@@ -1264,9 +1231,6 @@
     private System.Windows.Forms.RichTextBox tbEventText;
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.TextBox tbMaxSearchEvents;
-    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.RichTextBox richTextBox1;
-    private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.Label lCurrentTasks;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.Label label16;
@@ -1298,5 +1262,7 @@
     private System.Windows.Forms.ToolStripMenuItem qWORDToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem multiStringValueToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem expandableStringValueToolStripMenuItem;
+    private System.Windows.Forms.TabPage tbComputerCertificates;
+    private System.Windows.Forms.TabPage tpFirewall;
   }
 }

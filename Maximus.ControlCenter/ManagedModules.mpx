@@ -142,6 +142,33 @@
         <InputType>System!System.BaseData</InputType>
       </WriteActionModuleType>
 
+      <WriteActionModuleType ID="Maximus.ControlCenter.WriteRegistryElement.WriteAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="KeyPath" minOccurs="1" type="xsd:string"/>
+          <xsd:element name="Action" minOccurs="1" type="xsd:integer"/>
+          <xsd:element name="OldName" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="NewName" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="NewValue" minOccurs="0" type="xsd:string"/>
+          <xsd:element name="ValueType" minOccurs="0" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="KeyPath" Selector="$Config/KeyPath$" ParameterType="string" />
+          <OverrideableParameter ID="Action" Selector="$Config/Action$" ParameterType="int" />
+          <OverrideableParameter ID="OldName" Selector="$Config/OldName$" ParameterType="string" />
+          <OverrideableParameter ID="NewName" Selector="$Config/NewName$" ParameterType="string" />
+          <OverrideableParameter ID="NewValue" Selector="$Config/NewValue$" ParameterType="string" />
+          <OverrideableParameter ID="ValueType" Selector="$Config/ValueType$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Registry.WriteRegistryElementWA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>Maximus.ControlCenter.QuadrupleListDataItem</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </WriteActionModuleType>
+
     </ModuleTypes>
   </TypeDefinitions>
 </ManagementPackFragment>

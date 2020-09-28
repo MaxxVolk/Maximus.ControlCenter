@@ -83,9 +83,6 @@
     <Compile Include="Assemblies.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommandExecuterProxy.mpx">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ManagedDataItems.mpx">
       <SubType>Code</SubType>
     </Compile>

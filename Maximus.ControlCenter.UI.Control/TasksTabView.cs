@@ -136,6 +136,9 @@ namespace Maximus.ControlCenter.UI.Control
       cbEventSelectLog.Items.AddRange(new string[] { "Application", "Security", "System" });
       cbEventSelectLog.SelectedIndex = 0;
       ClearEventDisplayElements();
+      lvRegItems.Items.Clear();
+      tbRegPath.Text = "";
+      cbRegRootKey.SelectedIndex = 1;
     }
 
     private void ClearEventDisplayElements()
@@ -494,7 +497,7 @@ namespace Maximus.ControlCenter.UI.Control
           lvRegItems.Items.Clear();
           lvRegItems.Items.Add(new ListViewItem(new string[] { "..", "REG_KEY", "" }, GetRegImageIndex("REG_KEY")));
           foreach (Quadruple item in regReadResult.Data.List)
-            lvRegItems.Items.Add(new ListViewItem(new string[] { item.I1, item.I2, item.I3 }, GetRegImageIndex(item.I2)));
+            lvRegItems.Items.Add(new ListViewItem(new string[] { item.I1, item.I2, item.I3 }, GetRegImageIndex(item.I2))).Name = item.I1 + item.I2;
         }
       }
       catch (Exception e)
@@ -569,6 +572,115 @@ namespace Maximus.ControlCenter.UI.Control
     private void cbRegRootKey_SelectionChangeCommitted(object sender, EventArgs e)
     {
       tbRegPath.Text = "";
+    }
+
+    private void keyToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewName;
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+          SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+            new Dictionary<string, string>
+            {
+              { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+              { "Action", ((int)WriteRegistryElementAction.CreateKey).ToString() },
+              { "NewName", dialog.NewName }
+            }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+        }
+      }
+      
+    }
+
+    private void OnWriteRegistryElementTaskChange(IList<Microsoft.EnterpriseManagement.Runtime.TaskResult> results, bool lastUpdate)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
+
+      try
+      {
+        QuadrupleListDataItem regReadResult = DeserializeDataItemFromTaskResults<QuadrupleListDataItem, QuadrupleList>(results, (xmlReader) => new QuadrupleListDataItem(xmlReader));
+        if (regReadResult?.Data?.List != null && regReadResult.Data.List.Count >= 1)
+        {
+          if (regReadResult.Data.List[0].I1 == "@Error")
+            MessageBox.Show(regReadResult.Data.List[0].I3, "Task Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          else
+          {
+            btRegGo_Click(this, null);
+            //string key = regReadResult.Data.List[0].I1 + regReadResult.Data.List[0].I2;
+            //if (lvRegItems.Items.ContainsKey(key))
+            //  lvRegItems.Items.RemoveByKey(key);
+            //lvRegItems.Items.Add(new ListViewItem(new string[] { regReadResult.Data.List[0].I1, regReadResult.Data.List[0].I2, regReadResult.Data.List[0].I3 }, GetRegImageIndex(regReadResult.Data.List[0].I2)));
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        Dbg.Log($"Exception {e.Message} in {MethodBase.GetCurrentMethod().Name}");
+      }
+    }
+
+    private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}; Selected items count: {lvRegItems.SelectedItems?.Count ?? -1}");
+
+      if (lvRegItems.SelectedItems != null && lvRegItems.SelectedItems.Count == 1)
+      {
+        ListViewItem selectedItem = lvRegItems.SelectedItems[0];
+        if (selectedItem.SubItems[1].Text == "REG_KEY")
+        {
+          string addPath = selectedItem.SubItems[0].Text;
+          if (addPath == "..")
+            return;
+          SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+            new Dictionary<string, string>
+            {
+              { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+              { "Action", ((int)WriteRegistryElementAction.DeleteKey).ToString() },
+              { "OldName", addPath }
+            }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+        }
+        else
+        {
+          
+        }
+      }
+    }
+
+    private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}; Selected items count: {lvRegItems.SelectedItems?.Count ?? -1}");
+
+      if (lvRegItems.SelectedItems != null && lvRegItems.SelectedItems.Count == 1)
+      {
+        ListViewItem selectedItem = lvRegItems.SelectedItems[0];
+        if (selectedItem.SubItems[1].Text == "REG_KEY")
+        {
+          string addPath = selectedItem.SubItems[0].Text;
+          if (addPath == "..")
+            return;
+          using (RegistryEditForm dialog = new RegistryEditForm())
+          {
+            dialog.FormMode = RegistryEditFormMode.NewName;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+              SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+                new Dictionary<string, string>
+                {
+                  { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+                  { "Action", ((int)WriteRegistryElementAction.RenameKey).ToString() },
+                  { "OldName", addPath },
+                  { "NewName", dialog.NewName }
+                }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+            }
+          }
+        }
+        else
+        {
+
+        }
+      }
+
     }
   }
 }
