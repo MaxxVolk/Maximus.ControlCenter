@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 using Microsoft.Win32;
+using Microsoft.Win32.SafeHandles;
 
 using TestApplication.Properties;
 
@@ -20,7 +21,7 @@ namespace TestApplication
   {
     static void Main(string[] args)
     {
-      TestCast();
+      TestRegRename();
     }
 
     private static void TestEventRead()
@@ -99,6 +100,11 @@ namespace TestApplication
     [DllImport("advapi32.dll", EntryPoint = "RegLoadMUIStringW", CharSet = CharSet.Unicode, SetLastError = true)]
     public static extern int RegLoadMUIStringW(IntPtr hKey, string pszValue, StringBuilder pszOutBuf, uint cbOutBuf, out uint pcbData, uint Flags, string pszDirectory);
 
+    [DllImport("advapi32")]
+    public static extern int RegRenameKey(SafeRegistryHandle hKey, [MarshalAs(UnmanagedType.LPWStr)] string oldname, [MarshalAs(UnmanagedType.LPWStr)] string newname);
+    [DllImport("advapi32")]
+    public static extern int RegRenameValue(SafeRegistryHandle hKey, [MarshalAs(UnmanagedType.LPWStr)] string oldname, [MarshalAs(UnmanagedType.LPWStr)] string newname);
+
     private static void TestResource()
     {
       var y = Resources.res1;
@@ -121,6 +127,16 @@ namespace TestApplication
       object x = i;
       string s = unchecked((uint)x).ToString();
       Console.WriteLine(s);
+    }
+
+    private static void TestRegRename()
+    {
+      string rootPath = "Software\\7-Zip";
+      string OldName = "fff";
+      string NewName = "aaa";
+
+      RegistryKey rootKey = Registry.CurrentUser.OpenSubKey(rootPath, true);
+      int hResult = RegRenameValue(rootKey.Handle, OldName, NewName);
     }
   }
 

@@ -79,36 +79,44 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
               if (string.IsNullOrWhiteSpace(OldName))
                 return CreateErrorousOutput("Missing parameters. Delete Key operation requires KeyPath and OldName.");
               rootKey.DeleteSubKeyTree(OldName);
-              return CreateResponse(OldName, "REG_DELETED", "");
+              return CreateResponse(OldName, "REG_KEY_DELETED", "");
             // KeyPath, OldName, NewName
             case WriteRegistryElementAction.RenameKey:
               if (string.IsNullOrWhiteSpace(NewName) || string.IsNullOrWhiteSpace(OldName))
                 return CreateErrorousOutput("Missing parameters. Rename Key operation requires KeyPath, OldName, and NewName.");
-              using (RegistryKey key = rootKey.OpenSubKey(OldName))
-              {
-                int pathBeginsAt = KeyPath.IndexOf('\\');
-                string fullPathOld = "";
-                if (pathBeginsAt >= 0 && KeyPath.Length >= pathBeginsAt + 1)
-                  fullPathOld = KeyPath.Substring(pathBeginsAt + 1);
-                // int hResult = RegRenameKey(key.Handle, $"{fullPathOld}\\{OldName}", NewName);
-                int hResult = RegRenameKey(key.Handle, OldName, NewName);
-                if (hResult == 0)
-                  return CreateResponse(NewName, "REG_KEY", "");
-                else
-                  return CreateErrorousOutput($"Win error code: {hResult}");
-              }
+              int hResult = RegRenameKey(rootKey.Handle, OldName, NewName);
+              if (hResult == 0)
+                return CreateResponse(NewName, "REG_KEY", "");
+              else
+                return CreateErrorousOutput($"Win error code: {hResult}");
             // KeyPath, NewName, NewValue, ValueType
             case WriteRegistryElementAction.CreateValue:
-              break;
-            // KeyPath, OldName
-            case WriteRegistryElementAction.DeleteValue:
-              break;
-            // KeyPath, OldName, NewName
-            case WriteRegistryElementAction.RenameValue:
-              break;
+              return CreateErrorousOutput("Not supported. Use 'SetValue' to create not existing value.");
             // KeyPath, OldName, NewValue, ValueType
             case WriteRegistryElementAction.SetValue:
-              break;
+              if (string.IsNullOrWhiteSpace(NewValue) || string.IsNullOrWhiteSpace(ValueType))
+                return CreateErrorousOutput("Missing parameters. Rename Key operation requires KeyPath, OldName, NewValue, and ValueType. Although, OldName can be empty to indicate the default value.");
+              if (string.IsNullOrEmpty(OldName) && ValueType != "REG_SZ")
+                return CreateErrorousOutput("Invalid parameters. (Default) value can only be of REG_SZ type.");
+              RegistryValueKind dataType = GetRegistryValueKind(ValueType);
+              object value = DeserializeRegValue(NewValue, dataType);
+              rootKey.SetValue(OldName, value, dataType);
+              return CreateResponse(OldName, ValueType, NewValue);
+            // KeyPath, OldName
+            case WriteRegistryElementAction.DeleteValue:
+              if (string.IsNullOrWhiteSpace(OldName))
+                return CreateErrorousOutput("Missing parameters. Delete Key operation requires KeyPath and OldName.");
+              rootKey.DeleteValue(OldName);
+              return CreateResponse(OldName, "REG_VALUE_DELETED", "");
+            // KeyPath, OldName, NewName
+            case WriteRegistryElementAction.RenameValue:
+              if (string.IsNullOrWhiteSpace(NewName) || string.IsNullOrWhiteSpace(OldName))
+                return CreateErrorousOutput("Missing parameters. Rename Value operation requires KeyPath, OldName, and NewName.");
+              if (rootKey.GetValueNames().Any(s=>string.Compare(s, NewName, true) == 0))
+                return CreateErrorousOutput("Invalid parameters. Value with the new name already exists. Renaming failed.");
+              rootKey.SetValue(NewName, rootKey.GetValue(OldName), rootKey.GetValueKind(OldName));
+              rootKey.DeleteValue(OldName);
+              return new QuadrupleListDataItem[] { new QuadrupleListDataItem(new QuadrupleList { List = new List<Quadruple> { ReadRegistryKeyPA.SerializeRegValue(NewName, rootKey.GetValue(NewName), rootKey.GetValueKind(NewName), true) } }) };
           }
         }
         return CreateErrorousOutput("Unknown action.");
@@ -118,6 +126,40 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
         ModuleErrorSignalReceiver(ModuleErrorSeverity.DataLoss, ModuleErrorCriticality.Continue, e, $"Failed to query local log list.");
         return CreateErrorousOutput(e.Message);
       }
+    }
+
+    private static object DeserializeRegValue(string valueStr, RegistryValueKind dataType)
+    {
+      switch (dataType)
+      {
+        case RegistryValueKind.DWord: return uint.Parse(valueStr);
+        case RegistryValueKind.QWord: return ulong.Parse(valueStr);
+        case RegistryValueKind.String:
+        case RegistryValueKind.ExpandString: return valueStr;
+        case RegistryValueKind.Binary:
+          // https://stackoverflow.com/questions/1230303/bitconverter-tostring-in-reverse
+          byte[] data = new byte[(valueStr.Length + 1) / 3];
+          for (int i = 0; i < data.Length; i++)
+            data[i] = (byte)("0123456789ABCDEF".IndexOf(valueStr[i * 3]) * 16 + "0123456789ABCDEF".IndexOf(valueStr[i * 3 + 1]));
+          return data;
+        case RegistryValueKind.MultiString:
+          return valueStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+      }
+      throw new InvalidCastException("Failed to deserialize data or invalid data kind.");
+    }
+
+    private static RegistryValueKind GetRegistryValueKind(string regTypeStr)
+    {
+      switch (regTypeStr)
+      {
+        case "REG_SZ": return RegistryValueKind.String;
+        case "REG_EXPAND_SZ": return RegistryValueKind.ExpandString;
+        case "REG_BINARY": return RegistryValueKind.Binary;
+        case "REG_DWORD": return RegistryValueKind.DWord;
+        case "REG_MULTI_SZ": return RegistryValueKind.MultiString;
+        case "REG_QWORD": return RegistryValueKind.QWord;
+      }
+      return RegistryValueKind.Unknown;
     }
 
     private QuadrupleListDataItem[] CreateErrorousOutput(string message)
@@ -165,9 +207,9 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
     }
 
     [DllImport("advapi32")]
-    public static extern int RegRenameKey(
-     SafeRegistryHandle hKey,
-     [MarshalAs(UnmanagedType.LPWStr)] string oldname,
-     [MarshalAs(UnmanagedType.LPWStr)] string newname);
+    public static extern int RegRenameKey(SafeRegistryHandle hKey, [MarshalAs(UnmanagedType.LPWStr)] string oldname, [MarshalAs(UnmanagedType.LPWStr)] string newname);
+
+    [DllImport("advapi32")]
+    public static extern int RegRenameValue(SafeRegistryHandle hKey, [MarshalAs(UnmanagedType.LPWStr)] string oldname, [MarshalAs(UnmanagedType.LPWStr)] string newname);
   }
 }

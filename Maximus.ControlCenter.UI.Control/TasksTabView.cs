@@ -642,7 +642,14 @@ namespace Maximus.ControlCenter.UI.Control
         }
         else
         {
-          
+          string addPath = selectedItem.SubItems[0].Text;
+          SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+            new Dictionary<string, string>
+            {
+              { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+              { "Action", ((int)WriteRegistryElementAction.DeleteValue).ToString() },
+              { "OldName", addPath }
+            }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
         }
       }
     }
@@ -656,8 +663,8 @@ namespace Maximus.ControlCenter.UI.Control
         ListViewItem selectedItem = lvRegItems.SelectedItems[0];
         if (selectedItem.SubItems[1].Text == "REG_KEY")
         {
-          string addPath = selectedItem.SubItems[0].Text;
-          if (addPath == "..")
+          string keyName = selectedItem.SubItems[0].Text;
+          if (keyName == "..")
             return;
           using (RegistryEditForm dialog = new RegistryEditForm())
           {
@@ -669,7 +676,7 @@ namespace Maximus.ControlCenter.UI.Control
                 {
                   { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
                   { "Action", ((int)WriteRegistryElementAction.RenameKey).ToString() },
-                  { "OldName", addPath },
+                  { "OldName", keyName },
                   { "NewName", dialog.NewName }
                 }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
             }
@@ -677,10 +684,46 @@ namespace Maximus.ControlCenter.UI.Control
         }
         else
         {
-
+          using (RegistryEditForm dialog = new RegistryEditForm())
+          {
+            dialog.FormMode = RegistryEditFormMode.NewName;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+              string valueName = selectedItem.SubItems[0].Text;
+              SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+                new Dictionary<string, string>
+                {
+                  { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+                  { "Action", ((int)WriteRegistryElementAction.RenameValue).ToString() },
+                  { "OldName", valueName },
+                  { "NewName", dialog.NewName }
+                }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+            }
+          }
         }
       }
 
+    }
+
+    private void stringToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.String;
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+          SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+            new Dictionary<string, string>
+            {
+              { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+              { "Action", ((int)WriteRegistryElementAction.SetValue).ToString() },
+              { "OldName", dialog.NewName },
+              { "NewValue", dialog.Value },
+              { "ValueType", "REG_SZ" }
+            }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+        }
+      }
     }
   }
 }

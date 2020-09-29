@@ -50,7 +50,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
             // values
             List<Quadruple> values = new List<Quadruple>();
             foreach (string paramName in currentKey.GetValueNames())
-              values.Add(SerializeRegValue(paramName, currentKey.GetValue(paramName), currentKey.GetValueKind(paramName)));
+              values.Add(SerializeRegValue(paramName, currentKey.GetValue(paramName), currentKey.GetValueKind(paramName), ExpandStrings));
             values.Sort((q1, q2) => q1.I1.CompareTo(q2.I1));
 
             keys.AddRange(values);
@@ -80,7 +80,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
       }
     }
 
-    private Quadruple SerializeRegValue(string paramName, object value, RegistryValueKind dataType)
+    internal static Quadruple SerializeRegValue(string paramName, object value, RegistryValueKind dataType, bool ExpandStrings)
     {
       try
       {
@@ -104,8 +104,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
       }
       catch (Exception e)
       {
-        ModuleErrorSignalReceiver(ModuleErrorSeverity.DataLoss, ModuleErrorCriticality.Continue, e, $"Failed to serialize {paramName} of native type {value.GetType().Name} and registry type of {dataType}");
-        return new Quadruple { I1 = paramName, I2 = "REG_SZ", I3 = e.Message };
+        throw new InvalidCastException($"Failed to serialize {paramName} of native type {value.GetType().Name} and registry type of {dataType}", e);
       }
     }
 
