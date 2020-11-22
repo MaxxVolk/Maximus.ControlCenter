@@ -14,37 +14,35 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
 {
   [MonitoringModule(ModuleType.WriteAction)]
   [ModuleOutput(true)]
-  class ConfigureServiceWA : ModuleBaseSimpleAction<PropertyBagDataItem>
+  class ConfigureServiceWA : ModuleBaseSimpleAction<QuadrupleListDataItem>
   {
     // configuration
     private string QueryService;
     private int ServiceType = -1, StartType = -1, ErrorControl = -1; // SERVICE_NO_CHANGE = 0xFFFFFFFF
     private string BinaryPathName, LoadOrderGroup, Dependencies, ServiceStartName, Password, DisplayName;
 
-    public ConfigureServiceWA(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
+    public ConfigureServiceWA(ModuleHost<QuadrupleListDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
     {
 
     }
 
-    protected override void PreInitialize(ModuleHost<PropertyBagDataItem> moduleHost, XmlReader configuration, byte[] previousState)
+    protected override void PreInitialize(ModuleHost<QuadrupleListDataItem> moduleHost, XmlReader configuration, byte[] previousState)
     {
       ModInit.Logger.AddLoggingSource(GetType(), ModInit.evtId_ConfigureServiceWA);
       base.PreInitialize(moduleHost, configuration, previousState);
     }
 
-    protected override PropertyBagDataItem[] GetOutputData(DataItemBase[] inputDataItems)
+    protected override QuadrupleListDataItem[] GetOutputData(DataItemBase[] inputDataItems)
     {
       try
       {
         if (!string.IsNullOrWhiteSpace(Dependencies))
-          return new PropertyBagDataItem[]
-          {
-            CreatePropertyBag("Status", "ERROR", "Message", "Configuring 'Dependencies' is not supported.")
-          };
+          return CreateResponse("ERROR", "Configuring 'Dependencies' is not supported.", null, null);
 
         using (ServiceController sc = new ServiceController(QueryService))
         using (SafeHandle serviceHandle = sc.ServiceHandle)
         {
+          ModInit.Logger.WriteInformation($"Calling ChangeServiceConfig({QueryService}, {ServiceType}, {StartType}, {ErrorControl}, {BinaryPathName ?? "NULL"})", this);
           if (!Win32Helper.ChangeServiceConfig(
           serviceHandle.DangerousGetHandle(),
 
@@ -65,18 +63,17 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
           }
         }
 
-        return new PropertyBagDataItem[]
-        {
-          CreatePropertyBag("Status", "OK", "Message", "")
-        };
+        return CreateResponse("OK", "", null, null);
       }
       catch (Exception e)
       {
-        return new PropertyBagDataItem[]
-        {
-          CreatePropertyBag("Status", "ERROR", "Message", e.Message)
-        };
+        return CreateResponse("ERROR", e.Message, null, null);
       }
+    }
+
+    private QuadrupleListDataItem[] CreateResponse(string i1, string i2, string i3, string i4)
+    {
+      return new QuadrupleListDataItem[] { new QuadrupleListDataItem(new QuadrupleList { List = new System.Collections.Generic.List<Quadruple> { new Quadruple { I1 = i1, I2 = i2, I3 = i3, I4 = i4 } } }) };
     }
 
     protected override void LoadConfiguration(XmlDocument cfgDoc)

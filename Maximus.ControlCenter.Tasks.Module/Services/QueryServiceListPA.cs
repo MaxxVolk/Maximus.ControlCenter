@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Text;
 using System.Xml;
+using System.Linq;
 
 namespace Maximus.ControlCenter.Tasks.Module.Services
 {
@@ -117,6 +118,45 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
           }
         }
 
+        // query advanced dependency
+        ServiceController[] allNativeServices = null;
+        if (QueryParameters)
+          try
+          {
+            allNativeServices = ServiceController.GetServices();
+            foreach (ServiceInfo resultService in allServices)
+            {
+              ServiceController nativeServiceInstance = allNativeServices.Where(ns => ns.ServiceName == resultService.Name).FirstOrDefault();
+              if (nativeServiceInstance == null)
+                continue; // if the service was deleted right before the second query
+              if (nativeServiceInstance.ServicesDependedOn != null)
+              {
+                resultService.DependOn = new List<DependOnRecord>();
+                foreach (ServiceController dep_on in nativeServiceInstance.ServicesDependedOn)
+                {
+                  resultService.DependOn.Add(GetDependOnRecord(dep_on));
+                }
+              }
+              if (nativeServiceInstance.DependentServices != null)
+              {
+                resultService.Dependant = new List<DependOnRecord>();
+                foreach (ServiceController dep in nativeServiceInstance.DependentServices)
+                {
+                  resultService.Dependant.Add(GetDependantRecord(dep));
+                }
+              }
+            }
+          }
+          catch (Exception e)
+          {
+            ModuleErrorSignalReceiver(ModuleErrorSeverity.DataLoss, ModuleErrorCriticality.Continue, e, $"Failure while walking through service dependencies. Skipping.");
+          }
+          finally
+          {
+            if (allNativeServices != null)
+              foreach (ServiceController ns in allNativeServices) try { ns.Dispose(); } catch { }
+          }
+
         return new ServiceListDataItem[]
         {
           new ServiceListDataItem(new ServiceList
@@ -140,6 +180,48 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
           })
         };
       }
+    }
+
+    private DependOnRecord GetDependantRecord(ServiceController dep)
+    {
+      if (dep == null)
+        return null;
+      else
+      {
+        DependOnRecord result = new DependOnRecord
+        {
+          DependencyName = dep.ServiceName,
+          DependencyDisplayName = dep.DisplayName
+        };
+        if (dep.DependentServices != null)
+        {
+          result.DependOn = new List<DependOnRecord>();
+          foreach (ServiceController ds in dep.DependentServices)
+            result.DependOn.Add(GetDependOnRecord(ds));
+        }
+        return result;
+      }
+    }
+
+    private DependOnRecord GetDependOnRecord(ServiceController denendOnService)
+    {
+      if (denendOnService == null)
+        return null;
+      else
+      {
+        DependOnRecord result = new DependOnRecord
+        {
+          DependencyName = denendOnService.ServiceName,
+          DependencyDisplayName = denendOnService.DisplayName
+        };
+        if (denendOnService.ServicesDependedOn != null)
+        {
+          result.DependOn = new List<DependOnRecord>();
+          foreach (ServiceController ds in denendOnService.ServicesDependedOn)
+            result.DependOn.Add(GetDependOnRecord(ds));
+        }
+        return result;
+      }  
     }
 
     private void FillServiceValuesFromRegistry(ServiceInfo newInstance, ServiceController serviceObject, bool queryParameters)

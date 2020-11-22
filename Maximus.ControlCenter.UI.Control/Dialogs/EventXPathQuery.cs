@@ -19,6 +19,7 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
     private const string resourcePrefix = "EventXPath_";
 
     public string Query { get; set; }
+    public ComboBox.ObjectCollection EventLogList => cbEventLog.Items;
 
     public EventXPathQueryForm()
     {
@@ -28,13 +29,13 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
     private void EventXPathQueryForm_Load(object sender, EventArgs e)
     {
       cbPreDefQueryPicker.Items.Clear();
-      // using (System.Resources.ResourceSet rs = Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, false))
-        foreach (DictionaryEntry res in Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, false))
-        {
-          string resourceName = (string)res.Key;
-          if (resourceName.IndexOf(resourcePrefix) == 0)
-            cbPreDefQueryPicker.Items.Add(resourceName.Substring(resourcePrefix.Length));
-        }
+      foreach (DictionaryEntry res in Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, false))
+      {
+        string resourceName = (string)res.Key;
+        if (resourceName.IndexOf(resourcePrefix) == 0)
+          cbPreDefQueryPicker.Items.Add(resourceName.Substring(resourcePrefix.Length));
+      }
+      cbTimeRange.SelectedIndex = 0;
     }
 
     private void cbPreDefQueryPicker_SelectionChangeCommitted(object sender, EventArgs e)
@@ -74,6 +75,20 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
     private void rbFilter_CheckedChanged(object sender, EventArgs e)
     {
       UpdateElements();
+    }
+
+    private void cbTimeRange_SelectionChangeCommitted(object sender, EventArgs e)
+    {
+        if (cbTimeRange.SelectedIndex == 6)
+      {
+        dtpFrom.Enabled = true;
+        dtpTo.Enabled = true;
+      }
+        else
+      {
+        dtpFrom.Enabled = false;
+        dtpTo.Enabled = false;
+      }
     }
   }
 }

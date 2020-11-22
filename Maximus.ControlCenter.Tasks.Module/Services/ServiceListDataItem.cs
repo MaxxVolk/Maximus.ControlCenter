@@ -22,9 +22,6 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
     {
     }
 
-#if CONSOLE
-#else
     protected override string GetDataItemTypeName() => "Maximus.ControlCenter.Services.ServiceListDataItem";
-#endif
   }
 }

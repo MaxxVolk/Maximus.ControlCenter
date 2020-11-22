@@ -206,6 +206,8 @@
       this.dgvServices.Size = new System.Drawing.Size(897, 379);
       this.dgvServices.TabIndex = 1;
       this.dgvServices.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvServices_CellDoubleClick);
+      this.dgvServices.SelectionChanged += new System.EventHandler(this.dgvServices_SelectionChanged);
+      this.dgvServices.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvServices_KeyDown);
       this.dgvServices.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvServices_KeyPress);
       // 
       // cServiceDisplayName

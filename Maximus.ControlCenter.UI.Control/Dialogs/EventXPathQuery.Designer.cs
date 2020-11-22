@@ -34,24 +34,24 @@
       this.tbQueryText = new System.Windows.Forms.RichTextBox();
       this.cbPreDefQueryPicker = new System.Windows.Forms.ComboBox();
       this.gbFilterConditions = new System.Windows.Forms.GroupBox();
+      this.textBox3 = new System.Windows.Forms.TextBox();
+      this.label5 = new System.Windows.Forms.Label();
+      this.cbInformation = new System.Windows.Forms.CheckBox();
+      this.cbError = new System.Windows.Forms.CheckBox();
+      this.cbVerbose = new System.Windows.Forms.CheckBox();
+      this.cbWarning = new System.Windows.Forms.CheckBox();
+      this.cbCritical = new System.Windows.Forms.CheckBox();
+      this.label2 = new System.Windows.Forms.Label();
+      this.cbTimeRange = new System.Windows.Forms.ComboBox();
+      this.label1 = new System.Windows.Forms.Label();
       this.btCancel = new System.Windows.Forms.Button();
       this.btOK = new System.Windows.Forms.Button();
-      this.label1 = new System.Windows.Forms.Label();
-      this.comboBox2 = new System.Windows.Forms.ComboBox();
-      this.label2 = new System.Windows.Forms.Label();
-      this.cbCritical = new System.Windows.Forms.CheckBox();
-      this.cbWarning = new System.Windows.Forms.CheckBox();
-      this.cbVerbose = new System.Windows.Forms.CheckBox();
-      this.cbError = new System.Windows.Forms.CheckBox();
-      this.cbInformation = new System.Windows.Forms.CheckBox();
-      this.label3 = new System.Windows.Forms.Label();
-      this.label4 = new System.Windows.Forms.Label();
-      this.textBox1 = new System.Windows.Forms.TextBox();
-      this.textBox2 = new System.Windows.Forms.TextBox();
-      this.label5 = new System.Windows.Forms.Label();
-      this.textBox3 = new System.Windows.Forms.TextBox();
-      this.label6 = new System.Windows.Forms.Label();
-      this.textBox4 = new System.Windows.Forms.TextBox();
+      this.dtpFrom = new System.Windows.Forms.DateTimePicker();
+      this.dtpTo = new System.Windows.Forms.DateTimePicker();
+      this.rbByLog = new System.Windows.Forms.RadioButton();
+      this.rbBySource = new System.Windows.Forms.RadioButton();
+      this.cbEventLog = new System.Windows.Forms.ComboBox();
+      this.cbEventSource = new System.Windows.Forms.ComboBox();
       this.gbFilterConditions.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -83,7 +83,7 @@
       // rbManual
       // 
       this.rbManual.AutoSize = true;
-      this.rbManual.Location = new System.Drawing.Point(12, 271);
+      this.rbManual.Location = new System.Drawing.Point(12, 230);
       this.rbManual.Name = "rbManual";
       this.rbManual.Size = new System.Drawing.Size(91, 17);
       this.rbManual.TabIndex = 2;
@@ -93,10 +93,10 @@
       // 
       // tbQueryText
       // 
-      this.tbQueryText.Location = new System.Drawing.Point(12, 294);
+      this.tbQueryText.Location = new System.Drawing.Point(12, 253);
       this.tbQueryText.Name = "tbQueryText";
       this.tbQueryText.ReadOnly = true;
-      this.tbQueryText.Size = new System.Drawing.Size(660, 146);
+      this.tbQueryText.Size = new System.Drawing.Size(660, 187);
       this.tbQueryText.TabIndex = 3;
       this.tbQueryText.Text = "";
       // 
@@ -112,28 +112,130 @@
       // 
       // gbFilterConditions
       // 
-      this.gbFilterConditions.Controls.Add(this.textBox4);
-      this.gbFilterConditions.Controls.Add(this.label6);
+      this.gbFilterConditions.Controls.Add(this.cbEventSource);
+      this.gbFilterConditions.Controls.Add(this.cbEventLog);
+      this.gbFilterConditions.Controls.Add(this.rbBySource);
+      this.gbFilterConditions.Controls.Add(this.rbByLog);
+      this.gbFilterConditions.Controls.Add(this.dtpTo);
+      this.gbFilterConditions.Controls.Add(this.dtpFrom);
       this.gbFilterConditions.Controls.Add(this.textBox3);
       this.gbFilterConditions.Controls.Add(this.label5);
-      this.gbFilterConditions.Controls.Add(this.textBox2);
-      this.gbFilterConditions.Controls.Add(this.textBox1);
-      this.gbFilterConditions.Controls.Add(this.label4);
-      this.gbFilterConditions.Controls.Add(this.label3);
       this.gbFilterConditions.Controls.Add(this.cbInformation);
       this.gbFilterConditions.Controls.Add(this.cbError);
       this.gbFilterConditions.Controls.Add(this.cbVerbose);
       this.gbFilterConditions.Controls.Add(this.cbWarning);
       this.gbFilterConditions.Controls.Add(this.cbCritical);
       this.gbFilterConditions.Controls.Add(this.label2);
-      this.gbFilterConditions.Controls.Add(this.comboBox2);
+      this.gbFilterConditions.Controls.Add(this.cbTimeRange);
       this.gbFilterConditions.Controls.Add(this.label1);
       this.gbFilterConditions.Location = new System.Drawing.Point(12, 85);
       this.gbFilterConditions.Name = "gbFilterConditions";
-      this.gbFilterConditions.Size = new System.Drawing.Size(660, 180);
+      this.gbFilterConditions.Size = new System.Drawing.Size(660, 139);
       this.gbFilterConditions.TabIndex = 5;
       this.gbFilterConditions.TabStop = false;
       this.gbFilterConditions.Text = "Filter";
+      // 
+      // textBox3
+      // 
+      this.textBox3.Location = new System.Drawing.Point(92, 113);
+      this.textBox3.Name = "textBox3";
+      this.textBox3.Size = new System.Drawing.Size(224, 20);
+      this.textBox3.TabIndex = 13;
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Location = new System.Drawing.Point(6, 116);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(57, 13);
+      this.label5.TabIndex = 12;
+      this.label5.Text = "Event IDs:";
+      // 
+      // cbInformation
+      // 
+      this.cbInformation.AutoSize = true;
+      this.cbInformation.Location = new System.Drawing.Point(155, 67);
+      this.cbInformation.Name = "cbInformation";
+      this.cbInformation.Size = new System.Drawing.Size(78, 17);
+      this.cbInformation.TabIndex = 7;
+      this.cbInformation.Text = "Information";
+      this.cbInformation.UseVisualStyleBackColor = true;
+      // 
+      // cbError
+      // 
+      this.cbError.AutoSize = true;
+      this.cbError.Location = new System.Drawing.Point(92, 67);
+      this.cbError.Name = "cbError";
+      this.cbError.Size = new System.Drawing.Size(48, 17);
+      this.cbError.TabIndex = 6;
+      this.cbError.Text = "Error";
+      this.cbError.UseVisualStyleBackColor = true;
+      // 
+      // cbVerbose
+      // 
+      this.cbVerbose.AutoSize = true;
+      this.cbVerbose.Location = new System.Drawing.Point(238, 44);
+      this.cbVerbose.Name = "cbVerbose";
+      this.cbVerbose.Size = new System.Drawing.Size(65, 17);
+      this.cbVerbose.TabIndex = 5;
+      this.cbVerbose.Text = "Verbose";
+      this.cbVerbose.UseVisualStyleBackColor = true;
+      // 
+      // cbWarning
+      // 
+      this.cbWarning.AutoSize = true;
+      this.cbWarning.Location = new System.Drawing.Point(155, 44);
+      this.cbWarning.Name = "cbWarning";
+      this.cbWarning.Size = new System.Drawing.Size(66, 17);
+      this.cbWarning.TabIndex = 4;
+      this.cbWarning.Text = "Warning";
+      this.cbWarning.UseVisualStyleBackColor = true;
+      // 
+      // cbCritical
+      // 
+      this.cbCritical.AutoSize = true;
+      this.cbCritical.Location = new System.Drawing.Point(92, 44);
+      this.cbCritical.Name = "cbCritical";
+      this.cbCritical.Size = new System.Drawing.Size(57, 17);
+      this.cbCritical.TabIndex = 3;
+      this.cbCritical.Text = "Critical";
+      this.cbCritical.UseVisualStyleBackColor = true;
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(6, 48);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(63, 13);
+      this.label2.TabIndex = 2;
+      this.label2.Text = "Event level:";
+      // 
+      // cbTimeRange
+      // 
+      this.cbTimeRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbTimeRange.FormattingEnabled = true;
+      this.cbTimeRange.Items.AddRange(new object[] {
+            "Any time",
+            "Last hour",
+            "Last 12 hours",
+            "Last 24 hours",
+            "Last 7 days",
+            "Last 30 days",
+            "Custom range..."});
+      this.cbTimeRange.Location = new System.Drawing.Point(92, 17);
+      this.cbTimeRange.Name = "cbTimeRange";
+      this.cbTimeRange.Size = new System.Drawing.Size(224, 21);
+      this.cbTimeRange.TabIndex = 1;
+      this.cbTimeRange.SelectionChangeCommitted += new System.EventHandler(this.cbTimeRange_SelectionChangeCommitted);
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(6, 20);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(46, 13);
+      this.label1.TabIndex = 0;
+      this.label1.Text = "Logged:";
       // 
       // btCancel
       // 
@@ -155,145 +257,63 @@
       this.btOK.Text = "OK";
       this.btOK.UseVisualStyleBackColor = true;
       // 
-      // label1
+      // dtpFrom
       // 
-      this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(6, 20);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(46, 13);
-      this.label1.TabIndex = 0;
-      this.label1.Text = "Logged:";
+      this.dtpFrom.CustomFormat = "yyyy-MM-dd HH:mm";
+      this.dtpFrom.Enabled = false;
+      this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      this.dtpFrom.Location = new System.Drawing.Point(322, 18);
+      this.dtpFrom.Name = "dtpFrom";
+      this.dtpFrom.Size = new System.Drawing.Size(162, 20);
+      this.dtpFrom.TabIndex = 16;
       // 
-      // comboBox2
+      // dtpTo
       // 
-      this.comboBox2.FormattingEnabled = true;
-      this.comboBox2.Location = new System.Drawing.Point(47, 17);
-      this.comboBox2.Name = "comboBox2";
-      this.comboBox2.Size = new System.Drawing.Size(121, 21);
-      this.comboBox2.TabIndex = 1;
+      this.dtpTo.CustomFormat = "yyyy-MM-dd HH:mm";
+      this.dtpTo.Enabled = false;
+      this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      this.dtpTo.Location = new System.Drawing.Point(490, 18);
+      this.dtpTo.Name = "dtpTo";
+      this.dtpTo.Size = new System.Drawing.Size(164, 20);
+      this.dtpTo.TabIndex = 17;
       // 
-      // label2
+      // rbByLog
       // 
-      this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(6, 41);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(63, 13);
-      this.label2.TabIndex = 2;
-      this.label2.Text = "Event level:";
+      this.rbByLog.AutoSize = true;
+      this.rbByLog.Location = new System.Drawing.Point(9, 90);
+      this.rbByLog.Name = "rbByLog";
+      this.rbByLog.Size = new System.Drawing.Size(78, 17);
+      this.rbByLog.TabIndex = 18;
+      this.rbByLog.TabStop = true;
+      this.rbByLog.Text = "Event logs:";
+      this.rbByLog.UseVisualStyleBackColor = true;
       // 
-      // cbCritical
+      // rbBySource
       // 
-      this.cbCritical.AutoSize = true;
-      this.cbCritical.Location = new System.Drawing.Point(6, 57);
-      this.cbCritical.Name = "cbCritical";
-      this.cbCritical.Size = new System.Drawing.Size(57, 17);
-      this.cbCritical.TabIndex = 3;
-      this.cbCritical.Text = "Critical";
-      this.cbCritical.UseVisualStyleBackColor = true;
+      this.rbBySource.AutoSize = true;
+      this.rbBySource.Location = new System.Drawing.Point(324, 90);
+      this.rbBySource.Name = "rbBySource";
+      this.rbBySource.Size = new System.Drawing.Size(96, 17);
+      this.rbBySource.TabIndex = 19;
+      this.rbBySource.TabStop = true;
+      this.rbBySource.Text = "Event sources:";
+      this.rbBySource.UseVisualStyleBackColor = true;
       // 
-      // cbWarning
+      // cbEventLog
       // 
-      this.cbWarning.AutoSize = true;
-      this.cbWarning.Location = new System.Drawing.Point(82, 57);
-      this.cbWarning.Name = "cbWarning";
-      this.cbWarning.Size = new System.Drawing.Size(66, 17);
-      this.cbWarning.TabIndex = 4;
-      this.cbWarning.Text = "Warning";
-      this.cbWarning.UseVisualStyleBackColor = true;
+      this.cbEventLog.FormattingEnabled = true;
+      this.cbEventLog.Location = new System.Drawing.Point(92, 86);
+      this.cbEventLog.Name = "cbEventLog";
+      this.cbEventLog.Size = new System.Drawing.Size(224, 21);
+      this.cbEventLog.TabIndex = 20;
       // 
-      // cbVerbose
+      // cbEventSource
       // 
-      this.cbVerbose.AutoSize = true;
-      this.cbVerbose.Location = new System.Drawing.Point(327, 57);
-      this.cbVerbose.Name = "cbVerbose";
-      this.cbVerbose.Size = new System.Drawing.Size(65, 17);
-      this.cbVerbose.TabIndex = 5;
-      this.cbVerbose.Text = "Verbose";
-      this.cbVerbose.UseVisualStyleBackColor = true;
-      // 
-      // cbError
-      // 
-      this.cbError.AutoSize = true;
-      this.cbError.Location = new System.Drawing.Point(165, 57);
-      this.cbError.Name = "cbError";
-      this.cbError.Size = new System.Drawing.Size(48, 17);
-      this.cbError.TabIndex = 6;
-      this.cbError.Text = "Error";
-      this.cbError.UseVisualStyleBackColor = true;
-      // 
-      // cbInformation
-      // 
-      this.cbInformation.AutoSize = true;
-      this.cbInformation.Location = new System.Drawing.Point(228, 57);
-      this.cbInformation.Name = "cbInformation";
-      this.cbInformation.Size = new System.Drawing.Size(78, 17);
-      this.cbInformation.TabIndex = 7;
-      this.cbInformation.Text = "Information";
-      this.cbInformation.UseVisualStyleBackColor = true;
-      // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(6, 86);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(60, 13);
-      this.label3.TabIndex = 8;
-      this.label3.Text = "Event logs:";
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(204, 86);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(78, 13);
-      this.label4.TabIndex = 9;
-      this.label4.Text = "Event sources:";
-      // 
-      // textBox1
-      // 
-      this.textBox1.Location = new System.Drawing.Point(72, 80);
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(100, 20);
-      this.textBox1.TabIndex = 10;
-      // 
-      // textBox2
-      // 
-      this.textBox2.Location = new System.Drawing.Point(292, 83);
-      this.textBox2.Name = "textBox2";
-      this.textBox2.Size = new System.Drawing.Size(100, 20);
-      this.textBox2.TabIndex = 11;
-      // 
-      // label5
-      // 
-      this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(9, 115);
-      this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(57, 13);
-      this.label5.TabIndex = 12;
-      this.label5.Text = "Event IDs:";
-      // 
-      // textBox3
-      // 
-      this.textBox3.Location = new System.Drawing.Point(72, 112);
-      this.textBox3.Name = "textBox3";
-      this.textBox3.Size = new System.Drawing.Size(100, 20);
-      this.textBox3.TabIndex = 13;
-      // 
-      // label6
-      // 
-      this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(13, 135);
-      this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(78, 13);
-      this.label6.TabIndex = 14;
-      this.label6.Text = "Task category:";
-      // 
-      // textBox4
-      // 
-      this.textBox4.Location = new System.Drawing.Point(97, 138);
-      this.textBox4.Name = "textBox4";
-      this.textBox4.Size = new System.Drawing.Size(100, 20);
-      this.textBox4.TabIndex = 15;
+      this.cbEventSource.FormattingEnabled = true;
+      this.cbEventSource.Location = new System.Drawing.Point(426, 86);
+      this.cbEventSource.Name = "cbEventSource";
+      this.cbEventSource.Size = new System.Drawing.Size(224, 21);
+      this.cbEventSource.TabIndex = 21;
       // 
       // EventXPathQueryForm
       // 
@@ -332,23 +352,23 @@
     private System.Windows.Forms.RichTextBox tbQueryText;
     private System.Windows.Forms.ComboBox cbPreDefQueryPicker;
     private System.Windows.Forms.GroupBox gbFilterConditions;
-    private System.Windows.Forms.TextBox textBox4;
-    private System.Windows.Forms.Label label6;
     private System.Windows.Forms.TextBox textBox3;
     private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.TextBox textBox2;
-    private System.Windows.Forms.TextBox textBox1;
-    private System.Windows.Forms.Label label4;
-    private System.Windows.Forms.Label label3;
     private System.Windows.Forms.CheckBox cbInformation;
     private System.Windows.Forms.CheckBox cbError;
     private System.Windows.Forms.CheckBox cbVerbose;
     private System.Windows.Forms.CheckBox cbWarning;
     private System.Windows.Forms.CheckBox cbCritical;
     private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.ComboBox comboBox2;
+    private System.Windows.Forms.ComboBox cbTimeRange;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Button btCancel;
     private System.Windows.Forms.Button btOK;
+    private System.Windows.Forms.ComboBox cbEventSource;
+    private System.Windows.Forms.ComboBox cbEventLog;
+    private System.Windows.Forms.RadioButton rbBySource;
+    private System.Windows.Forms.RadioButton rbByLog;
+    private System.Windows.Forms.DateTimePicker dtpTo;
+    private System.Windows.Forms.DateTimePicker dtpFrom;
   }
 }

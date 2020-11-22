@@ -28,10 +28,7 @@ namespace Maximus.ControlCenter.Tasks.Module
     {
     }
 
-#if CONSOLE
-#else
     protected override string GetDataItemTypeName() => "Maximus.ControlCenter.QuadrupleListDataItem";
-#endif
   }
 
   [XmlRoot("QuadrupleList")]

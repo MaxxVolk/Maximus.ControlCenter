@@ -138,10 +138,11 @@
             <Type>Maximus.ControlCenter.Tasks.Module.Services.ConfigureServiceWA</Type>
           </Managed>
         </ModuleImplementation>
-        <OutputType>System!System.PropertyBagData</OutputType>
+        <OutputType>Maximus.ControlCenter.QuadrupleListDataItem</OutputType>
         <InputType>System!System.BaseData</InputType>
       </WriteActionModuleType>
 
+      <!-- Maximus.ControlCenter.WriteRegistryElement.WriteAction -->
       <WriteActionModuleType ID="Maximus.ControlCenter.WriteRegistryElement.WriteAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
         <Configuration>
           <xsd:element name="KeyPath" minOccurs="1" type="xsd:string"/>

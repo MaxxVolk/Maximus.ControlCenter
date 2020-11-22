@@ -26,10 +26,6 @@ namespace Maximus.ControlCenter.Tasks.Module.Events
     public EventListDataItem(XmlReader reader) : base(reader)
     {
     }
-
-#if CONSOLE
-#else
     protected override string GetDataItemTypeName() => "Maximus.ControlCenter.Services.EventListDataItem";
-#endif
   }
 }

@@ -12,6 +12,10 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
     public int Type { get; set; }
     [XmlArray]
     public string[] DependOnService { get; set; }
+    [XmlArray]
+    public List<DependOnRecord> DependOn { get; set; }
+    [XmlArray]
+    public List<DependOnRecord> Dependant { get; set; } // Dependant
     public string ObjectName { get; set; }
     public string ImagePath { get; set; }
     public bool IsDelayed { get; set; }
@@ -31,5 +35,13 @@ namespace Maximus.ControlCenter.Tasks.Module.Services
     public string Name { get; set; }
     public object Data { get; set; }
     public string RegType { get; set; }
+  }
+
+  public class DependOnRecord
+  {
+    public string DependencyName { get; set; }
+    public string DependencyDisplayName { get; set; }
+    [XmlArray]
+    public List<DependOnRecord> DependOn { get; set; }
   }
 }

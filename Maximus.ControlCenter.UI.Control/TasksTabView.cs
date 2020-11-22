@@ -237,17 +237,7 @@ namespace Maximus.ControlCenter.UI.Control
       }
       return "#####";
     }
-
-    private void dgvServices_KeyPress(object sender, KeyPressEventArgs e)
-    {
-      if (e.KeyChar == (char)13)
-      {
-        e.Handled = true;
-        ShowServiceDetails((DataRowView)dgvServices.CurrentRow.DataBoundItem);
-      }
-
-    }
-
+    
     private void dgvServices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
       if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -322,14 +312,13 @@ namespace Maximus.ControlCenter.UI.Control
 
       try
       {
-        EventListDataItem serviceListResult = DeserializeDataItemFromTaskResults<EventListDataItem, EventList>(results, (xmlReader) => new EventListDataItem(xmlReader));
-        if (serviceListResult != null && serviceListResult.Data.ErrorCode == 0)
+        EventListDataItem eventListResult = DeserializeDataItemFromTaskResults<EventListDataItem, EventList>(results, (xmlReader) => new EventListDataItem(xmlReader));
+        if (eventListResult != null && eventListResult.Data.ErrorCode == 0)
         {
           ClearEventDisplayElements();
-          DataTable table = PrepareEventTable(serviceListResult);
+          DataTable table = PrepareEventTable(eventListResult);
           BindingSource bs = new BindingSource() { DataSource = table };
           dgvEventsMain.DataSource = bs;
-          //dgvEventsMain.Sort(cServiceDisplayName, ListSortDirection.Ascending);
           tbEventText.DataBindings.Add("Text", bs, "FormattedDescription");
           tbEventLogName.DataBindings.Add("Text", bs, "LogName");
           tbEventSource.DataBindings.Add("Text", bs, "Source");
@@ -342,7 +331,12 @@ namespace Maximus.ControlCenter.UI.Control
           tbEventComputer.DataBindings.Add("Text", bs, "Computer");
           wbEventXML.DataBindings.Add("DocumentText", bs, "RawXML");
         }
-
+        else
+        {
+          dgvEventsMain.DataSource = null;
+          if (eventListResult != null && eventListResult.Data.ErrorCode != 0)
+            MessageBox.Show($"Failed to query event log.\r\nError message: {eventListResult.Data.ErrorMessage ?? "Not provided."}", "Operation Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
       }
       catch (Exception e)
       {
@@ -396,6 +390,9 @@ namespace Maximus.ControlCenter.UI.Control
 
       using (EventXPathQueryForm queryDialog = new EventXPathQueryForm())
       {
+        queryDialog.EventLogList.Clear();
+        foreach (object item in cbEventSelectLog.Items)
+          queryDialog.EventLogList.Add(item);
         queryDialog.Query = tbEventXPathQuery.Text;
         if (queryDialog.ShowDialog() == DialogResult.OK)
         {
@@ -527,7 +524,7 @@ namespace Maximus.ControlCenter.UI.Control
       if (lvRegItems.SelectedItems !=null && lvRegItems.SelectedItems.Count == 1)
       {
         ListViewItem selectedItem = lvRegItems.SelectedItems[0];
-        Dbg.Log($"Subitems count: {selectedItem.SubItems.Count}; [0]: {selectedItem.SubItems[0].Text}");
+        Dbg.Log($"Subitem count: {selectedItem.SubItems.Count}; [0]: {selectedItem.SubItems[0].Text}");
         if (selectedItem.SubItems[1].Text == "REG_KEY")
         {
           string addPath = selectedItem.SubItems[0].Text;
@@ -724,6 +721,45 @@ namespace Maximus.ControlCenter.UI.Control
             }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
         }
       }
+    }
+
+    private string searchExpression = "";
+    private DateTime searchExpressionUpdate = DateTime.Now;
+
+    private void dgvServices_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.Enter)
+      {
+        ShowServiceDetails((DataRowView)dgvServices.CurrentRow.DataBoundItem);
+        e.Handled = true;
+        e.SuppressKeyPress = true;
+      }
+      if (char.IsLetterOrDigit((char)e.KeyData))
+      {
+        if (DateTime.Now.Subtract(searchExpressionUpdate).TotalMilliseconds > 500)
+          searchExpression = $"{(char)e.KeyData}";
+        else
+          searchExpression += (char)e.KeyData;
+        searchExpression = searchExpression.ToLowerInvariant();
+        searchExpressionUpdate = DateTime.Now;
+        foreach (DataGridViewRow row in dgvServices.Rows)
+          if (((DataRowView)row.DataBoundItem)["DisplayName"]?.ToString().ToLowerInvariant().StartsWith(searchExpression) == true)
+          {
+            dgvServices.Rows[row.Index].Selected = true;
+            dgvServices.CurrentCell = dgvServices.Rows[row.Index].Cells[0];
+            break;
+          }
+      }
+    }
+
+    private void dgvServices_KeyPress(object sender, KeyPressEventArgs e)
+    {
+
+    }
+
+    private void dgvServices_SelectionChanged(object sender, EventArgs e)
+    {
+
     }
   }
 }
