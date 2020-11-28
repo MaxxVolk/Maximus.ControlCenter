@@ -34,6 +34,12 @@
       this.tbQueryText = new System.Windows.Forms.RichTextBox();
       this.cbPreDefQueryPicker = new System.Windows.Forms.ComboBox();
       this.gbFilterConditions = new System.Windows.Forms.GroupBox();
+      this.cbEventSource = new System.Windows.Forms.ComboBox();
+      this.cbEventLog = new System.Windows.Forms.ComboBox();
+      this.rbBySource = new System.Windows.Forms.RadioButton();
+      this.rbByLog = new System.Windows.Forms.RadioButton();
+      this.dtpTo = new System.Windows.Forms.DateTimePicker();
+      this.dtpFrom = new System.Windows.Forms.DateTimePicker();
       this.textBox3 = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.cbInformation = new System.Windows.Forms.CheckBox();
@@ -46,12 +52,6 @@
       this.label1 = new System.Windows.Forms.Label();
       this.btCancel = new System.Windows.Forms.Button();
       this.btOK = new System.Windows.Forms.Button();
-      this.dtpFrom = new System.Windows.Forms.DateTimePicker();
-      this.dtpTo = new System.Windows.Forms.DateTimePicker();
-      this.rbByLog = new System.Windows.Forms.RadioButton();
-      this.rbBySource = new System.Windows.Forms.RadioButton();
-      this.cbEventLog = new System.Windows.Forms.ComboBox();
-      this.cbEventSource = new System.Windows.Forms.ComboBox();
       this.gbFilterConditions.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -74,9 +74,10 @@
       this.rbFilter.Enabled = false;
       this.rbFilter.Location = new System.Drawing.Point(12, 62);
       this.rbFilter.Name = "rbFilter";
-      this.rbFilter.Size = new System.Drawing.Size(87, 17);
+      this.rbFilter.Size = new System.Drawing.Size(437, 17);
       this.rbFilter.TabIndex = 1;
-      this.rbFilter.Text = "Create Query";
+      this.rbFilter.Text = "Create Query (Not Supported. Use Event Viewer to create a query, then paste it be" +
+    "low.)";
       this.rbFilter.UseVisualStyleBackColor = true;
       this.rbFilter.CheckedChanged += new System.EventHandler(this.rbFilter_CheckedChanged);
       // 
@@ -93,6 +94,7 @@
       // 
       // tbQueryText
       // 
+      this.tbQueryText.BackColor = System.Drawing.SystemColors.Window;
       this.tbQueryText.Location = new System.Drawing.Point(12, 253);
       this.tbQueryText.Name = "tbQueryText";
       this.tbQueryText.ReadOnly = true;
@@ -128,12 +130,71 @@
       this.gbFilterConditions.Controls.Add(this.label2);
       this.gbFilterConditions.Controls.Add(this.cbTimeRange);
       this.gbFilterConditions.Controls.Add(this.label1);
+      this.gbFilterConditions.Enabled = false;
       this.gbFilterConditions.Location = new System.Drawing.Point(12, 85);
       this.gbFilterConditions.Name = "gbFilterConditions";
       this.gbFilterConditions.Size = new System.Drawing.Size(660, 139);
       this.gbFilterConditions.TabIndex = 5;
       this.gbFilterConditions.TabStop = false;
       this.gbFilterConditions.Text = "Filter";
+      // 
+      // cbEventSource
+      // 
+      this.cbEventSource.FormattingEnabled = true;
+      this.cbEventSource.Location = new System.Drawing.Point(426, 86);
+      this.cbEventSource.Name = "cbEventSource";
+      this.cbEventSource.Size = new System.Drawing.Size(224, 21);
+      this.cbEventSource.TabIndex = 21;
+      // 
+      // cbEventLog
+      // 
+      this.cbEventLog.FormattingEnabled = true;
+      this.cbEventLog.Location = new System.Drawing.Point(92, 86);
+      this.cbEventLog.Name = "cbEventLog";
+      this.cbEventLog.Size = new System.Drawing.Size(224, 21);
+      this.cbEventLog.TabIndex = 20;
+      // 
+      // rbBySource
+      // 
+      this.rbBySource.AutoSize = true;
+      this.rbBySource.Location = new System.Drawing.Point(324, 90);
+      this.rbBySource.Name = "rbBySource";
+      this.rbBySource.Size = new System.Drawing.Size(96, 17);
+      this.rbBySource.TabIndex = 19;
+      this.rbBySource.TabStop = true;
+      this.rbBySource.Text = "Event sources:";
+      this.rbBySource.UseVisualStyleBackColor = true;
+      // 
+      // rbByLog
+      // 
+      this.rbByLog.AutoSize = true;
+      this.rbByLog.Location = new System.Drawing.Point(9, 90);
+      this.rbByLog.Name = "rbByLog";
+      this.rbByLog.Size = new System.Drawing.Size(78, 17);
+      this.rbByLog.TabIndex = 18;
+      this.rbByLog.TabStop = true;
+      this.rbByLog.Text = "Event logs:";
+      this.rbByLog.UseVisualStyleBackColor = true;
+      // 
+      // dtpTo
+      // 
+      this.dtpTo.CustomFormat = "yyyy-MM-dd HH:mm";
+      this.dtpTo.Enabled = false;
+      this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      this.dtpTo.Location = new System.Drawing.Point(490, 18);
+      this.dtpTo.Name = "dtpTo";
+      this.dtpTo.Size = new System.Drawing.Size(164, 20);
+      this.dtpTo.TabIndex = 17;
+      // 
+      // dtpFrom
+      // 
+      this.dtpFrom.CustomFormat = "yyyy-MM-dd HH:mm";
+      this.dtpFrom.Enabled = false;
+      this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      this.dtpFrom.Location = new System.Drawing.Point(322, 18);
+      this.dtpFrom.Name = "dtpFrom";
+      this.dtpFrom.Size = new System.Drawing.Size(162, 20);
+      this.dtpFrom.TabIndex = 16;
       // 
       // textBox3
       // 
@@ -256,64 +317,6 @@
       this.btOK.TabIndex = 7;
       this.btOK.Text = "OK";
       this.btOK.UseVisualStyleBackColor = true;
-      // 
-      // dtpFrom
-      // 
-      this.dtpFrom.CustomFormat = "yyyy-MM-dd HH:mm";
-      this.dtpFrom.Enabled = false;
-      this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-      this.dtpFrom.Location = new System.Drawing.Point(322, 18);
-      this.dtpFrom.Name = "dtpFrom";
-      this.dtpFrom.Size = new System.Drawing.Size(162, 20);
-      this.dtpFrom.TabIndex = 16;
-      // 
-      // dtpTo
-      // 
-      this.dtpTo.CustomFormat = "yyyy-MM-dd HH:mm";
-      this.dtpTo.Enabled = false;
-      this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-      this.dtpTo.Location = new System.Drawing.Point(490, 18);
-      this.dtpTo.Name = "dtpTo";
-      this.dtpTo.Size = new System.Drawing.Size(164, 20);
-      this.dtpTo.TabIndex = 17;
-      // 
-      // rbByLog
-      // 
-      this.rbByLog.AutoSize = true;
-      this.rbByLog.Location = new System.Drawing.Point(9, 90);
-      this.rbByLog.Name = "rbByLog";
-      this.rbByLog.Size = new System.Drawing.Size(78, 17);
-      this.rbByLog.TabIndex = 18;
-      this.rbByLog.TabStop = true;
-      this.rbByLog.Text = "Event logs:";
-      this.rbByLog.UseVisualStyleBackColor = true;
-      // 
-      // rbBySource
-      // 
-      this.rbBySource.AutoSize = true;
-      this.rbBySource.Location = new System.Drawing.Point(324, 90);
-      this.rbBySource.Name = "rbBySource";
-      this.rbBySource.Size = new System.Drawing.Size(96, 17);
-      this.rbBySource.TabIndex = 19;
-      this.rbBySource.TabStop = true;
-      this.rbBySource.Text = "Event sources:";
-      this.rbBySource.UseVisualStyleBackColor = true;
-      // 
-      // cbEventLog
-      // 
-      this.cbEventLog.FormattingEnabled = true;
-      this.cbEventLog.Location = new System.Drawing.Point(92, 86);
-      this.cbEventLog.Name = "cbEventLog";
-      this.cbEventLog.Size = new System.Drawing.Size(224, 21);
-      this.cbEventLog.TabIndex = 20;
-      // 
-      // cbEventSource
-      // 
-      this.cbEventSource.FormattingEnabled = true;
-      this.cbEventSource.Location = new System.Drawing.Point(426, 86);
-      this.cbEventSource.Name = "cbEventSource";
-      this.cbEventSource.Size = new System.Drawing.Size(224, 21);
-      this.cbEventSource.TabIndex = 21;
       // 
       // EventXPathQueryForm
       // 

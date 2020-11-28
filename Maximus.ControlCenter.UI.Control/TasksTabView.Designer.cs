@@ -880,6 +880,7 @@
       this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
       this.modifyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
       this.modifyToolStripMenuItem.Text = "Modify";
+      this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
       // 
       // toolStripSeparator1
       // 
@@ -944,30 +945,35 @@
       this.binaryToolStripMenuItem.Name = "binaryToolStripMenuItem";
       this.binaryToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
       this.binaryToolStripMenuItem.Text = "Binary Value";
+      this.binaryToolStripMenuItem.Click += new System.EventHandler(this.binaryToolStripMenuItem_Click);
       // 
       // dWORDToolStripMenuItem
       // 
       this.dWORDToolStripMenuItem.Name = "dWORDToolStripMenuItem";
       this.dWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
       this.dWORDToolStripMenuItem.Text = "DWORD Value";
+      this.dWORDToolStripMenuItem.Click += new System.EventHandler(this.dWORDToolStripMenuItem_Click);
       // 
       // qWORDToolStripMenuItem
       // 
       this.qWORDToolStripMenuItem.Name = "qWORDToolStripMenuItem";
       this.qWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
       this.qWORDToolStripMenuItem.Text = "QWORD Value";
+      this.qWORDToolStripMenuItem.Click += new System.EventHandler(this.qWORDToolStripMenuItem_Click);
       // 
       // multiStringValueToolStripMenuItem
       // 
       this.multiStringValueToolStripMenuItem.Name = "multiStringValueToolStripMenuItem";
       this.multiStringValueToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
       this.multiStringValueToolStripMenuItem.Text = "Multi-String Value";
+      this.multiStringValueToolStripMenuItem.Click += new System.EventHandler(this.multiStringValueToolStripMenuItem_Click);
       // 
       // expandableStringValueToolStripMenuItem
       // 
       this.expandableStringValueToolStripMenuItem.Name = "expandableStringValueToolStripMenuItem";
       this.expandableStringValueToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
       this.expandableStringValueToolStripMenuItem.Text = "Expandable String Value";
+      this.expandableStringValueToolStripMenuItem.Click += new System.EventHandler(this.expandableStringValueToolStripMenuItem_Click);
       // 
       // ilRegIcons
       // 

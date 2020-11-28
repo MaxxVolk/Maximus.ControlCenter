@@ -95,7 +95,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
             // KeyPath, OldName, NewValue, ValueType
             case WriteRegistryElementAction.SetValue:
               if (string.IsNullOrWhiteSpace(NewValue) || string.IsNullOrWhiteSpace(ValueType))
-                return CreateErrorousOutput("Missing parameters. Rename Key operation requires KeyPath, OldName, NewValue, and ValueType. Although, OldName can be empty to indicate the default value.");
+                return CreateErrorousOutput("Missing parameters. Set Value operation requires KeyPath, OldName, NewValue, and ValueType. Although, OldName can be empty to indicate the default value.");
               if (string.IsNullOrEmpty(OldName) && ValueType != "REG_SZ")
                 return CreateErrorousOutput("Invalid parameters. (Default) value can only be of REG_SZ type.");
               RegistryValueKind dataType = GetRegistryValueKind(ValueType);

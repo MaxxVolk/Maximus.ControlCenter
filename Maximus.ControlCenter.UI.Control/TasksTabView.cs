@@ -190,7 +190,7 @@ namespace Maximus.ControlCenter.UI.Control
         }
     }
 
-    private DataTable PrepareServiceTable(ServiceListDataItem  serviceDataItem)
+    private DataTable PrepareServiceTable(ServiceListDataItem serviceDataItem)
     {
       Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
 
@@ -205,17 +205,17 @@ namespace Maximus.ControlCenter.UI.Control
 
       result.Columns.Add("SourceObject", typeof(ServiceInfo));
 
-      foreach(ServiceInfo serviceInfo in serviceDataItem.Data.Services)
-        result.LoadDataRow(new object[] 
-        { 
+      foreach (ServiceInfo serviceInfo in serviceDataItem.Data.Services)
+        result.LoadDataRow(new object[]
+        {
           (object)serviceInfo.DisplayName ?? (object)serviceInfo.Name ?? DBNull.Value,
-          (object)serviceInfo.Description ?? DBNull.Value, 
+          (object)serviceInfo.Description ?? DBNull.Value,
           ServiceStartTypeToString(serviceInfo.Start),
           (object)serviceInfo.ObjectName  ?? DBNull.Value,
-          serviceInfo.IsDelayed, 
+          serviceInfo.IsDelayed,
           serviceInfo.IsTriggered,
-          (object)serviceInfo.Status ?? DBNull.Value, 
-          serviceInfo 
+          (object)serviceInfo.Status ?? DBNull.Value,
+          serviceInfo
         }, false);
       result.AcceptChanges();
 
@@ -237,7 +237,7 @@ namespace Maximus.ControlCenter.UI.Control
       }
       return "#####";
     }
-    
+
     private void dgvServices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
       if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -406,7 +406,7 @@ namespace Maximus.ControlCenter.UI.Control
     {
       switch ((string)((DataRowView)dgvEventsMain.Rows[e.RowIndex].DataBoundItem)["Level"])
       {
-        case "Error": dgvEventsMain.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Pink;break;
+        case "Error": dgvEventsMain.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Pink; break;
         case "Warning": dgvEventsMain.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightYellow; break;
       }
     }
@@ -492,6 +492,11 @@ namespace Maximus.ControlCenter.UI.Control
         if (regReadResult?.Data?.List != null)
         {
           lvRegItems.Items.Clear();
+          if (regReadResult.Data.List.Any() && regReadResult.Data.List[0].I1 == "@Error")
+          {
+            MessageBox.Show($"Registry navigation task failed.\r\nError message: {regReadResult.Data.List[0].I3}", "Task failure.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+          }
           lvRegItems.Items.Add(new ListViewItem(new string[] { "..", "REG_KEY", "" }, GetRegImageIndex("REG_KEY")));
           foreach (Quadruple item in regReadResult.Data.List)
             lvRegItems.Items.Add(new ListViewItem(new string[] { item.I1, item.I2, item.I3 }, GetRegImageIndex(item.I2))).Name = item.I1 + item.I2;
@@ -521,7 +526,7 @@ namespace Maximus.ControlCenter.UI.Control
     {
       Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}; Selected items count: {lvRegItems.SelectedItems?.Count ?? -1}");
 
-      if (lvRegItems.SelectedItems !=null && lvRegItems.SelectedItems.Count == 1)
+      if (lvRegItems.SelectedItems != null && lvRegItems.SelectedItems.Count == 1)
       {
         ListViewItem selectedItem = lvRegItems.SelectedItems[0];
         Dbg.Log($"Subitem count: {selectedItem.SubItems.Count}; [0]: {selectedItem.SubItems[0].Text}");
@@ -587,7 +592,7 @@ namespace Maximus.ControlCenter.UI.Control
             }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
         }
       }
-      
+
     }
 
     private void OnWriteRegistryElementTaskChange(IList<Microsoft.EnterpriseManagement.Runtime.TaskResult> results, bool lastUpdate)
@@ -702,25 +707,45 @@ namespace Maximus.ControlCenter.UI.Control
 
     }
 
-    private void stringToolStripMenuItem_Click(object sender, EventArgs e)
+    private void StartNewRegValueTask(Microsoft.Win32.RegistryValueKind valueKind, string valueName, string valueSerialized)
     {
-      using (RegistryEditForm dialog = new RegistryEditForm())
-      {
-        dialog.FormMode = RegistryEditFormMode.NewValue;
-        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.String;
-        if (dialog.ShowDialog() == DialogResult.OK)
+      SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+        new Dictionary<string, string>
         {
-          SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
-            new Dictionary<string, string>
-            {
-              { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
-              { "Action", ((int)WriteRegistryElementAction.SetValue).ToString() },
-              { "OldName", dialog.NewName },
-              { "NewValue", dialog.Value },
-              { "ValueType", "REG_SZ" }
-            }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
-        }
+          { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+          { "Action", ((int)WriteRegistryElementAction.SetValue).ToString() },
+          { "OldName", valueName },
+          { "NewValue", valueSerialized },
+          { "ValueType", RegistryValueKindToREG(valueKind) }
+        }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+    }
+
+    private string RegistryValueKindToREG(Microsoft.Win32.RegistryValueKind valueKind)
+    {
+      switch (valueKind)
+      {
+        case Microsoft.Win32.RegistryValueKind.DWord: return "REG_DWORD";
+        case Microsoft.Win32.RegistryValueKind.QWord:return "REG_QWORD";
+        case Microsoft.Win32.RegistryValueKind.String: return "REG_SZ";
+        case Microsoft.Win32.RegistryValueKind.ExpandString: return "REG_EXPAND_SZ";
+        case Microsoft.Win32.RegistryValueKind.Binary: return "REG_BINARY";
+        case Microsoft.Win32.RegistryValueKind.MultiString: return "REG_MULTI_SZ";
       }
+      return "REG_UNKNOWN";
+    }
+
+    private static Microsoft.Win32.RegistryValueKind GetRegistryValueKind(string regTypeStr)
+    {
+      switch (regTypeStr)
+      {
+        case "REG_SZ": return Microsoft.Win32.RegistryValueKind.String;
+        case "REG_EXPAND_SZ": return Microsoft.Win32.RegistryValueKind.ExpandString;
+        case "REG_BINARY": return Microsoft.Win32.RegistryValueKind.Binary;
+        case "REG_DWORD": return Microsoft.Win32.RegistryValueKind.DWord;
+        case "REG_MULTI_SZ": return Microsoft.Win32.RegistryValueKind.MultiString;
+        case "REG_QWORD": return Microsoft.Win32.RegistryValueKind.QWord;
+      }
+      return Microsoft.Win32.RegistryValueKind.Unknown;
     }
 
     private string searchExpression = "";
@@ -761,5 +786,100 @@ namespace Maximus.ControlCenter.UI.Control
     {
 
     }
+
+    private void modifyToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (lvRegItems.SelectedItems == null || lvRegItems.SelectedItems.Count == 0)
+        return;
+      ListViewItem currentRegItem = lvRegItems.SelectedItems[0];
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.EditValue;
+        dialog.NewName = currentRegItem.SubItems[0].Text;
+        dialog.ValueKind = GetRegistryValueKind(currentRegItem.SubItems[1].Text);
+        dialog.Value = currentRegItem.SubItems[2].Text;
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+          SubmitTaskAsync(WriteRegistryElementTaskId, ManagementObject,
+            new Dictionary<string, string>
+            {
+              { "KeyPath", $"{cbRegRootKey.SelectedItem}\\{tbRegPath.Text}" },
+              { "Action", ((int)WriteRegistryElementAction.SetValue).ToString() },
+              { "OldName", currentRegItem.SubItems[0].Text }, // use original
+              { "NewValue", dialog.Value },
+              { "ValueType", currentRegItem.SubItems[1].Text } // use original
+        }, new OnTaskStatusChangeDelegate(OnWriteRegistryElementTaskChange));
+        }  
+      }
+    }
+
+    #region New Reg Values
+    private void binaryToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.Binary;
+        if (dialog.ShowDialog() == DialogResult.OK)
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.String, dialog.NewName, dialog.Value);
+      }
+    }
+
+    private void stringToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.String;
+        if (dialog.ShowDialog() == DialogResult.OK)
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.String, dialog.NewName, dialog.Value);
+      }
+    }
+
+    private void dWORDToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.DWord;
+        if (dialog.ShowDialog() == DialogResult.OK)
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.DWord, dialog.NewName, dialog.Value);
+      }
+    }
+
+    private void qWORDToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.QWord;
+        if (dialog.ShowDialog() == DialogResult.OK)
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.QWord, dialog.NewName, dialog.Value);
+      }
+    }
+
+    private void multiStringValueToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.MultiString;
+        if (dialog.ShowDialog() == DialogResult.OK)
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.MultiString, dialog.NewName, dialog.Value);
+      }
+    }
+
+    private void expandableStringValueToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      using (RegistryEditForm dialog = new RegistryEditForm())
+      {
+        dialog.FormMode = RegistryEditFormMode.NewValue;
+        dialog.ValueKind = Microsoft.Win32.RegistryValueKind.ExpandString;
+        if (dialog.ShowDialog() == DialogResult.OK)
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.ExpandString, dialog.NewName, dialog.Value);
+      }
+    }
+    #endregion
+
   }
 }

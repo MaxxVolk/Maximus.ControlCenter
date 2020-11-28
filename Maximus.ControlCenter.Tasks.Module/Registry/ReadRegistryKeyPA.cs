@@ -91,7 +91,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
           case RegistryValueKind.QWord: return new Quadruple { I1 = pn, I2 = "REG_QWORD", I3 = unchecked((ulong)((long)value)).ToString() };
           case RegistryValueKind.String: return new Quadruple { I1 = pn, I2 = "REG_SZ", I3 = (string)value };
           case RegistryValueKind.ExpandString: return new Quadruple { I1 = pn, I2 = "REG_EXPAND_SZ", I3 = ExpandStrings ? Environment.ExpandEnvironmentVariables((string)value) : (string)value };
-          case RegistryValueKind.Binary: return new Quadruple { I1 = pn, I2 = "REG_BINARY.", I3 = BitConverter.ToString((byte[])value).Replace('-', ' ') };
+          case RegistryValueKind.Binary: return new Quadruple { I1 = pn, I2 = "REG_BINARY", I3 = BitConverter.ToString((byte[])value).Replace('-', ' ') };
           case RegistryValueKind.MultiString:
             string mliners = "";
             string[] lines = (string[])value;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -28,7 +29,7 @@ namespace Maximus.ControlCenter.UI.Control
     public readonly Guid WriteRegistryElementTaskId = Guid.Parse("b4223042-05a4-c00d-437e-71d30c32801f");
 
     private readonly Dictionary<Guid, ManagementPackTaskInfo> MPTasks = new Dictionary<Guid, ManagementPackTaskInfo>(20);
-    private object onTaskStatusChangeLock = new object();
+    private readonly object onTaskStatusChangeLock = new object();
 
     private void GetTaskObjects(Guid taskId)
     {
@@ -57,19 +58,25 @@ namespace Maximus.ControlCenter.UI.Control
     public void SubmitTaskAsync(Guid taskId, EnterpriseManagementObject mo, Dictionary<string, string> taskParameters, OnTaskStatusChangeDelegate statusChangeCallback)
     {
       Dbg.Log($"Entering {MethodBase.GetCurrentMethod().Name}");
-
-      if (!MPTasks.ContainsKey(taskId))
-        GetTaskObjects(taskId);
-      if (MPTasks.ContainsKey(taskId))
+      try
       {
-        Microsoft.EnterpriseManagement.Runtime.TaskConfiguration taskParams = new Microsoft.EnterpriseManagement.Runtime.TaskConfiguration();
-        if (taskParameters != null)
-          foreach (KeyValuePair<string, string> paramPair in taskParameters)
-            taskParams.Overrides.Add(new Pair<ManagementPackOverrideableParameter, string>(MPTasks[taskId].OverrideableParameters[paramPair.Key], paramPair.Value));
-        UpdateTaskStatus("Starting a new task...");
-        Guid batchId = ManagementGroup.TaskRuntime.SubmitTask(mo, MPTasks[taskId].ManagementPackTask, taskParams, new Microsoft.EnterpriseManagement.Runtime.TaskStatusChangeCallback(OnTaskStatusChange));
-        MPTasks[taskId].TaskCallbacks.Add(batchId, statusChangeCallback);
-        UpdateTaskStatus("Waiting on task completion...");
+        if (!MPTasks.ContainsKey(taskId))
+          GetTaskObjects(taskId);
+        if (MPTasks.ContainsKey(taskId))
+        {
+          Microsoft.EnterpriseManagement.Runtime.TaskConfiguration taskParams = new Microsoft.EnterpriseManagement.Runtime.TaskConfiguration();
+          if (taskParameters != null)
+            foreach (KeyValuePair<string, string> paramPair in taskParameters)
+              taskParams.Overrides.Add(new Pair<ManagementPackOverrideableParameter, string>(MPTasks[taskId].OverrideableParameters[paramPair.Key], paramPair.Value));
+          UpdateTaskStatus("Starting a new task...");
+          Guid batchId = ManagementGroup.TaskRuntime.SubmitTask(mo, MPTasks[taskId].ManagementPackTask, taskParams, new Microsoft.EnterpriseManagement.Runtime.TaskStatusChangeCallback(OnTaskStatusChange));
+          MPTasks[taskId].TaskCallbacks.Add(batchId, statusChangeCallback);
+          UpdateTaskStatus("Waiting on task completion...");
+        }
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show($"Failed to start task.\r\nError message: {e.Message}.", "Task Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
 

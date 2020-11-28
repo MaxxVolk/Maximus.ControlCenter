@@ -21,7 +21,7 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
     public RegistryValueKind ValueKind { get; set; }
 
     // Output
-    public string NewName => tbNewName.Text;
+    public string NewName { get => tbNewName.Text; set => tbNewName.Text = value; }
 
     public string Value
     {
@@ -29,14 +29,37 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
       {
         switch (ValueKind)
         {
-          case RegistryValueKind.String: 
+          case RegistryValueKind.String:
+          case RegistryValueKind.ExpandString:
             return tbStringValue.Text;
           case RegistryValueKind.DWord:
           case RegistryValueKind.QWord:
-            break;
+            return nudIntegerValue.Value.ToString();
+          case RegistryValueKind.MultiString:
+            return tbMultiStringValue.Text;
+          case RegistryValueKind.Binary:
+            return tbBinaryValue.Text;
         }
 
         return null;
+      }
+      set
+      {
+        switch (ValueKind)
+        {
+          case RegistryValueKind.String:
+          case RegistryValueKind.ExpandString:
+            tbStringValue.Text = value; break;
+          case RegistryValueKind.DWord:
+            nudIntegerValue.Value = uint.Parse(value); break;
+          case RegistryValueKind.QWord:
+            nudIntegerValue.Value = ulong.Parse(value); break;
+          case RegistryValueKind.MultiString:
+            tbMultiStringValue.Text = value; break;
+          case RegistryValueKind.Binary:
+            tbBinaryValue.Text = value;
+            break;
+        }
       }
     }
 
@@ -61,11 +84,20 @@ namespace Maximus.ControlCenter.UI.Control.Dialogs
       }
       switch (ValueKind)
       {
-        case RegistryValueKind.String: tcPages.SelectedTab = tpStringValue; break;
+        case RegistryValueKind.ExpandString:
+        case RegistryValueKind.String:       tcPages.SelectedTab = tpStringValue; break;
         case RegistryValueKind.DWord:
+          nudIntegerValue.Minimum = 0;
+          nudIntegerValue.Maximum = uint.MaxValue;
+          tcPages.SelectedTab = tpNumeric; 
+          break;
         case RegistryValueKind.QWord:
+          nudIntegerValue.Minimum = 0;
+          nudIntegerValue.Maximum = ulong.MaxValue;
           tcPages.SelectedTab = tpNumeric;
           break;
+        case RegistryValueKind.MultiString:  tcPages.SelectedTab = tpMultiString; break;
+        case RegistryValueKind.Binary:       tcPages.SelectedTab = tpBinary; break;
       }
     }
   }

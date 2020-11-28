@@ -30,16 +30,23 @@
     {
       this.tcPages = new System.Windows.Forms.TabControl();
       this.tpStringValue = new System.Windows.Forms.TabPage();
-      this.tbNewName = new System.Windows.Forms.TextBox();
-      this.label1 = new System.Windows.Forms.Label();
+      this.tbStringValue = new System.Windows.Forms.TextBox();
       this.tpNumeric = new System.Windows.Forms.TabPage();
-      this.btCancel = new System.Windows.Forms.Button();
-      this.btOK = new System.Windows.Forms.Button();
       this.tpMultiString = new System.Windows.Forms.TabPage();
       this.tpBinary = new System.Windows.Forms.TabPage();
-      this.tbStringValue = new System.Windows.Forms.TextBox();
+      this.tbNewName = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.btCancel = new System.Windows.Forms.Button();
+      this.btOK = new System.Windows.Forms.Button();
+      this.nudIntegerValue = new System.Windows.Forms.NumericUpDown();
+      this.tbMultiStringValue = new System.Windows.Forms.TextBox();
+      this.tbBinaryValue = new System.Windows.Forms.TextBox();
       this.tcPages.SuspendLayout();
       this.tpStringValue.SuspendLayout();
+      this.tpNumeric.SuspendLayout();
+      this.tpMultiString.SuspendLayout();
+      this.tpBinary.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.nudIntegerValue)).BeginInit();
       this.SuspendLayout();
       // 
       // tcPages
@@ -65,6 +72,46 @@
       this.tpStringValue.Text = "String";
       this.tpStringValue.UseVisualStyleBackColor = true;
       // 
+      // tbStringValue
+      // 
+      this.tbStringValue.Location = new System.Drawing.Point(6, 6);
+      this.tbStringValue.Name = "tbStringValue";
+      this.tbStringValue.Size = new System.Drawing.Size(389, 20);
+      this.tbStringValue.TabIndex = 0;
+      // 
+      // tpNumeric
+      // 
+      this.tpNumeric.Controls.Add(this.nudIntegerValue);
+      this.tpNumeric.Location = new System.Drawing.Point(4, 22);
+      this.tpNumeric.Name = "tpNumeric";
+      this.tpNumeric.Padding = new System.Windows.Forms.Padding(3);
+      this.tpNumeric.Size = new System.Drawing.Size(401, 159);
+      this.tpNumeric.TabIndex = 1;
+      this.tpNumeric.Text = "D/Q-Word";
+      this.tpNumeric.UseVisualStyleBackColor = true;
+      // 
+      // tpMultiString
+      // 
+      this.tpMultiString.Controls.Add(this.tbMultiStringValue);
+      this.tpMultiString.Location = new System.Drawing.Point(4, 22);
+      this.tpMultiString.Name = "tpMultiString";
+      this.tpMultiString.Padding = new System.Windows.Forms.Padding(3);
+      this.tpMultiString.Size = new System.Drawing.Size(401, 159);
+      this.tpMultiString.TabIndex = 2;
+      this.tpMultiString.Text = "Multi Stirng";
+      this.tpMultiString.UseVisualStyleBackColor = true;
+      // 
+      // tpBinary
+      // 
+      this.tpBinary.Controls.Add(this.tbBinaryValue);
+      this.tpBinary.Location = new System.Drawing.Point(4, 22);
+      this.tpBinary.Name = "tpBinary";
+      this.tpBinary.Padding = new System.Windows.Forms.Padding(3);
+      this.tpBinary.Size = new System.Drawing.Size(401, 159);
+      this.tpBinary.TabIndex = 3;
+      this.tpBinary.Text = "Binary";
+      this.tpBinary.UseVisualStyleBackColor = true;
+      // 
       // tbNewName
       // 
       this.tbNewName.Location = new System.Drawing.Point(15, 25);
@@ -80,16 +127,6 @@
       this.label1.Size = new System.Drawing.Size(87, 13);
       this.label1.TabIndex = 0;
       this.label1.Text = "Enter new name:";
-      // 
-      // tpNumeric
-      // 
-      this.tpNumeric.Location = new System.Drawing.Point(4, 22);
-      this.tpNumeric.Name = "tpNumeric";
-      this.tpNumeric.Padding = new System.Windows.Forms.Padding(3);
-      this.tpNumeric.Size = new System.Drawing.Size(401, 159);
-      this.tpNumeric.TabIndex = 1;
-      this.tpNumeric.Text = "D/Q-Word";
-      this.tpNumeric.UseVisualStyleBackColor = true;
       // 
       // btCancel
       // 
@@ -111,32 +148,30 @@
       this.btOK.Text = "OK";
       this.btOK.UseVisualStyleBackColor = true;
       // 
-      // tpMultiString
+      // nudIntegerValue
       // 
-      this.tpMultiString.Location = new System.Drawing.Point(4, 22);
-      this.tpMultiString.Name = "tpMultiString";
-      this.tpMultiString.Padding = new System.Windows.Forms.Padding(3);
-      this.tpMultiString.Size = new System.Drawing.Size(401, 159);
-      this.tpMultiString.TabIndex = 2;
-      this.tpMultiString.Text = "Multi Stirng";
-      this.tpMultiString.UseVisualStyleBackColor = true;
+      this.nudIntegerValue.Location = new System.Drawing.Point(6, 6);
+      this.nudIntegerValue.Name = "nudIntegerValue";
+      this.nudIntegerValue.Size = new System.Drawing.Size(389, 20);
+      this.nudIntegerValue.TabIndex = 0;
       // 
-      // tpBinary
+      // tbMultiStringValue
       // 
-      this.tpBinary.Location = new System.Drawing.Point(4, 22);
-      this.tpBinary.Name = "tpBinary";
-      this.tpBinary.Padding = new System.Windows.Forms.Padding(3);
-      this.tpBinary.Size = new System.Drawing.Size(401, 159);
-      this.tpBinary.TabIndex = 3;
-      this.tpBinary.Text = "Binary";
-      this.tpBinary.UseVisualStyleBackColor = true;
+      this.tbMultiStringValue.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tbMultiStringValue.Location = new System.Drawing.Point(3, 3);
+      this.tbMultiStringValue.Multiline = true;
+      this.tbMultiStringValue.Name = "tbMultiStringValue";
+      this.tbMultiStringValue.Size = new System.Drawing.Size(395, 153);
+      this.tbMultiStringValue.TabIndex = 0;
       // 
-      // tbStringValue
+      // tbBinaryValue
       // 
-      this.tbStringValue.Location = new System.Drawing.Point(6, 6);
-      this.tbStringValue.Name = "tbStringValue";
-      this.tbStringValue.Size = new System.Drawing.Size(389, 20);
-      this.tbStringValue.TabIndex = 0;
+      this.tbBinaryValue.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tbBinaryValue.Location = new System.Drawing.Point(3, 3);
+      this.tbBinaryValue.Name = "tbBinaryValue";
+      this.tbBinaryValue.Size = new System.Drawing.Size(395, 20);
+      this.tbBinaryValue.TabIndex = 0;
+      this.tbBinaryValue.WordWrap = false;
       // 
       // RegistryEditForm
       // 
@@ -157,6 +192,12 @@
       this.tcPages.ResumeLayout(false);
       this.tpStringValue.ResumeLayout(false);
       this.tpStringValue.PerformLayout();
+      this.tpNumeric.ResumeLayout(false);
+      this.tpMultiString.ResumeLayout(false);
+      this.tpMultiString.PerformLayout();
+      this.tpBinary.ResumeLayout(false);
+      this.tpBinary.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.nudIntegerValue)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -174,5 +215,8 @@
     private System.Windows.Forms.TextBox tbStringValue;
     private System.Windows.Forms.TabPage tpMultiString;
     private System.Windows.Forms.TabPage tpBinary;
+    private System.Windows.Forms.NumericUpDown nudIntegerValue;
+    private System.Windows.Forms.TextBox tbMultiStringValue;
+    private System.Windows.Forms.TextBox tbBinaryValue;
   }
 }

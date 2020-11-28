@@ -22,6 +22,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Events
     {
       try
       {
+        // System.Diagnostics.Eventing.Reader.NativeWrapper.EvtNextChannelPath();
         List<Quadruple> rawData = new List<Quadruple>();
         foreach (string logName in EventLogSession.GlobalSession.GetLogNames())
           rawData.Add(new Quadruple { I1 = logName });
