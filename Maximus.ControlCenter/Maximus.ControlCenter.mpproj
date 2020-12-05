@@ -92,6 +92,9 @@
     <Compile Include="ManagedModules.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ManagementPack.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UI.mpx">
       <SubType>Code</SubType>
     </Compile>
