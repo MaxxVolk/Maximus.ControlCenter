@@ -21,6 +21,24 @@
         <OutputType>Maximus.ControlCenter.ServiceListDataItem</OutputType>
         <InputType>System!System.BaseData</InputType>
       </ProbeActionModuleType>
+
+      <!-- Maximus.ControlCenter.QueryCertSoreContent.ProbeAction -->
+      <ProbeActionModuleType ID="Maximus.ControlCenter.QueryCertSoreContent.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">
+        <Configuration>
+          <xsd:element name="StoreName" minOccurs="1" type="xsd:string" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="StoreName" Selector="$Config/StoreName$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation>
+          <Managed>
+            <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+            <Type>Maximus.ControlCenter.Tasks.Module.Certificates.QueryCertSoreContentPA</Type>
+          </Managed>
+        </ModuleImplementation>
+        <OutputType>Maximus.ControlCenter.CertStoreDataItem</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </ProbeActionModuleType>
       
       <!-- Maximus.ControlCenter.ReadEventLog.ProbeAction -->
       <ProbeActionModuleType ID="Maximus.ControlCenter.ReadEventLog.ProbeAction" Accessibility="Internal" RunAs="SC!Microsoft.SystemCenter.LocalAgentElevatedAccount">

@@ -12,6 +12,7 @@ namespace Maximus.ControlCenter.UI.Control
   {
     public static void Log(string msg)
     {
+#if TRACE_FILE_OUTPUT
       int maxAttempts = 10;
       while (true)
         try
@@ -27,6 +28,7 @@ namespace Maximus.ControlCenter.UI.Control
           Thread.Sleep(1);
           continue;
         }
+#endif
     }
   }
 }

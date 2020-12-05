@@ -80,6 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Certificates\CertificateDetails.cs" />
+    <Compile Include="Certificates\CertificateHelper.cs" />
+    <Compile Include="Certificates\CertStoreContent.cs" />
+    <Compile Include="Certificates\CertStoreDataItem.cs" />
+    <Compile Include="Certificates\QueryCertSoreContentPA.cs" />
     <Compile Include="Events\EventInfo.cs" />
     <Compile Include="Events\EventList.cs" />
     <Compile Include="Events\EventListDataItem.cs" />

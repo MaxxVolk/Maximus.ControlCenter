@@ -25,6 +25,9 @@
       <FolderItem ID="Maximus.ControlCenter.UIControl.FolderItem" ElementID="Maximus.ControlCenter.UIControl.View"
                   Folder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
     </FolderItems>
+    <ImageReferences>
+      <ImageReference ElementID="Maximus.ControlCenter.UIControl.ViewType" ImageID="Maximus.ControlCenter.UIControl.Icon" />
+    </ImageReferences>
   </Presentation>
   <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
@@ -35,4 +38,8 @@
       </DisplayStrings>
     </LanguagePack>
   </LanguagePacks>
+  <Resources>
+    <!-- Icons made by <a href="https://www.flaticon.com/authors/nhor-phai" title="Nhor Phai">Nhor Phai</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+    <Image ID="Maximus.ControlCenter.UIControl.Icon" Accessibility="Public" HasNullStream="false" FileName="tablet16x16.bmp" />
+  </Resources>
 </ManagementPackFragment>

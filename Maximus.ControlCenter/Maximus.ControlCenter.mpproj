@@ -83,6 +83,9 @@
     <Compile Include="Assemblies.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Images.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ManagedDataItems.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -98,6 +101,9 @@
       <SubType>Content</SubType>
       <Generator>FragmentGenerator</Generator>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="tablet16x16.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

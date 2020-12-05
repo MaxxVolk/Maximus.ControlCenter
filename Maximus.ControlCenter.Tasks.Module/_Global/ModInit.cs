@@ -26,6 +26,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Global
     internal const int evtId_ReadEventLogPA = 3;
     internal const int evtId_ReadRegistryKeyPA = 4;
     internal const int evtId_WriteRegistryElementWA = 5;
+    internal const int evtId_QueryCertSoreContentPA = 6;
 
     internal static void ModuleErrorSignalReceiver(ModuleErrorSeverity severity, ModuleErrorCriticality criticality, Exception e, string message, object callerInstance)
     {

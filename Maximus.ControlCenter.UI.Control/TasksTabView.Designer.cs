@@ -101,6 +101,8 @@
       this.cmRegEditMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.tsmiRefresh = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -121,13 +123,28 @@
       this.cbRegRootKey = new System.Windows.Forms.ComboBox();
       this.label13 = new System.Windows.Forms.Label();
       this.tpPerformance = new System.Windows.Forms.TabPage();
+      this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+      this.label19 = new System.Windows.Forms.Label();
       this.tpSystemInfo = new System.Windows.Forms.TabPage();
+      this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+      this.label20 = new System.Windows.Forms.Label();
       this.tpStorage = new System.Windows.Forms.TabPage();
+      this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+      this.label21 = new System.Windows.Forms.Label();
       this.tpPtocesses = new System.Windows.Forms.TabPage();
+      this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+      this.label22 = new System.Windows.Forms.Label();
       this.tpShares = new System.Windows.Forms.TabPage();
+      this.linkLabel5 = new System.Windows.Forms.LinkLabel();
+      this.label23 = new System.Windows.Forms.Label();
       this.tpLocalUsers = new System.Windows.Forms.TabPage();
+      this.linkLabel6 = new System.Windows.Forms.LinkLabel();
+      this.label24 = new System.Windows.Forms.Label();
       this.tbComputerCertificates = new System.Windows.Forms.TabPage();
+      this.label25 = new System.Windows.Forms.Label();
       this.tpFirewall = new System.Windows.Forms.TabPage();
+      this.linkLabel8 = new System.Windows.Forms.LinkLabel();
+      this.label26 = new System.Windows.Forms.Label();
       this.lCurrentTasks = new System.Windows.Forms.Label();
       this.tcCategories.SuspendLayout();
       this.tpServices.SuspendLayout();
@@ -147,6 +164,14 @@
       this.tpRegistry.SuspendLayout();
       this.cmRegEditMenu.SuspendLayout();
       this.pRegistryControls.SuspendLayout();
+      this.tpPerformance.SuspendLayout();
+      this.tpSystemInfo.SuspendLayout();
+      this.tpStorage.SuspendLayout();
+      this.tpPtocesses.SuspendLayout();
+      this.tpShares.SuspendLayout();
+      this.tpLocalUsers.SuspendLayout();
+      this.tbComputerCertificates.SuspendLayout();
+      this.tpFirewall.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
       this.SuspendLayout();
       // 
@@ -155,13 +180,13 @@
       this.tcCategories.Controls.Add(this.tpServices);
       this.tcCategories.Controls.Add(this.tpEvents);
       this.tcCategories.Controls.Add(this.tpRegistry);
+      this.tcCategories.Controls.Add(this.tbComputerCertificates);
       this.tcCategories.Controls.Add(this.tpPerformance);
       this.tcCategories.Controls.Add(this.tpSystemInfo);
       this.tcCategories.Controls.Add(this.tpStorage);
       this.tcCategories.Controls.Add(this.tpPtocesses);
       this.tcCategories.Controls.Add(this.tpShares);
       this.tcCategories.Controls.Add(this.tpLocalUsers);
-      this.tcCategories.Controls.Add(this.tbComputerCertificates);
       this.tcCategories.Controls.Add(this.tpFirewall);
       this.tcCategories.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tcCategories.Location = new System.Drawing.Point(0, 0);
@@ -169,6 +194,7 @@
       this.tcCategories.SelectedIndex = 0;
       this.tcCategories.Size = new System.Drawing.Size(1111, 411);
       this.tcCategories.TabIndex = 0;
+      this.tcCategories.SelectedIndexChanged += new System.EventHandler(this.tcCategories_SelectedIndexChanged);
       // 
       // tpServices
       // 
@@ -867,16 +893,19 @@
       this.cmRegEditMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.modifyToolStripMenuItem,
             this.toolStripSeparator1,
+            this.tsmiRefresh,
+            this.toolStripSeparator4,
             this.deleteToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.toolStripSeparator2,
             this.newToolStripMenuItem});
       this.cmRegEditMenu.Name = "contextMenuStrip1";
-      this.cmRegEditMenu.Size = new System.Drawing.Size(118, 104);
+      this.cmRegEditMenu.Size = new System.Drawing.Size(118, 132);
       this.cmRegEditMenu.Opening += new System.ComponentModel.CancelEventHandler(this.cmRegEditMenu_Opening);
       // 
       // modifyToolStripMenuItem
       // 
+      this.modifyToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
       this.modifyToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
       this.modifyToolStripMenuItem.Text = "Modify";
@@ -886,6 +915,18 @@
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
       this.toolStripSeparator1.Size = new System.Drawing.Size(114, 6);
+      // 
+      // tsmiRefresh
+      // 
+      this.tsmiRefresh.Name = "tsmiRefresh";
+      this.tsmiRefresh.Size = new System.Drawing.Size(117, 22);
+      this.tsmiRefresh.Text = "Refresh";
+      this.tsmiRefresh.Click += new System.EventHandler(this.tsmiRefresh_Click);
+      // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(114, 6);
       // 
       // deleteToolStripMenuItem
       // 
@@ -1050,6 +1091,8 @@
       // 
       // tpPerformance
       // 
+      this.tpPerformance.Controls.Add(this.linkLabel1);
+      this.tpPerformance.Controls.Add(this.label19);
       this.tpPerformance.Location = new System.Drawing.Point(4, 22);
       this.tpPerformance.Name = "tpPerformance";
       this.tpPerformance.Padding = new System.Windows.Forms.Padding(3);
@@ -1058,8 +1101,29 @@
       this.tpPerformance.Text = "Performance";
       this.tpPerformance.UseVisualStyleBackColor = true;
       // 
+      // linkLabel1
+      // 
+      this.linkLabel1.AutoSize = true;
+      this.linkLabel1.Location = new System.Drawing.Point(6, 26);
+      this.linkLabel1.Name = "linkLabel1";
+      this.linkLabel1.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel1.TabIndex = 1;
+      this.linkLabel1.TabStop = true;
+      this.linkLabel1.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label19
+      // 
+      this.label19.AutoSize = true;
+      this.label19.Location = new System.Drawing.Point(6, 3);
+      this.label19.Name = "label19";
+      this.label19.Size = new System.Drawing.Size(207, 13);
+      this.label19.TabIndex = 0;
+      this.label19.Text = "Not implemented yet. Join development at ";
+      // 
       // tpSystemInfo
       // 
+      this.tpSystemInfo.Controls.Add(this.linkLabel2);
+      this.tpSystemInfo.Controls.Add(this.label20);
       this.tpSystemInfo.Location = new System.Drawing.Point(4, 22);
       this.tpSystemInfo.Name = "tpSystemInfo";
       this.tpSystemInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -1068,8 +1132,29 @@
       this.tpSystemInfo.Text = "System Information";
       this.tpSystemInfo.UseVisualStyleBackColor = true;
       // 
+      // linkLabel2
+      // 
+      this.linkLabel2.AutoSize = true;
+      this.linkLabel2.Location = new System.Drawing.Point(6, 26);
+      this.linkLabel2.Name = "linkLabel2";
+      this.linkLabel2.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel2.TabIndex = 3;
+      this.linkLabel2.TabStop = true;
+      this.linkLabel2.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label20
+      // 
+      this.label20.AutoSize = true;
+      this.label20.Location = new System.Drawing.Point(6, 3);
+      this.label20.Name = "label20";
+      this.label20.Size = new System.Drawing.Size(207, 13);
+      this.label20.TabIndex = 2;
+      this.label20.Text = "Not implemented yet. Join development at ";
+      // 
       // tpStorage
       // 
+      this.tpStorage.Controls.Add(this.linkLabel3);
+      this.tpStorage.Controls.Add(this.label21);
       this.tpStorage.Location = new System.Drawing.Point(4, 22);
       this.tpStorage.Name = "tpStorage";
       this.tpStorage.Padding = new System.Windows.Forms.Padding(3);
@@ -1078,8 +1163,29 @@
       this.tpStorage.Text = "Storage";
       this.tpStorage.UseVisualStyleBackColor = true;
       // 
+      // linkLabel3
+      // 
+      this.linkLabel3.AutoSize = true;
+      this.linkLabel3.Location = new System.Drawing.Point(6, 26);
+      this.linkLabel3.Name = "linkLabel3";
+      this.linkLabel3.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel3.TabIndex = 3;
+      this.linkLabel3.TabStop = true;
+      this.linkLabel3.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label21
+      // 
+      this.label21.AutoSize = true;
+      this.label21.Location = new System.Drawing.Point(6, 3);
+      this.label21.Name = "label21";
+      this.label21.Size = new System.Drawing.Size(207, 13);
+      this.label21.TabIndex = 2;
+      this.label21.Text = "Not implemented yet. Join development at ";
+      // 
       // tpPtocesses
       // 
+      this.tpPtocesses.Controls.Add(this.linkLabel4);
+      this.tpPtocesses.Controls.Add(this.label22);
       this.tpPtocesses.Location = new System.Drawing.Point(4, 22);
       this.tpPtocesses.Name = "tpPtocesses";
       this.tpPtocesses.Padding = new System.Windows.Forms.Padding(3);
@@ -1088,8 +1194,29 @@
       this.tpPtocesses.Text = "Processes";
       this.tpPtocesses.UseVisualStyleBackColor = true;
       // 
+      // linkLabel4
+      // 
+      this.linkLabel4.AutoSize = true;
+      this.linkLabel4.Location = new System.Drawing.Point(6, 26);
+      this.linkLabel4.Name = "linkLabel4";
+      this.linkLabel4.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel4.TabIndex = 3;
+      this.linkLabel4.TabStop = true;
+      this.linkLabel4.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label22
+      // 
+      this.label22.AutoSize = true;
+      this.label22.Location = new System.Drawing.Point(6, 3);
+      this.label22.Name = "label22";
+      this.label22.Size = new System.Drawing.Size(207, 13);
+      this.label22.TabIndex = 2;
+      this.label22.Text = "Not implemented yet. Join development at ";
+      // 
       // tpShares
       // 
+      this.tpShares.Controls.Add(this.linkLabel5);
+      this.tpShares.Controls.Add(this.label23);
       this.tpShares.Location = new System.Drawing.Point(4, 22);
       this.tpShares.Name = "tpShares";
       this.tpShares.Padding = new System.Windows.Forms.Padding(3);
@@ -1098,8 +1225,29 @@
       this.tpShares.Text = "Shared Folders";
       this.tpShares.UseVisualStyleBackColor = true;
       // 
+      // linkLabel5
+      // 
+      this.linkLabel5.AutoSize = true;
+      this.linkLabel5.Location = new System.Drawing.Point(3, 26);
+      this.linkLabel5.Name = "linkLabel5";
+      this.linkLabel5.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel5.TabIndex = 3;
+      this.linkLabel5.TabStop = true;
+      this.linkLabel5.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label23
+      // 
+      this.label23.AutoSize = true;
+      this.label23.Location = new System.Drawing.Point(3, 3);
+      this.label23.Name = "label23";
+      this.label23.Size = new System.Drawing.Size(207, 13);
+      this.label23.TabIndex = 2;
+      this.label23.Text = "Not implemented yet. Join development at ";
+      // 
       // tpLocalUsers
       // 
+      this.tpLocalUsers.Controls.Add(this.linkLabel6);
+      this.tpLocalUsers.Controls.Add(this.label24);
       this.tpLocalUsers.Location = new System.Drawing.Point(4, 22);
       this.tpLocalUsers.Name = "tpLocalUsers";
       this.tpLocalUsers.Padding = new System.Windows.Forms.Padding(3);
@@ -1108,8 +1256,28 @@
       this.tpLocalUsers.Text = "Local Users and Groups";
       this.tpLocalUsers.UseVisualStyleBackColor = true;
       // 
+      // linkLabel6
+      // 
+      this.linkLabel6.AutoSize = true;
+      this.linkLabel6.Location = new System.Drawing.Point(6, 26);
+      this.linkLabel6.Name = "linkLabel6";
+      this.linkLabel6.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel6.TabIndex = 3;
+      this.linkLabel6.TabStop = true;
+      this.linkLabel6.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label24
+      // 
+      this.label24.AutoSize = true;
+      this.label24.Location = new System.Drawing.Point(6, 3);
+      this.label24.Name = "label24";
+      this.label24.Size = new System.Drawing.Size(207, 13);
+      this.label24.TabIndex = 2;
+      this.label24.Text = "Not implemented yet. Join development at ";
+      // 
       // tbComputerCertificates
       // 
+      this.tbComputerCertificates.Controls.Add(this.label25);
       this.tbComputerCertificates.Location = new System.Drawing.Point(4, 22);
       this.tbComputerCertificates.Name = "tbComputerCertificates";
       this.tbComputerCertificates.Padding = new System.Windows.Forms.Padding(3);
@@ -1118,8 +1286,19 @@
       this.tbComputerCertificates.Text = "Computer Certificates";
       this.tbComputerCertificates.UseVisualStyleBackColor = true;
       // 
+      // label25
+      // 
+      this.label25.AutoSize = true;
+      this.label25.Location = new System.Drawing.Point(6, 3);
+      this.label25.Name = "label25";
+      this.label25.Size = new System.Drawing.Size(71, 13);
+      this.label25.TabIndex = 2;
+      this.label25.Text = "Coming soon!";
+      // 
       // tpFirewall
       // 
+      this.tpFirewall.Controls.Add(this.linkLabel8);
+      this.tpFirewall.Controls.Add(this.label26);
       this.tpFirewall.Location = new System.Drawing.Point(4, 22);
       this.tpFirewall.Name = "tpFirewall";
       this.tpFirewall.Padding = new System.Windows.Forms.Padding(3);
@@ -1127,6 +1306,25 @@
       this.tpFirewall.TabIndex = 10;
       this.tpFirewall.Text = "Firewall";
       this.tpFirewall.UseVisualStyleBackColor = true;
+      // 
+      // linkLabel8
+      // 
+      this.linkLabel8.AutoSize = true;
+      this.linkLabel8.Location = new System.Drawing.Point(6, 26);
+      this.linkLabel8.Name = "linkLabel8";
+      this.linkLabel8.Size = new System.Drawing.Size(259, 13);
+      this.linkLabel8.TabIndex = 3;
+      this.linkLabel8.TabStop = true;
+      this.linkLabel8.Text = "https://github.com/MaxxVolk/Maximus.ControlCenter";
+      // 
+      // label26
+      // 
+      this.label26.AutoSize = true;
+      this.label26.Location = new System.Drawing.Point(6, 3);
+      this.label26.Name = "label26";
+      this.label26.Size = new System.Drawing.Size(207, 13);
+      this.label26.TabIndex = 2;
+      this.label26.Text = "Not implemented yet. Join development at ";
       // 
       // lCurrentTasks
       // 
@@ -1166,6 +1364,22 @@
       this.cmRegEditMenu.ResumeLayout(false);
       this.pRegistryControls.ResumeLayout(false);
       this.pRegistryControls.PerformLayout();
+      this.tpPerformance.ResumeLayout(false);
+      this.tpPerformance.PerformLayout();
+      this.tpSystemInfo.ResumeLayout(false);
+      this.tpSystemInfo.PerformLayout();
+      this.tpStorage.ResumeLayout(false);
+      this.tpStorage.PerformLayout();
+      this.tpPtocesses.ResumeLayout(false);
+      this.tpPtocesses.PerformLayout();
+      this.tpShares.ResumeLayout(false);
+      this.tpShares.PerformLayout();
+      this.tpLocalUsers.ResumeLayout(false);
+      this.tpLocalUsers.PerformLayout();
+      this.tbComputerCertificates.ResumeLayout(false);
+      this.tbComputerCertificates.PerformLayout();
+      this.tpFirewall.ResumeLayout(false);
+      this.tpFirewall.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -1273,5 +1487,22 @@
     private System.Windows.Forms.ToolStripMenuItem expandableStringValueToolStripMenuItem;
     private System.Windows.Forms.TabPage tbComputerCertificates;
     private System.Windows.Forms.TabPage tpFirewall;
+    private System.Windows.Forms.ToolStripMenuItem tsmiRefresh;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+    private System.Windows.Forms.LinkLabel linkLabel1;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.LinkLabel linkLabel2;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.LinkLabel linkLabel3;
+    private System.Windows.Forms.Label label21;
+    private System.Windows.Forms.LinkLabel linkLabel4;
+    private System.Windows.Forms.Label label22;
+    private System.Windows.Forms.LinkLabel linkLabel5;
+    private System.Windows.Forms.Label label23;
+    private System.Windows.Forms.LinkLabel linkLabel6;
+    private System.Windows.Forms.Label label24;
+    private System.Windows.Forms.Label label25;
+    private System.Windows.Forms.LinkLabel linkLabel8;
+    private System.Windows.Forms.Label label26;
   }
 }

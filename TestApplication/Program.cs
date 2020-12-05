@@ -21,7 +21,7 @@ namespace TestApplication
   {
     static void Main(string[] args)
     {
-      TestRegRename();
+      var v = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey("SOFTWARE\\Test").GetValue("exp", null, RegistryValueOptions.DoNotExpandEnvironmentNames);
     }
 
     private static void TestEventRead()

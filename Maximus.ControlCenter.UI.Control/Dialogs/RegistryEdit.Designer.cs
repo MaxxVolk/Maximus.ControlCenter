@@ -32,21 +32,21 @@
       this.tpStringValue = new System.Windows.Forms.TabPage();
       this.tbStringValue = new System.Windows.Forms.TextBox();
       this.tpNumeric = new System.Windows.Forms.TabPage();
+      this.nudIntegerValue = new System.Windows.Forms.NumericUpDown();
       this.tpMultiString = new System.Windows.Forms.TabPage();
+      this.tbMultiStringValue = new System.Windows.Forms.TextBox();
       this.tpBinary = new System.Windows.Forms.TabPage();
+      this.tbBinaryValue = new System.Windows.Forms.TextBox();
       this.tbNewName = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.btCancel = new System.Windows.Forms.Button();
       this.btOK = new System.Windows.Forms.Button();
-      this.nudIntegerValue = new System.Windows.Forms.NumericUpDown();
-      this.tbMultiStringValue = new System.Windows.Forms.TextBox();
-      this.tbBinaryValue = new System.Windows.Forms.TextBox();
       this.tcPages.SuspendLayout();
       this.tpStringValue.SuspendLayout();
       this.tpNumeric.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.nudIntegerValue)).BeginInit();
       this.tpMultiString.SuspendLayout();
       this.tpBinary.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.nudIntegerValue)).BeginInit();
       this.SuspendLayout();
       // 
       // tcPages
@@ -90,6 +90,13 @@
       this.tpNumeric.Text = "D/Q-Word";
       this.tpNumeric.UseVisualStyleBackColor = true;
       // 
+      // nudIntegerValue
+      // 
+      this.nudIntegerValue.Location = new System.Drawing.Point(6, 6);
+      this.nudIntegerValue.Name = "nudIntegerValue";
+      this.nudIntegerValue.Size = new System.Drawing.Size(389, 20);
+      this.nudIntegerValue.TabIndex = 0;
+      // 
       // tpMultiString
       // 
       this.tpMultiString.Controls.Add(this.tbMultiStringValue);
@@ -100,6 +107,16 @@
       this.tpMultiString.TabIndex = 2;
       this.tpMultiString.Text = "Multi Stirng";
       this.tpMultiString.UseVisualStyleBackColor = true;
+      // 
+      // tbMultiStringValue
+      // 
+      this.tbMultiStringValue.AcceptsReturn = true;
+      this.tbMultiStringValue.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tbMultiStringValue.Location = new System.Drawing.Point(3, 3);
+      this.tbMultiStringValue.Multiline = true;
+      this.tbMultiStringValue.Name = "tbMultiStringValue";
+      this.tbMultiStringValue.Size = new System.Drawing.Size(395, 153);
+      this.tbMultiStringValue.TabIndex = 0;
       // 
       // tpBinary
       // 
@@ -112,11 +129,23 @@
       this.tpBinary.Text = "Binary";
       this.tpBinary.UseVisualStyleBackColor = true;
       // 
+      // tbBinaryValue
+      // 
+      this.tbBinaryValue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+      this.tbBinaryValue.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tbBinaryValue.Location = new System.Drawing.Point(3, 3);
+      this.tbBinaryValue.Multiline = true;
+      this.tbBinaryValue.Name = "tbBinaryValue";
+      this.tbBinaryValue.Size = new System.Drawing.Size(395, 153);
+      this.tbBinaryValue.TabIndex = 0;
+      this.tbBinaryValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbBinaryValue_KeyPress);
+      this.tbBinaryValue.Validating += new System.ComponentModel.CancelEventHandler(this.tbBinaryValue_Validating);
+      // 
       // tbNewName
       // 
       this.tbNewName.Location = new System.Drawing.Point(15, 25);
       this.tbNewName.Name = "tbNewName";
-      this.tbNewName.Size = new System.Drawing.Size(228, 20);
+      this.tbNewName.Size = new System.Drawing.Size(402, 20);
       this.tbNewName.TabIndex = 1;
       // 
       // label1
@@ -124,9 +153,9 @@
       this.label1.AutoSize = true;
       this.label1.Location = new System.Drawing.Point(12, 9);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(87, 13);
+      this.label1.Size = new System.Drawing.Size(66, 13);
       this.label1.TabIndex = 0;
-      this.label1.Text = "Enter new name:";
+      this.label1.Text = "Value name:";
       // 
       // btCancel
       // 
@@ -148,35 +177,12 @@
       this.btOK.Text = "OK";
       this.btOK.UseVisualStyleBackColor = true;
       // 
-      // nudIntegerValue
-      // 
-      this.nudIntegerValue.Location = new System.Drawing.Point(6, 6);
-      this.nudIntegerValue.Name = "nudIntegerValue";
-      this.nudIntegerValue.Size = new System.Drawing.Size(389, 20);
-      this.nudIntegerValue.TabIndex = 0;
-      // 
-      // tbMultiStringValue
-      // 
-      this.tbMultiStringValue.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbMultiStringValue.Location = new System.Drawing.Point(3, 3);
-      this.tbMultiStringValue.Multiline = true;
-      this.tbMultiStringValue.Name = "tbMultiStringValue";
-      this.tbMultiStringValue.Size = new System.Drawing.Size(395, 153);
-      this.tbMultiStringValue.TabIndex = 0;
-      // 
-      // tbBinaryValue
-      // 
-      this.tbBinaryValue.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbBinaryValue.Location = new System.Drawing.Point(3, 3);
-      this.tbBinaryValue.Name = "tbBinaryValue";
-      this.tbBinaryValue.Size = new System.Drawing.Size(395, 20);
-      this.tbBinaryValue.TabIndex = 0;
-      this.tbBinaryValue.WordWrap = false;
-      // 
       // RegistryEditForm
       // 
+      this.AcceptButton = this.btOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.btCancel;
       this.ClientSize = new System.Drawing.Size(437, 278);
       this.Controls.Add(this.tbNewName);
       this.Controls.Add(this.btOK);
@@ -189,15 +195,16 @@
       this.Name = "RegistryEditForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Registry Edit";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RegistryEditForm_FormClosing);
       this.tcPages.ResumeLayout(false);
       this.tpStringValue.ResumeLayout(false);
       this.tpStringValue.PerformLayout();
       this.tpNumeric.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.nudIntegerValue)).EndInit();
       this.tpMultiString.ResumeLayout(false);
       this.tpMultiString.PerformLayout();
       this.tpBinary.ResumeLayout(false);
       this.tpBinary.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.nudIntegerValue)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 

@@ -21,7 +21,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
   {
     // configuration
     private string KeyPath;
-    private bool ExpandStrings = true;
+    private bool ExpandStrings = false;
 
     public ReadRegistryKeyPA(ModuleHost<QuadrupleListDataItem> moduleHost, XmlReader configuration, byte[] previousState) : base(moduleHost, configuration, previousState)
     {
@@ -50,7 +50,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
             // values
             List<Quadruple> values = new List<Quadruple>();
             foreach (string paramName in currentKey.GetValueNames())
-              values.Add(SerializeRegValue(paramName, currentKey.GetValue(paramName), currentKey.GetValueKind(paramName), ExpandStrings));
+              values.Add(SerializeRegValue(paramName, currentKey.GetValue(paramName, null, ExpandStrings ? RegistryValueOptions.None : RegistryValueOptions.DoNotExpandEnvironmentNames), currentKey.GetValueKind(paramName)));
             values.Sort((q1, q2) => q1.I1.CompareTo(q2.I1));
 
             keys.AddRange(values);
@@ -80,7 +80,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
       }
     }
 
-    internal static Quadruple SerializeRegValue(string paramName, object value, RegistryValueKind dataType, bool ExpandStrings)
+    internal static Quadruple SerializeRegValue(string paramName, object value, RegistryValueKind dataType)
     {
       try
       {
@@ -90,7 +90,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
           case RegistryValueKind.DWord: return new Quadruple { I1 = pn, I2 = "REG_DWORD", I3 = unchecked((uint)((int)value)).ToString() };
           case RegistryValueKind.QWord: return new Quadruple { I1 = pn, I2 = "REG_QWORD", I3 = unchecked((ulong)((long)value)).ToString() };
           case RegistryValueKind.String: return new Quadruple { I1 = pn, I2 = "REG_SZ", I3 = (string)value };
-          case RegistryValueKind.ExpandString: return new Quadruple { I1 = pn, I2 = "REG_EXPAND_SZ", I3 = ExpandStrings ? Environment.ExpandEnvironmentVariables((string)value) : (string)value };
+          case RegistryValueKind.ExpandString: return new Quadruple { I1 = pn, I2 = "REG_EXPAND_SZ", I3 = (string)value };
           case RegistryValueKind.Binary: return new Quadruple { I1 = pn, I2 = "REG_BINARY", I3 = BitConverter.ToString((byte[])value).Replace('-', ' ') };
           case RegistryValueKind.MultiString:
             string mliners = "";
@@ -113,7 +113,7 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
       try
       {
         LoadConfigurationElement(cfgDoc, "KeyPath", out KeyPath);
-        LoadConfigurationElement(cfgDoc, "ExpandStrings", out ExpandStrings, true, false);
+        LoadConfigurationElement(cfgDoc, "ExpandStrings", out ExpandStrings, false, false);
       }
       catch (Exception e)
       {

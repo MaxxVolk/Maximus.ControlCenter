@@ -116,7 +116,10 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
                 return CreateErrorousOutput("Invalid parameters. Value with the new name already exists. Renaming failed.");
               rootKey.SetValue(NewName, rootKey.GetValue(OldName), rootKey.GetValueKind(OldName));
               rootKey.DeleteValue(OldName);
-              return new QuadrupleListDataItem[] { new QuadrupleListDataItem(new QuadrupleList { List = new List<Quadruple> { ReadRegistryKeyPA.SerializeRegValue(NewName, rootKey.GetValue(NewName), rootKey.GetValueKind(NewName), true) } }) };
+              return new QuadrupleListDataItem[] { new QuadrupleListDataItem(new QuadrupleList { List = new List<Quadruple> 
+              { 
+                ReadRegistryKeyPA.SerializeRegValue(NewName, rootKey.GetValue(NewName, null, RegistryValueOptions.DoNotExpandEnvironmentNames), rootKey.GetValueKind(NewName)) 
+              } }) };
           }
         }
         return CreateErrorousOutput("Unknown action.");
@@ -138,12 +141,13 @@ namespace Maximus.ControlCenter.Tasks.Module.Registry
         case RegistryValueKind.ExpandString: return valueStr;
         case RegistryValueKind.Binary:
           // https://stackoverflow.com/questions/1230303/bitconverter-tostring-in-reverse
-          byte[] data = new byte[(valueStr.Length + 1) / 3];
+          string normalizedStr = valueStr.Trim().ToUpperInvariant().Replace(" ","");
+          byte[] data = new byte[normalizedStr.TrimEnd().Length / 2];
           for (int i = 0; i < data.Length; i++)
-            data[i] = (byte)("0123456789ABCDEF".IndexOf(valueStr[i * 3]) * 16 + "0123456789ABCDEF".IndexOf(valueStr[i * 3 + 1]));
+            data[i] = (byte)("0123456789ABCDEF".IndexOf(normalizedStr[i * 2]) * 16 + "0123456789ABCDEF".IndexOf(normalizedStr[i * 2 + 1]));
           return data;
         case RegistryValueKind.MultiString:
-          return valueStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+          return valueStr.Split(new string[] { "\r\n", "\r", "\n", "\n\r" }, StringSplitOptions.RemoveEmptyEntries);
       }
       throw new InvalidCastException("Failed to deserialize data or invalid data kind.");
     }

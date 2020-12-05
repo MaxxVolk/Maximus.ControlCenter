@@ -529,7 +529,7 @@ namespace Maximus.ControlCenter.UI.Control
       if (lvRegItems.SelectedItems != null && lvRegItems.SelectedItems.Count == 1)
       {
         ListViewItem selectedItem = lvRegItems.SelectedItems[0];
-        Dbg.Log($"Subitem count: {selectedItem.SubItems.Count}; [0]: {selectedItem.SubItems[0].Text}");
+        Dbg.Log($"Subitem count: {selectedItem.SubItems.Count}; [0]: {selectedItem.SubItems[0].Text} [1]: {selectedItem.SubItems[1].Text} [2]: {selectedItem.SubItems[2].Text}");
         if (selectedItem.SubItems[1].Text == "REG_KEY")
         {
           string addPath = selectedItem.SubItems[0].Text;
@@ -545,7 +545,7 @@ namespace Maximus.ControlCenter.UI.Control
         }
         else
         {
-          // call editor
+          modifyToolStripMenuItem_Click(sender, e);
         }
       }
     }
@@ -821,7 +821,7 @@ namespace Maximus.ControlCenter.UI.Control
         dialog.FormMode = RegistryEditFormMode.NewValue;
         dialog.ValueKind = Microsoft.Win32.RegistryValueKind.Binary;
         if (dialog.ShowDialog() == DialogResult.OK)
-          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.String, dialog.NewName, dialog.Value);
+          StartNewRegValueTask(Microsoft.Win32.RegistryValueKind.Binary, dialog.NewName, dialog.Value);
       }
     }
 
@@ -881,5 +881,13 @@ namespace Maximus.ControlCenter.UI.Control
     }
     #endregion
 
+    private void tsmiRefresh_Click(object sender, EventArgs e)
+    {
+      btRegGo_Click(sender, e);
+    }
+
+    private void tcCategories_SelectedIndexChanged(object sender, EventArgs e)
+    {
+    }
   }
 }

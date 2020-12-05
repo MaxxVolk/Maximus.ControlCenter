@@ -18,11 +18,19 @@
         </Implementation>
       </DataType>
       
-      <!--  -->
+      <!-- Maximus.ControlCenter.QuadrupleListDataItem -->
       <DataType ID="Maximus.ControlCenter.QuadrupleListDataItem" Base="System!System.BaseData" Accessibility="Public">
         <Implementation>
           <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
           <Type>Maximus.ControlCenter.Tasks.Module.QuadrupleListDataItem</Type>
+        </Implementation>
+      </DataType>
+
+      <!-- Maximus.ControlCenter.CertStoreDataItem -->
+      <DataType ID="Maximus.ControlCenter.CertStoreDataItem" Base="System!System.BaseData" Accessibility="Public">
+        <Implementation>
+          <Assembly>Maximus.ControlCenter.Tasks.Module.DeployableAssembly</Assembly>
+          <Type>Maximus.ControlCenter.Tasks.Module.Certificates.CertStoreDataItem</Type>
         </Implementation>
       </DataType>
       
