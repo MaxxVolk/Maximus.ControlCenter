@@ -40,6 +40,7 @@
   </LanguagePacks>
   <Resources>
     <!-- Icons made by <a href="https://www.flaticon.com/authors/nhor-phai" title="Nhor Phai">Nhor Phai</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
-    <Image ID="Maximus.ControlCenter.UIControl.Icon" Accessibility="Public" HasNullStream="false" FileName="tablet16x16.bmp" />
+    <Image ID="Maximus.ControlCenter.UIControl.Icon" Accessibility="Public" HasNullStream="false" FileName="tablet16x16.bmp" 
+           Comment="Icons made by https://www.flaticon.com/authors/nhor-phai Nhor Phai" />
   </Resources>
 </ManagementPackFragment>
